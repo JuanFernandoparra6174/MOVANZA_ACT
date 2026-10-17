@@ -1,5 +1,6 @@
 
 import { supabase } from '../configuracion/supabase.js';
+import { consultarAcceso, crearNavegacion, NOMBRES_ROL } from './acceso.js';
 
 // Elementos de la interfaz
 const seccionAcceso = document.getElementById('seccion-acceso');
@@ -10,6 +11,7 @@ const mensaje = document.getElementById('mensaje');
 const formularioAcceso = document.getElementById('formulario-acceso');
 const formularioRegistro = document.getElementById('formulario-registro');
 const formularioPerfil = document.getElementById('formulario-perfil');
+let usuarioPerfilId = null;
 
 function mostrarSeccion(seccion) {
     seccionAcceso.classList.add('oculto');
@@ -51,6 +53,12 @@ formularioRegistro.addEventListener('submit', async (evento) => {
         .value.trim();
 
     const clave = document.getElementById('clave-registro').value;
+    const rol = document.getElementById('rol-registro').value;
+
+    if (!['empresa', 'trabajador'].includes(rol)) {
+        mostrarMensaje('Selecciona Empresa o Trabajador.', 'error');
+        return;
+    }
 
     const confirmarClave = document.getElementById('confirmar-clave')
         .value;
@@ -66,12 +74,14 @@ formularioRegistro.addEventListener('submit', async (evento) => {
     try {
         const { data, error } = await supabase.auth.signUp({
             email: correo,
-            password: clave
+            password: clave,
+            options: { data: { rol } }
         });
 
         if (error) throw error;
 
         if (data.session) {
+            sessionStorage.removeItem('movanza_empresa_activa');
             await cargarPerfil();
         } else {
             mostrarSeccion(seccionAcceso);
@@ -109,6 +119,7 @@ formularioAcceso.addEventListener('submit', async (evento) => {
 
         if (error) throw error;
 
+        sessionStorage.removeItem('movanza_empresa_activa');
         await cargarPerfil();
 
     } catch (error) {
@@ -121,25 +132,13 @@ formularioAcceso.addEventListener('submit', async (evento) => {
 
 // CONSULTAR EL PERFIL AUTENTICADO
 async function cargarPerfil() {
-    const { data: datosUsuario, error: errorUsuario } =
-        await supabase.auth.getUser();
-
-    if (errorUsuario) throw errorUsuario;
-
-    const usuario = datosUsuario.user;
-
-    if (!usuario) {
+    const acceso = await consultarAcceso();
+    if (!acceso) {
         mostrarSeccion(seccionAcceso);
         return;
     }
-
-    const { data: perfil, error: errorPerfil } = await supabase
-        .from('perfiles')
-        .select('id, nombre_usuario, nombre_completo')
-        .eq('usuario_auth_id', usuario.id)
-        .single();
-
-    if (errorPerfil) throw errorPerfil;
+    const { usuario, perfil } = acceso;
+    usuarioPerfilId = usuario.id;
 
     document.getElementById('perfil-id').textContent = perfil.id;
 
@@ -151,6 +150,16 @@ async function cargarPerfil() {
 
     document.getElementById('nombre-completo').value =
         perfil.nombre_completo || '';
+
+    document.getElementById('perfil-rol').textContent = NOMBRES_ROL[perfil.rol];
+    document.querySelectorAll('[data-roles]').forEach(elemento => {
+        elemento.classList.toggle(
+            'oculto', !elemento.dataset.roles.split(' ').includes(perfil.rol)
+        );
+    });
+    document.getElementById('modulos-cuenta').replaceChildren(
+        crearNavegacion(perfil.rol, './paginas/')
+    );
 
     mostrarSeccion(seccionPerfil);
     mostrarMensaje('Perfil cargado correctamente.', 'exito');
@@ -208,6 +217,7 @@ document.getElementById('boton-salir')
 
             if (error) throw error;
 
+            sessionStorage.removeItem('movanza_empresa_activa');
             formularioAcceso.reset();
             formularioRegistro.reset();
             formularioPerfil.reset();
@@ -247,3 +257,21 @@ async function iniciarAplicacion() {
 }
 
 iniciarAplicacion();
+
+// Evita conservar la pantalla de otra sesión al salir desde otra pestaña.
+supabase.auth.onAuthStateChange((evento, sesion) => {
+    if (evento === 'SIGNED_OUT') {
+        usuarioPerfilId = null;
+        sessionStorage.removeItem('movanza_empresa_activa');
+        formularioPerfil.reset();
+        mostrarSeccion(seccionAcceso);
+    } else if (evento === 'SIGNED_IN' && sesion?.user.id !== usuarioPerfilId) {
+        sessionStorage.removeItem('movanza_empresa_activa');
+        mostrarSeccion(seccionAcceso);
+        // Consultar Auth fuera del callback evita bloquear su actualización de sesión.
+        setTimeout(() => cargarPerfil().catch(error => {
+            mostrarSeccion(seccionAcceso);
+            mostrarMensaje('No se pudo verificar tu cuenta. ' + error.message, 'error');
+        }), 0);
+    }
+});

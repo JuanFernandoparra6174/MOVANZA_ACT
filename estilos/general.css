@@ -38,13 +38,29 @@ h1 {
     display: none;
 }
 
+[hidden] {
+    display: none !important;
+}
+
+.navegacion-modulos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.navegacion-modulos [aria-current="page"] {
+    font-weight: bold;
+}
+
 label {
     display: block;
     margin: 15px 0 7px;
     font-weight: 600;
 }
 
-input {
+input,
+#rol-registro {
     display: block;
     width: 100%;
     padding: 12px;

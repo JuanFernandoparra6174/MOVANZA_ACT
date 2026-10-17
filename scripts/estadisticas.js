@@ -405,17 +405,11 @@ function actualizarSelectorTrabajadores() {
 }
 
 function actualizarFiltrosVisibles() {
-    const empresa = $('modo-panel').value === 'empresa';
     const personalizado =
         $('filtro-periodo').value === 'personalizado';
 
-    $('contenedor-empresa').classList.toggle(
-        'oculto', !empresa
-    );
-
-    $('contenedor-trabajador').classList.toggle(
-        'oculto', !empresa
-    );
+    $('contenedor-empresa').classList.remove('oculto');
+    $('contenedor-trabajador').classList.remove('oculto');
 
     $('contenedor-fecha-inicio').classList.toggle(
         'oculto', !personalizado
@@ -431,7 +425,6 @@ function actualizarFiltrosVisibles() {
 // =====================================================
 
 function filtrarAsignaciones() {
-    const modo = $('modo-panel').value;
     const empresaElegida = $('filtro-empresa').value;
     const trabajadorElegido = $('filtro-trabajador').value;
     const periodo = $('filtro-periodo').value;
@@ -477,25 +470,19 @@ function filtrarAsignaciones() {
 
         if (!trabajo) return false;
 
-        if (modo === 'trabajador') {
-            if (a.trabajador_id !== perfil.id) {
-                return false;
-            }
-        } else {
-            if (!idsPropios.has(trabajo.empresa_id)) {
-                return false;
-            }
-
-            if (
-                empresaElegida !== 'todas' &&
-                String(trabajo.empresa_id) !== empresaElegida
-            ) return false;
-
-            if (
-                trabajadorElegido !== 'todos' &&
-                String(a.trabajador_id) !== trabajadorElegido
-            ) return false;
+        if (!idsPropios.has(trabajo.empresa_id)) {
+            return false;
         }
+
+        if (
+            empresaElegida !== 'todas' &&
+            String(trabajo.empresa_id) !== empresaElegida
+        ) return false;
+
+        if (
+            trabajadorElegido !== 'todos' &&
+            String(a.trabajador_id) !== trabajadorElegido
+        ) return false;
 
         if (desde || hasta) {
             if (!a.programada_para) return false;
@@ -683,9 +670,7 @@ function mostrarTablaAgrupada(registros) {
     const cuerpo = $('tabla-agrupacion');
     cuerpo.replaceChildren();
 
-    const modo = $('modo-panel').value;
-    const porTrabajador = modo === 'empresa' &&
-        $('filtro-empresa').value !== 'todas';
+    const porTrabajador = $('filtro-empresa').value !== 'todas';
 
     $('titulo-agrupacion').textContent = porTrabajador
         ? 'Resultados por trabajador'
@@ -838,15 +823,9 @@ function actualizarPanel() {
         mostrarTablaAgrupada(resultadosFiltrados);
         mostrarTablaDetalle(resultadosFiltrados);
 
-        const modo = $('modo-panel').value;
-
         $('descripcion-filtros').textContent =
             `Mostrando ${resultadosFiltrados.length} ` +
-            `asignaciones de ${
-                modo === 'empresa'
-                    ? 'las empresas seleccionadas'
-                    : 'tu perfil como trabajador'
-            }.`;
+            'asignaciones de las empresas seleccionadas.';
 
         informar('');
 
@@ -858,11 +837,6 @@ function actualizarPanel() {
 // =====================================================
 // EVENTOS
 // =====================================================
-
-$('modo-panel').addEventListener('change', () => {
-    actualizarFiltrosVisibles();
-    actualizarPanel();
-});
 
 $('filtro-empresa').addEventListener('change', () => {
     actualizarSelectorTrabajadores();

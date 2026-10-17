@@ -8,8 +8,8 @@
     <title>MOVANZA | Panel y estadísticas</title>
     <link rel="stylesheet" href="../estilos/general.css">
 </head>
-<body>
-<main class="contenedor contenedor-amplio">
+<body data-modulo="estadisticas">
+<main class="contenedor contenedor-amplio" hidden>
 
     <header>
         <h1>MOVANZA</h1>
@@ -37,18 +37,6 @@
         <h2>Filtros</h2>
 
         <div class="estadisticas-filtros">
-
-            <div>
-                <label for="modo-panel">Consultar como</label>
-                <select id="modo-panel">
-                    <option value="trabajador">
-                        Trabajador
-                    </option>
-                    <option value="empresa">
-                        Propietario de empresa
-                    </option>
-                </select>
-            </div>
 
             <div id="contenedor-empresa" class="oculto">
                 <label for="filtro-empresa">Empresa</label>
@@ -256,7 +244,7 @@
 
 <script
     type="module"
-    src="../scripts/estadisticas.js">
+    src="../scripts/modulo.js">
 </script>
 </body>
 </html>
