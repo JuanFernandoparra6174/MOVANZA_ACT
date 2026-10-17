@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MOVANZA | Mis asignaciones</title>
+
+    <link rel="stylesheet"
+          href="../estilos/general.css">
+</head>
+
+<body>
+<main class="contenedor contenedor-amplio">
+
+    <!-- ENCABEZADO -->
+    <header>
+        <h1>MOVANZA</h1>
+        <p>Mis tareas y asignaciones</p>
+    </header>
+
+    <nav>
+        <a href="../index.html">
+            ← Volver a mi perfil
+        </a>
+    </nav>
+
+    <!-- DATOS DEL TRABAJADOR -->
+    <section class="tarjeta bloque">
+        <h2>Mi espacio de trabajo</h2>
+
+        <p>
+            <strong>Usuario:</strong>
+            <span id="nombre-usuario-actual">
+                Cargando...
+            </span>
+        </p>
+
+        <p>
+            Aquí puedes aceptar, rechazar, iniciar
+            y finalizar tus tareas.
+        </p>
+    </section>
+
+    <!-- RESUMEN -->
+    <section class="tarjeta bloque">
+        <h2>Resumen de asignaciones</h2>
+
+        <div class="resumen-asignaciones">
+            <div>
+                <strong id="total-pendientes">0</strong>
+                <span>Pendientes</span>
+            </div>
+
+            <div>
+                <strong id="total-aceptadas">0</strong>
+                <span>Aceptadas</span>
+            </div>
+
+            <div>
+                <strong id="total-en-curso">0</strong>
+                <span>En curso</span>
+            </div>
+
+            <div>
+                <strong id="total-finalizadas">0</strong>
+                <span>Finalizadas</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- INFORMACIÓN GPS -->
+    <section class="tarjeta bloque">
+        <h2>Ubicación y seguridad</h2>
+
+        <p>
+            Para iniciar o finalizar una tarea,
+            MOVANZA solicitará tu ubicación actual.
+        </p>
+
+        <p>
+            Debes encontrarte dentro del radio
+            autorizado por la empresa y tener
+            suficiente precisión GPS.
+        </p>
+
+        <small class="texto-ayuda">
+            Tu navegador solicitará permiso para
+            acceder a la ubicación. No realizaremos
+            seguimiento continuo: la ubicación se
+            solicitará únicamente cuando decidas
+            iniciar o finalizar una tarea.
+        </small>
+
+        <p id="estado-gps" role="status">
+            GPS sin consultar.
+        </p>
+    </section>
+
+    <!-- LISTADO -->
+    <section class="tarjeta bloque">
+        <h2>Mis asignaciones</h2>
+
+        <label for="filtro-estado">
+            Filtrar por estado
+        </label>
+
+        <select id="filtro-estado">
+            <option value="todas">Todas</option>
+            <option value="pendiente">Pendientes</option>
+            <option value="aceptada">Aceptadas</option>
+            <option value="rechazada">Rechazadas</option>
+            <option value="en_curso">En curso</option>
+            <option value="finalizada">Finalizadas</option>
+            <option value="cancelada">Canceladas</option>
+        </select>
+
+        <button
+            id="boton-actualizar"
+            type="button"
+            class="boton-secundario"
+        >
+            Actualizar asignaciones
+        </button>
+
+        <div id="lista-asignaciones" class="bloque">
+            Cargando asignaciones...
+        </div>
+    </section>
+
+    <!-- RECHAZAR ASIGNACIÓN -->
+    <section
+        id="seccion-rechazo"
+        class="tarjeta bloque oculto"
+    >
+        <h2>Rechazar asignación</h2>
+
+        <p>
+            Tarea:
+            <strong id="titulo-rechazo"></strong>
+        </p>
+
+        <form id="formulario-rechazo">
+
+            <label for="motivo-rechazo">
+                Motivo del rechazo
+            </label>
+
+            <textarea
+                id="motivo-rechazo"
+                rows="4"
+                maxlength="2000"
+                placeholder="Explica por qué no puedes realizarla"
+                required
+            ></textarea>
+
+            <button
+                type="submit"
+                id="boton-confirmar-rechazo"
+                class="boton-peligro"
+            >
+                Confirmar rechazo
+            </button>
+
+            <button
+                type="button"
+                id="boton-cancelar-rechazo"
+                class="boton-secundario"
+            >
+                Volver sin rechazar
+            </button>
+        </form>
+    </section>
+
+    <!-- FINALIZAR ASIGNACIÓN -->
+    <section
+        id="seccion-finalizacion"
+        class="tarjeta bloque oculto"
+    >
+        <h2>Finalizar tarea</h2>
+
+        <p>
+            Tarea:
+            <strong id="titulo-finalizacion"></strong>
+        </p>
+
+        <form id="formulario-finalizacion">
+
+            <label for="objetivo-cumplido">
+                ¿Se cumplió el objetivo?
+            </label>
+
+            <select id="objetivo-cumplido" required>
+                <option value="">
+                    Selecciona una respuesta
+                </option>
+                <option value="si">
+                    Sí, se cumplió
+                </option>
+                <option value="no">
+                    No se cumplió
+                </option>
+            </select>
+
+            <label for="nota-finalizacion">
+                Observaciones finales
+            </label>
+
+            <textarea
+                id="nota-finalizacion"
+                rows="4"
+                maxlength="2000"
+                placeholder="Describe el resultado de la tarea"
+            ></textarea>
+
+            <small class="texto-ayuda">
+                Si el objetivo no se cumplió,
+                debes explicar el motivo.
+                También se verificará nuevamente
+                tu ubicación mediante GPS.
+            </small>
+
+            <button
+                id="boton-confirmar-finalizacion"
+                type="submit"
+            >
+                Verificar GPS y finalizar
+            </button>
+
+            <button
+                id="boton-cancelar-finalizacion"
+                type="button"
+                class="boton-secundario"
+            >
+                Volver sin finalizar
+            </button>
+
+        </form>
+    </section>
+
+    <!-- MENSAJES -->
+    <p
+        id="mensaje"
+        role="status"
+        aria-live="polite"
+    ></p>
+
+</main>
+
+<script
+    type="module"
+    src="../scripts/mis_asignaciones.js"
+></script>
+
+</body>
+</html>
+

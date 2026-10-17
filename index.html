@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MOVANZA | Acceso</title>
+
+    <link rel="stylesheet" href="./estilos/general.css">
+</head>
+
+<body>
+
+    <main class="contenedor">
+
+        <!-- ENCABEZADO -->
+        <header>
+            <h1>MOVANZA</h1>
+            <p>Gestión de trabajos presenciales</p>
+        </header>
+
+        <!-- INICIO DE SESIÓN -->
+        <section id="seccion-acceso" class="tarjeta">
+
+            <h2>Iniciar sesión</h2>
+
+            <form id="formulario-acceso">
+
+                <label for="correo-acceso">
+                    Correo electrónico
+                </label>
+
+                <input
+                    id="correo-acceso"
+                    type="email"
+                    placeholder="Ej: usuario@correo.com"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="clave-acceso">
+                    Contraseña
+                </label>
+
+                <input
+                    id="clave-acceso"
+                    type="password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button type="submit">
+                    Iniciar sesión
+                </button>
+
+            </form>
+
+            <p>
+                ¿No tienes cuenta?
+
+                <button
+                    type="button"
+                    class="enlace"
+                    id="mostrar-registro"
+                >
+                    Registrarse
+                </button>
+            </p>
+
+        </section>
+
+        <!-- REGISTRO DE USUARIOS -->
+        <section id="seccion-registro" class="tarjeta oculto">
+
+            <h2>Crear cuenta</h2>
+
+            <form id="formulario-registro">
+
+                <label for="correo-registro">
+                    Correo electrónico
+                </label>
+
+                <input
+                    id="correo-registro"
+                    type="email"
+                    placeholder="Ej: usuario@correo.com"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="clave-registro">
+                    Contraseña
+                </label>
+
+                <input
+                    id="clave-registro"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                >
+
+                <label for="confirmar-clave">
+                    Confirmar contraseña
+                </label>
+
+                <input
+                    id="confirmar-clave"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                >
+
+                <button type="submit">
+                    Crear cuenta
+                </button>
+
+            </form>
+
+            <p>
+                ¿Ya tienes cuenta?
+
+                <button
+                    type="button"
+                    class="enlace"
+                    id="mostrar-acceso"
+                >
+                    Iniciar sesión
+                </button>
+            </p>
+
+        </section>
+
+        <!-- PERFIL DEL USUARIO -->
+        <section id="seccion-perfil" class="tarjeta oculto">
+
+            <h2>Mi perfil</h2>
+
+            <p>Sesión iniciada correctamente.</p>
+
+            <p>
+                <strong>ID:</strong>
+                <span id="perfil-id"></span>
+            </p>
+
+            <p>
+                <strong>Correo electrónico:</strong>
+                <span id="perfil-correo"></span>
+            </p>
+
+            <!-- EDITAR PERFIL -->
+            <form id="formulario-perfil">
+
+                <!-- NOMBRE COMPLETO -->
+                <label for="nombre-completo">
+                    Nombre completo
+                </label>
+
+                <input
+                    id="nombre-completo"
+                    type="text"
+                    maxlength="150"
+                    placeholder="Ej: Juan Fernando Parra"
+                >
+
+                <small class="texto-ayuda">
+                    Escribe tu nombre y apellidos.
+                    Así podrán identificarte las empresas
+                    a las que pertenezcas.
+                </small>
+
+                <!-- NOMBRE DE USUARIO -->
+                <label for="nombre-usuario">
+                    Nombre de usuario (único)
+                </label>
+
+                <input
+                    id="nombre-usuario"
+                    type="text"
+                    minlength="3"
+                    maxlength="30"
+                    pattern="[a-z0-9_]{3,30}"
+                    placeholder="Ej: juan_parra21"
+                    autocomplete="username"
+                    required
+                >
+
+                <small class="texto-ayuda">
+                    Es tu identificador público en MOVANZA.
+                    Las empresas lo utilizarán para buscarte
+                    y enviarte invitaciones.
+                    No puede repetirse.
+
+                    Utiliza entre 3 y 30 caracteres:
+                    letras minúsculas, números o
+                    guion bajo (_).
+                </small>
+
+                <button type="submit">
+                    Guardar perfil
+                </button>
+
+            </form>
+
+            <!-- ESPACIO COMO PROPIETARIO -->
+            <div class="bloque">
+
+                <h3>Mis empresas</h3>
+
+                <p>
+                    Crea una empresa o administra
+                    las que ya tienes registradas.
+                </p>
+
+                <p>
+                    Desde allí podrás gestionar trabajadores,
+                    invitaciones, mapas, trabajos y asignaciones.
+                </p>
+
+                <a href="./paginas/empresas.html">
+                    Ir a mis empresas →
+                </a>
+
+            </div>
+
+            <!-- ESPACIO COMO TRABAJADOR -->
+            <div class="bloque">
+
+                <h3>Mi espacio como trabajador</h3>
+
+                <p>
+                    Consulta las invitaciones que has recibido,
+                    las empresas a las que perteneces
+                    y las tareas que te han asignado.
+                </p>
+
+                <!-- INVITACIONES -->
+                <div class="bloque">
+
+                    <h4>Invitaciones y empresas</h4>
+
+                    <p>
+                        Acepta o rechaza invitaciones
+                        de empresas y consulta los equipos
+                        a los que perteneces.
+                    </p>
+
+                    <a href="./paginas/mis_invitaciones.html">
+                        Ver mis invitaciones y empresas →
+                    </a>
+
+                </div>
+
+                <!-- MIS ASIGNACIONES -->
+                <div class="bloque">
+
+                    <h4>Mis asignaciones</h4>
+
+                    <p>
+                        Consulta tus tareas pendientes,
+                        revisa sus objetivos y fechas,
+                        y decide si aceptarlas o rechazarlas.
+                    </p>
+
+                    <a href="./paginas/mis_asignaciones.html">
+                        Consultar mis asignaciones →
+                    </a>
+
+                </div>
+
+            </div>
+            
+            <!-- MENSAJERÍA -->
+            <div class="bloque">
+
+                <h3>Mensajes</h3>
+
+                <p>
+                    Consulta las conversaciones de tus asignaciones.
+                    Comunícate con las empresas o con los trabajadores
+                    de los que eres responsable.
+                </p>
+
+                <a href="./paginas/mensajes.html">
+                    Abrir mis conversaciones →
+                </a>
+
+            </div>
+
+            
+            <!-- PANEL Y ESTADÍSTICAS -->
+            <div class="bloque">
+                <h3>Panel y estadísticas</h3>
+
+                <p>
+                    Consulta el estado de tus asignaciones,
+                    tiempos reales, cumplimiento de objetivos
+                    y resultados por empresa o trabajador.
+                </p>
+
+                <a href="./paginas/estadisticas.html">
+                    Ver panel de estadísticas →
+                </a>
+            </div>
+
+
+
+            <!-- CERRAR SESIÓN -->
+            <button
+                id="boton-salir"
+                type="button"
+                class="boton-secundario"
+            >
+                Cerrar sesión
+            </button>
+
+        </section>
+
+        <!-- MENSAJES DEL SISTEMA -->
+        <p
+            id="mensaje"
+            role="status"
+            aria-live="polite"
+        ></p>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script
+        type="module"
+        src="./scripts/autenticacion.js"
+    ></script>
+
+</body>
+</html>
+
+

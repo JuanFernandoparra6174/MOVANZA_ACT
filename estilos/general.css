@@ -1,0 +1,601 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #172033;
+}
+
+.contenedor {
+    max-width: 480px;
+    margin: 55px auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+h1 {
+    color: #185abc;
+    margin-bottom: 5px;
+}
+
+.tarjeta {
+    padding: 28px;
+    background: white;
+    border: 1px solid #e3e7ed;
+    border-radius: 12px;
+}
+
+.oculto {
+    display: none;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: 600;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+}
+
+button {
+    padding: 12px 18px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 6px;
+    background: #185abc;
+    color: white;
+    cursor: pointer;
+    font: inherit;
+}
+
+form button {
+    width: 100%;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.boton-secundario {
+    background: #475569;
+}
+
+.enlace {
+    padding: 0;
+    margin: 0;
+    color: #185abc;
+    background: transparent;
+    text-decoration: underline;
+}
+
+#mensaje {
+    padding: 12px;
+    text-align: center;
+    white-space: pre-wrap;
+}
+
+#mensaje:empty {
+    display: none;
+}
+
+#mensaje.error {
+    color: #b42318;
+}
+
+#mensaje.exito {
+    color: #087443;
+}
+
+
+.texto-ayuda {
+    display: block;
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* MÓDULO DE EMPRESAS */
+
+.contenedor-amplio {
+    max-width: 760px;
+}
+
+.bloque {
+    margin-top: 20px;
+}
+
+nav {
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: #185abc;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.elemento-empresa {
+    padding: 18px;
+    margin-top: 15px;
+    border: 1px solid #d9e2ec;
+    border-radius: 8px;
+    background-color: #f8fafc;
+}
+
+.elemento-empresa h3 {
+    margin: 0 0 10px;
+    color: #172033;
+}
+
+.elemento-empresa p {
+    margin: 7px 0;
+    color: #475569;
+}
+
+.elemento-empresa button {
+    margin-top: 12px;
+}
+
+
+/* MÓDULO MAPA Y TRABAJOS */
+
+#mapa-trabajos {
+    width: 100%;
+    height: 430px;
+    margin-top: 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    z-index: 0;
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+    resize: vertical;
+}
+
+.lista-seleccion {
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #d9e2ec;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.opcion-trabajador {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 4px;
+    margin: 0;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.opcion-trabajador input {
+    width: auto;
+    margin: 0;
+}
+
+.tarjeta-asignacion {
+    padding: 14px;
+    margin-top: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.tarjeta-asignacion h4 {
+    margin: 0 0 10px;
+}
+
+.tarjeta-asignacion p {
+    margin: 6px 0;
+}
+
+.acciones-trabajo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 14px;
+}
+
+.acciones-trabajo button {
+    margin: 0;
+    width: auto;
+}
+
+button.boton-peligro {
+    background: #b42318;
+}
+
+button.boton-peligro:hover {
+    background: #8e1c13;
+}
+
+.etiqueta-estado {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 6px;
+    background: #e2e8f0;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+button.oculto,
+section.oculto {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    #mapa-trabajos {
+        height: 320px;
+    }
+
+    .acciones-trabajo button {
+        width: 100%;
+    }
+}
+
+
+/* MIS ASIGNACIONES */
+
+.resumen-asignaciones {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.resumen-asignaciones div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    padding: 16px 8px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.resumen-asignaciones strong {
+    font-size: 25px;
+    color: #185abc;
+}
+
+.resumen-asignaciones span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+#filtro-estado {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: white;
+    font: inherit;
+}
+
+.etiqueta-estado {
+    display: inline-block;
+    margin: 6px 0;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.estado-pendiente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.estado-aceptada {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.estado-rechazada {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.estado-en_curso {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.estado-finalizada {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.estado-cancelada {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+@media (max-width: 480px) {
+    .resumen-asignaciones {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =====================================
+   MÓDULO DE MENSAJERÍA
+===================================== */
+
+.historial-mensajes {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 220px;
+    max-height: 480px;
+    overflow-y: auto;
+
+    padding: 18px;
+    margin: 20px 0;
+
+    border: 1px solid #d9e2ec;
+    border-radius: 10px;
+    background-color: #f8fafc;
+}
+
+.burbuja-mensaje {
+    max-width: 82%;
+    padding: 12px 15px;
+
+    border-radius: 12px;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.burbuja-mensaje strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.burbuja-mensaje p {
+    margin: 5px 0 8px;
+    white-space: pre-wrap;
+}
+
+.burbuja-mensaje small {
+    display: block;
+    font-size: 11px;
+    opacity: 0.75;
+}
+
+.mensaje-propio {
+    align-self: flex-end;
+
+    background-color: #dbeafe;
+    color: #1e3a8a;
+
+    border-bottom-right-radius: 4px;
+}
+
+.mensaje-recibido {
+    align-self: flex-start;
+
+    background-color: white;
+    color: #172033;
+
+    border: 1px solid #e2e8f0;
+    border-bottom-left-radius: 4px;
+}
+
+#seccion-conversacion textarea {
+    width: 100%;
+    margin-top: 8px;
+}
+
+#lista-conversaciones .elemento-empresa {
+    margin-bottom: 12px;
+}
+
+#filtro-conversaciones {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .historial-mensajes {
+        padding: 12px;
+        min-height: 180px;
+        max-height: 380px;
+    }
+
+    .burbuja-mensaje {
+        max-width: 95%;
+    }
+}
+
+
+/* ==========================================
+   MOVANZA - PANEL Y ESTADÍSTICAS
+========================================== */
+
+.estadisticas-filtros {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.estadisticas-filtros > div {
+    min-width: 0;
+}
+
+.estadisticas-filtros label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.estadisticas-filtros select,
+.estadisticas-filtros input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font: inherit;
+    background-color: white;
+    color: #172033;
+}
+
+.estadisticas-filtros .oculto {
+    display: none !important;
+}
+
+/* TARJETAS DE INDICADORES */
+
+.estadisticas-tarjetas {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(155px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.estadistica-tarjeta {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 95px;
+    padding: 16px;
+
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.estadistica-tarjeta span {
+    color: #475569;
+    font-size: 14px;
+}
+
+.estadistica-tarjeta strong {
+    font-size: 25px;
+    color: #172554;
+    overflow-wrap: anywhere;
+}
+
+/* GRÁFICO DE ESTADOS */
+
+.grafico-estados {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.estadistica-barra-fila {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.estadistica-barra-encabezado {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.estadistica-barra-fondo {
+    width: 100%;
+    height: 12px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.estadistica-barra-relleno {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.25s ease;
+}
+
+/* TABLAS */
+
+.estadisticas-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 16px;
+}
+
+.estadisticas-tabla {
+    width: 100%;
+    min-width: 690px;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.estadisticas-tabla th,
+.estadisticas-tabla td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    vertical-align: top;
+}
+
+.estadisticas-tabla th {
+    background-color: #f1f5f9;
+    color: #334155;
+    font-weight: 700;
+}
+
+.estadisticas-tabla tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+@media (max-width: 600px) {
+    .estadisticas-filtros {
+        grid-template-columns: 1fr;
+    }
+
+    .estadisticas-tarjetas {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .estadistica-tarjeta {
+        padding: 12px;
+    }
+
+    .estadistica-tarjeta strong {
+        font-size: 21px;
+    }
+}
+
+

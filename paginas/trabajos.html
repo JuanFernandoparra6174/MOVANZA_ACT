@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVANZA | Trabajos y mapa</title>
+
+    <link rel="stylesheet" href="../estilos/general.css">
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+<main class="contenedor contenedor-amplio">
+
+    <header>
+        <h1>MOVANZA</h1>
+        <p>Gestión de trabajos y asignaciones</p>
+    </header>
+
+    <nav>
+        <a href="./empresas.html">← Volver a mis empresas</a>
+    </nav>
+
+    <!-- EMPRESA ACTUAL -->
+    <section class="tarjeta bloque">
+        <h2 id="nombre-empresa">Cargando empresa...</h2>
+        <p>
+            Los trabajos de cada empresa se administran
+            de manera independiente.
+        </p>
+    </section>
+
+    <!-- MAPA -->
+    <section class="tarjeta bloque">
+        <h2>Mapa de trabajos</h2>
+
+        <p>
+            Haz clic en el mapa para seleccionar la
+            ubicación de un trabajo. El círculo azul
+            muestra el radio permitido.
+        </p>
+
+        <div id="mapa-trabajos"></div>
+
+        <p>
+            <strong>Latitud:</strong>
+            <span id="latitud-seleccionada">Sin seleccionar</span>
+        </p>
+
+        <p>
+            <strong>Longitud:</strong>
+            <span id="longitud-seleccionada">Sin seleccionar</span>
+        </p>
+
+        <button
+            type="button"
+            id="boton-centrar"
+            class="boton-secundario"
+        >
+            Mostrar todos los trabajos
+        </button>
+    </section>
+
+    <!-- CREAR TRABAJO -->
+    <section class="tarjeta bloque" id="seccion-crear">
+
+        <h2 id="titulo-formulario">
+            Crear trabajo
+        </h2>
+
+        <p id="descripcion-formulario">
+            Define la ubicación y selecciona los
+            trabajadores responsables.
+        </p>
+
+        <form id="formulario-trabajo">
+
+            <label for="nombre-trabajo">
+                Nombre del trabajo
+            </label>
+
+            <input
+                id="nombre-trabajo"
+                type="text"
+                minlength="2"
+                maxlength="160"
+                placeholder="Ej: Mantenimiento edificio A"
+                required
+            >
+
+            <label for="radio-trabajo">
+                Radio permitido (metros)
+            </label>
+
+            <input
+                id="radio-trabajo"
+                type="number"
+                min="10"
+                max="1000"
+                value="100"
+                required
+            >
+
+            <small class="texto-ayuda">
+                Selecciona un punto en el mapa.
+                El radio debe estar entre 10 y 1000 metros.
+            </small>
+
+            <h3>Asignaciones</h3>
+
+            <p>
+                Selecciona uno o varios integrantes activos
+                de esta empresa.
+            </p>
+
+            <div id="lista-trabajadores" class="lista-seleccion">
+                Cargando trabajadores...
+            </div>
+
+            <label for="titulo-asignacion">
+                Título de la tarea
+            </label>
+
+            <input
+                id="titulo-asignacion"
+                type="text"
+                minlength="2"
+                maxlength="160"
+                placeholder="Ej: Revisar las instalaciones"
+                required
+            >
+
+            <label for="objetivo-asignacion">
+                Objetivo de la tarea
+            </label>
+
+            <textarea
+                id="objetivo-asignacion"
+                rows="4"
+                minlength="2"
+                maxlength="2000"
+                placeholder="Describe lo que debe realizarse"
+                required
+            ></textarea>
+
+            <label for="fecha-asignacion">
+                Fecha y hora programadas
+            </label>
+
+            <input
+                id="fecha-asignacion"
+                type="datetime-local"
+                required
+            >
+
+            <label for="minutos-asignacion">
+                Duración estimada (minutos)
+            </label>
+
+            <input
+                id="minutos-asignacion"
+                type="number"
+                min="1"
+                max="10080"
+                value="60"
+                required
+            >
+
+            <small class="texto-ayuda">
+                Cada trabajador seleccionado recibirá
+                una asignación independiente.
+            </small>
+
+            <button type="submit" id="boton-guardar-trabajo">
+                Crear trabajo y asignaciones
+            </button>
+
+            <button
+                type="button"
+                id="boton-cancelar-agregar"
+                class="boton-secundario oculto"
+            >
+                Volver a crear un trabajo nuevo
+            </button>
+
+        </form>
+    </section>
+
+    <!-- TRABAJOS EXISTENTES -->
+    <section class="tarjeta bloque">
+        <h2>Trabajos registrados</h2>
+
+        <p>
+            Aquí encontrarás los trabajos y las
+            asignaciones de la empresa seleccionada.
+        </p>
+
+        <div id="lista-trabajos">
+            Cargando trabajos...
+        </div>
+    </section>
+
+    <!-- EDITAR TRABAJO -->
+    <section
+        id="seccion-editar-trabajo"
+        class="tarjeta bloque oculto"
+    >
+        <h2>Editar trabajo</h2>
+
+        <p>
+            ID del trabajo:
+            <strong id="id-trabajo-edicion"></strong>
+        </p>
+
+        <form id="formulario-editar-trabajo">
+
+            <label for="editar-nombre-trabajo">
+                Nombre del trabajo
+            </label>
+
+            <input
+                id="editar-nombre-trabajo"
+                type="text"
+                minlength="2"
+                maxlength="160"
+                required
+            >
+
+            <label for="editar-radio-trabajo">
+                Radio permitido (metros)
+            </label>
+
+            <input
+                id="editar-radio-trabajo"
+                type="number"
+                min="10"
+                max="1000"
+                required
+            >
+
+            <small class="texto-ayuda">
+                Si deseas cambiar la ubicación,
+                selecciona un nuevo punto en el mapa.
+                Una vez iniciada alguna asignación,
+                no se podrá editar este trabajo.
+            </small>
+
+            <button type="submit">
+                Guardar cambios
+            </button>
+        </form>
+
+        <button
+            type="button"
+            id="cerrar-edicion-trabajo"
+            class="boton-secundario"
+        >
+            Cerrar edición
+        </button>
+    </section>
+
+    <!-- EDITAR ASIGNACIÓN -->
+    <section
+        id="seccion-editar-asignacion"
+        class="tarjeta bloque oculto"
+    >
+        <h2>Editar asignación</h2>
+
+        <p>
+            ID de la asignación:
+            <strong id="id-asignacion-edicion"></strong>
+        </p>
+
+        <form id="formulario-editar-asignacion">
+
+            <label for="editar-titulo">
+                Título
+            </label>
+
+            <input
+                id="editar-titulo"
+                type="text"
+                minlength="2"
+                maxlength="160"
+                required
+            >
+
+            <label for="editar-objetivo">
+                Objetivo
+            </label>
+
+            <textarea
+                id="editar-objetivo"
+                rows="4"
+                minlength="2"
+                maxlength="2000"
+                required
+            ></textarea>
+
+            <label for="editar-fecha">
+                Fecha y hora programadas
+            </label>
+
+            <input
+                id="editar-fecha"
+                type="datetime-local"
+                required
+            >
+
+            <label for="editar-minutos">
+                Duración estimada (minutos)
+            </label>
+
+            <input
+                id="editar-minutos"
+                type="number"
+                min="1"
+                max="10080"
+                required
+            >
+
+            <button type="submit">
+                Guardar asignación
+            </button>
+        </form>
+
+        <button
+            type="button"
+            id="cerrar-edicion-asignacion"
+            class="boton-secundario"
+        >
+            Cerrar edición
+        </button>
+    </section>
+
+    <!-- MENSAJES -->
+    <p id="mensaje" role="status" aria-live="polite"></p>
+
+</main>
+
+<script type="module" src="../scripts/trabajos.js"></script>
+
+</body>
+</html>

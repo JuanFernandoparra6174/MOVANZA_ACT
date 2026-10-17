@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVANZA | Mis invitaciones</title>
+    <link rel="stylesheet" href="../estilos/general.css">
+</head>
+<body>
+    <main class="contenedor contenedor-amplio">
+        <header>
+            <h1>MOVANZA</h1>
+            <p>Mis invitaciones y empresas</p>
+        </header>
+
+        <nav>
+            <a href="../index.html">← Volver a mi perfil</a>
+        </nav>
+
+        <section class="tarjeta bloque">
+            <h2>Invitaciones recibidas</h2>
+
+            <p>
+                Las empresas pueden invitarte utilizando
+                tu nombre de usuario de MOVANZA.
+            </p>
+
+            <div id="lista-invitaciones">
+                Cargando invitaciones...
+            </div>
+        </section>
+
+        <section class="tarjeta bloque">
+            <h2>Empresas donde trabajo</h2>
+
+            <p>
+                Aquí aparecen las empresas a las que
+                perteneces actualmente como trabajador.
+            </p>
+
+            <div id="lista-membresias">
+                Cargando empresas...
+            </div>
+        </section>
+
+        <p id="mensaje" role="status" aria-live="polite"></p>
+    </main>
+
+    <script
+        type="module"
+        src="../scripts/mis_invitaciones.js">
+    </script>
+</body>
+</html>

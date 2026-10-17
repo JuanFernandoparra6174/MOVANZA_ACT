@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MOVANZA | Mensajes</title>
+
+    <link rel="stylesheet"
+          href="../estilos/general.css">
+</head>
+
+<body>
+
+<main class="contenedor contenedor-amplio">
+
+    <!-- ENCABEZADO -->
+    <header>
+        <h1>MOVANZA</h1>
+        <p>Mensajes por asignación</p>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav>
+        <a href="../index.html">
+            ← Volver a mi perfil
+        </a>
+    </nav>
+
+    <!-- INFORMACIÓN DEL USUARIO -->
+    <section class="tarjeta bloque">
+
+        <h2>Mis conversaciones</h2>
+
+        <p>
+            <strong>Usuario:</strong>
+            <span id="usuario-actual">
+                Cargando...
+            </span>
+        </p>
+
+        <p>
+            Consulta las conversaciones relacionadas
+            con tus asignaciones y empresas.
+        </p>
+
+        <small class="texto-ayuda">
+            Los mensajes quedan guardados como
+            parte del historial de cada asignación.
+            No pueden modificarse ni eliminarse
+            desde MOVANZA.
+        </small>
+
+    </section>
+
+    <!-- LISTADO DE CONVERSACIONES -->
+    <section class="tarjeta bloque">
+
+        <h2>Seleccionar conversación</h2>
+
+        <label for="filtro-conversaciones">
+            Buscar asignación
+        </label>
+
+        <input
+            id="filtro-conversaciones"
+            type="search"
+            placeholder="Buscar por tarea, trabajo o empresa"
+        >
+
+        <button
+            id="boton-actualizar-conversaciones"
+            type="button"
+            class="boton-secundario"
+        >
+            Actualizar conversaciones
+        </button>
+
+        <div
+            id="lista-conversaciones"
+            class="bloque"
+        >
+            Cargando conversaciones...
+        </div>
+
+    </section>
+
+    <!-- CONVERSACIÓN SELECCIONADA -->
+    <section
+        id="seccion-conversacion"
+        class="tarjeta bloque oculto"
+    >
+
+        <h2 id="titulo-conversacion">
+            Conversación
+        </h2>
+
+        <p>
+            <strong>Empresa:</strong>
+            <span id="empresa-conversacion"></span>
+        </p>
+
+        <p>
+            <strong>Trabajo:</strong>
+            <span id="trabajo-conversacion"></span>
+        </p>
+
+        <p>
+            <strong>Estado de asignación:</strong>
+            <span id="estado-conversacion"></span>
+        </p>
+
+        <p>
+            <strong>Asignación ID:</strong>
+            <span id="id-conversacion"></span>
+        </p>
+
+        <!-- HISTORIAL -->
+        <div
+            id="historial-mensajes"
+            class="historial-mensajes"
+            aria-label="Historial de mensajes"
+        >
+            Cargando mensajes...
+        </div>
+
+        <button
+            id="boton-actualizar-mensajes"
+            type="button"
+            class="boton-secundario"
+        >
+            Actualizar mensajes
+        </button>
+
+        <!-- NUEVO MENSAJE -->
+        <form id="formulario-mensaje">
+
+            <label for="contenido-mensaje">
+                Nuevo mensaje
+            </label>
+
+            <textarea
+                id="contenido-mensaje"
+                rows="3"
+                minlength="1"
+                maxlength="4000"
+                placeholder="Escribe tu mensaje..."
+                required
+            ></textarea>
+
+            <small class="texto-ayuda">
+                Una vez enviado, el mensaje quedará
+                registrado en el historial.
+            </small>
+
+            <button
+                id="boton-enviar-mensaje"
+                type="submit"
+            >
+                Enviar mensaje
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- MENSAJES DEL SISTEMA -->
+    <p
+        id="mensaje"
+        role="status"
+        aria-live="polite"
+    ></p>
+
+</main>
+
+<script
+    type="module"
+    src="../scripts/mensajes.js"
+></script>
+
+</body>
+</html>

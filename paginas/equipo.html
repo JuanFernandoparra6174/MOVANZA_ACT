@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVANZA | Equipo de trabajo</title>
+    <link rel="stylesheet" href="../estilos/general.css">
+</head>
+<body>
+    <main class="contenedor contenedor-amplio">
+        <header>
+            <h1>MOVANZA</h1>
+            <p>Equipo de trabajo</p>
+        </header>
+
+        <nav>
+            <a href="./empresas.html">← Mis empresas</a>
+        </nav>
+
+        <section class="tarjeta bloque">
+            <h2 id="titulo-empresa">Cargando empresa...</h2>
+            <p>
+                Administra las invitaciones y los
+                integrantes de esta empresa.
+            </p>
+        </section>
+
+        <section class="tarjeta bloque">
+            <h2>Invitar trabajador</h2>
+
+            <form id="formulario-busqueda">
+                <label for="nombre-buscado">
+                    Nombre de usuario
+                </label>
+
+                <input
+                    id="nombre-buscado"
+                    type="text"
+                    placeholder="Ej: juan_parra21"
+                    minlength="3"
+                    maxlength="30"
+                    required
+                >
+
+                <small class="texto-ayuda">
+                    Escribe el nombre de usuario exacto
+                    de la persona que deseas invitar.
+                </small>
+
+                <button type="submit">
+                    Buscar usuario
+                </button>
+            </form>
+
+            <div id="resultado-busqueda" class="bloque"></div>
+        </section>
+
+        <section class="tarjeta bloque">
+            <h2>Invitaciones pendientes</h2>
+            <div id="lista-pendientes">
+                Cargando...
+            </div>
+        </section>
+
+        <section class="tarjeta bloque">
+            <h2>Integrantes del equipo</h2>
+            <p>
+                Los alias son nombres internos que puedes
+                utilizar para identificar a tus trabajadores.
+            </p>
+
+            <div id="lista-integrantes">
+                Cargando...
+            </div>
+        </section>
+
+        <p id="mensaje" role="status" aria-live="polite"></p>
+    </main>
+
+    <script type="module" src="../scripts/equipo.js"></script>
+</body>
+</html>

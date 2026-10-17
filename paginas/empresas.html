@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MOVANZA | Mis empresas</title>
+
+    <link rel="stylesheet" href="../estilos/general.css">
+</head>
+
+<body>
+
+    <main class="contenedor contenedor-amplio">
+
+        <!-- ENCABEZADO -->
+        <header>
+            <h1>MOVANZA</h1>
+            <p>Administración de empresas</p>
+        </header>
+
+        <!-- NAVEGACIÓN -->
+        <nav>
+            <a href="../index.html">
+                ← Volver a mi perfil
+            </a>
+        </nav>
+
+        <!-- INFORMACIÓN DEL USUARIO -->
+        <section class="tarjeta bloque">
+
+            <h2>Mi cuenta</h2>
+
+            <p>
+                <strong>Usuario:</strong>
+                <span id="usuario-actual">
+                    Cargando...
+                </span>
+            </p>
+
+            <p>
+                <strong>ID de perfil:</strong>
+                <span id="perfil-actual">
+                    ...
+                </span>
+            </p>
+
+        </section>
+
+        <!-- CREACIÓN DE EMPRESAS -->
+        <section class="tarjeta bloque">
+
+            <h2>Crear empresa</h2>
+
+            <p>
+                Registra una empresa para organizar
+                sus trabajadores, trabajos y asignaciones.
+            </p>
+
+            <form id="formulario-empresa">
+
+                <label for="nombre-empresa">
+                    Nombre de la empresa
+                </label>
+
+                <input
+                    type="text"
+                    id="nombre-empresa"
+                    placeholder="Ej: Servicios Técnicos Alfa"
+                    minlength="2"
+                    maxlength="120"
+                    required
+                >
+
+                <small class="texto-ayuda">
+                    Puedes crear y administrar varias empresas
+                    desde una misma cuenta de MOVANZA.
+                    Cada empresa tendrá sus propios trabajadores,
+                    trabajos y asignaciones.
+                </small>
+
+                <button
+                    type="submit"
+                    id="boton-crear"
+                >
+                    Crear empresa
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- LISTADO DE EMPRESAS -->
+        <section class="tarjeta bloque">
+
+            <h2>Mis empresas</h2>
+
+            <p>
+                Selecciona la empresa que deseas administrar.
+                Podrás cambiar entre tus empresas cuando quieras.
+            </p>
+
+            <div id="lista-empresas">
+                Cargando empresas...
+            </div>
+
+        </section>
+
+        <!-- ESPACIO DE TRABAJO SELECCIONADO -->
+        <section
+            id="seccion-empresa-activa"
+            class="tarjeta bloque oculto"
+        >
+
+            <h2>Espacio de trabajo seleccionado</h2>
+
+            <p>
+                <strong>Empresa:</strong>
+                <span id="empresa-activa-nombre"></span>
+            </p>
+
+            <p>
+                <strong>ID de la empresa:</strong>
+                <span id="empresa-activa-id"></span>
+            </p>
+
+            <p>
+                Selecciona el módulo que deseas administrar
+                dentro de esta empresa.
+            </p>
+
+            <!-- MÓDULO DE EQUIPO DE TRABAJO -->
+            <div class="bloque">
+
+                <h3>Equipo de trabajo</h3>
+
+                <p>
+                    Busca usuarios de MOVANZA, envía invitaciones,
+                    consulta los integrantes de tu empresa,
+                    asigna alias internos y retira miembros.
+                </p>
+
+                <a
+                    href="./equipo.html"
+                    class="enlace-modulo"
+                >
+                    Administrar equipo de trabajo →
+                </a>
+
+            </div>
+
+            <!-- MÓDULO DE MAPA Y TRABAJOS -->
+            <div class="bloque">
+
+                <h3>Mapa, trabajos y asignaciones</h3>
+
+                <p>
+                    Selecciona ubicaciones sobre el mapa,
+                    establece radios permitidos y crea
+                    trabajos para uno o varios trabajadores.
+                </p>
+
+                <p>
+                    También podrás programar asignaciones,
+                    consultar su estado, editar lo permitido
+                    y cancelar tareas sin eliminar su historial.
+                </p>
+
+                <a
+                    href="./trabajos.html"
+                    class="enlace-modulo"
+                >
+                    Administrar mapa y trabajos →
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- MENSAJES DEL SISTEMA -->
+        <p
+            id="mensaje"
+            role="status"
+            aria-live="polite"
+        ></p>
+
+    </main>
+
+    <!-- JAVASCRIPT DEL MÓDULO -->
+    <script
+        type="module"
+        src="../scripts/empresas.js"
+    ></script>
+
+</body>
+</html>
+
