@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "movanza-act",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2025-10-01",
+  "keep_vars": true,
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "ratelimits": [
+    {
+      "name": "CONTACTO_LIMITE",
+      "namespace_id": "11001",
+      "simple": { "limit": 3, "period": 60 }
+    },
+    {
+      "name": "CONTACTO_LIMITE_TOTAL",
+      "namespace_id": "11002",
+      "simple": { "limit": 30, "period": 60 }
+    }
+  ]
+}

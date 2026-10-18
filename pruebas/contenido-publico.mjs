@@ -42,9 +42,9 @@ for (const [i, faq] of faqs.entries()) {
 }
 igual(d.querySelector('#contacto a[href^="tel:"]').getAttribute('href'), 'tel:+576068631514', 'Teléfono oficial');
 igual(d.querySelector('#contacto a[href^="https://wa.me"]').getAttribute('href'), 'https://wa.me/573005623545', 'WhatsApp oficial');
-igual(d.querySelector('#contacto a[href^="mailto:"]').getAttribute('href'), 'mailto:juanfer27y@gmail.com', 'Correo oficial');
+igual(d.querySelector('#contacto a[href^="mailto:"]').getAttribute('href'), 'mailto:contacto@movanza.site', 'Correo empresarial');
 verificar(d.querySelector('#contacto a[href="./login.html"]'), 'El chat dirige a la página de acceso');
-verificar(d.querySelector('#contacto-aviso').textContent.includes('Para enviarlo'), 'El formulario explica cómo utilizar los canales de contacto');
+verificar(d.querySelector('#contacto-aviso').textContent.includes('Envía tu consulta desde aquí'), 'El formulario permite contactar sin salir de MOVANZA');
 
 const legal = (await leer('informacion/Movanza_Politicas_Completas.txt')).replace(/\r\n/g, '\n');
 const documentos = [...legal.matchAll(/^={64}\nDOCUMENTO (\d)\. ([^\n]+)\n={64}\n/gm)];

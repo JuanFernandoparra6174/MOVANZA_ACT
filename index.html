@@ -12,6 +12,7 @@
         <script src="./scripts/componentes-publicos.js" defer=""></script>
         <script src="./scripts/auth-modal.js" defer></script>
         <script src="./scripts/index-publico.js" defer=""></script>
+        <script type="module" src="./scripts/contacto.js"></script>
         <link rel="stylesheet" href="./estilos/auth-modal.css">
         <link rel="stylesheet" href="./recursos/efecto_fondo/fondo.css">
         <link rel="stylesheet" href="./estilos/componentes-publicos.css">
@@ -313,7 +314,7 @@
                     <div>
                         <dt>Correo electrónico</dt>
                         <dd>
-                            <a href="mailto:juanfer27y@gmail.com">juanfer27y@gmail.com</a>
+                            <a href="mailto:contacto@movanza.site">contacto@movanza.site</a>
                         </dd>
                     </div>
                     <div>
@@ -321,17 +322,20 @@
                         <dd>Disponible desde la plataforma. <span class="movanza-tooltip"><a href="./login.html" aria-describedby="ayuda-chat">Abrir chat desde mi cuenta</a><span class="movanza-tooltip-texto" id="ayuda-chat" role="tooltip">Inicia sesión y abre el módulo Mensajes de tu cuenta.</span></span></dd>
                     </div>
                 </dl>
-                <a class="boton" href="mailto:juanfer27y@gmail.com">Contáctanos <span aria-hidden="true">↗</span></a>
                 <h3>Formulario de contacto</h3>
-                <form id="formulario-contacto">
+                <form id="formulario-contacto" novalidate>
                     <label for="contacto-nombre">Nombre</label>
                     <input id="contacto-nombre" name="nombre" autocomplete="name" maxlength="150" required="" class="movanza-input">
                     <label for="contacto-correo">Correo electrónico</label>
                     <input id="contacto-correo" name="correo" type="email" autocomplete="email" maxlength="254" required="" class="movanza-input">
                     <label for="contacto-mensaje">Mensaje</label>
                     <textarea id="contacto-mensaje" name="mensaje" rows="5" maxlength="4000" required="" aria-describedby="contacto-aviso" class="movanza-input"></textarea>
-                    <p id="contacto-aviso" class="texto-ayuda">Puedes revisar tu mensaje aquí. Para enviarlo, utiliza el correo electrónico o WhatsApp de contacto.</p>
-                    <button type="submit" class="boton">Revisar mensaje</button>
+                    <div class="contacto-trampa" aria-hidden="true">
+                        <label for="contacto-sitio">Deja este campo vacío</label>
+                        <input id="contacto-sitio" name="sitioWeb" tabindex="-1" autocomplete="off">
+                    </div>
+                    <p id="contacto-aviso" class="texto-ayuda">Envía tu consulta desde aquí. Te responderemos al correo que indiques. Máximo 4000 caracteres; evita incluir información sensible.</p>
+                    <button type="submit" class="boton">Enviar mensaje</button>
                     <p id="contacto-estado" role="status" aria-live="polite"></p>
                 </form>
             </dialog>

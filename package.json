@@ -1,0 +1,15 @@
+{
+  "name": "movanza-act",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --ip 127.0.0.1",
+    "check:worker": "wrangler deploy --dry-run",
+    "test:contacto": "node --test pruebas/contacto-worker.mjs",
+    "test:contacto:interfaz": "node --experimental-vm-modules --disable-warning=ExperimentalWarning pruebas/contacto-interfaz.mjs ."
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0",
+    "wrangler": "4.151.1"
+  }
+}

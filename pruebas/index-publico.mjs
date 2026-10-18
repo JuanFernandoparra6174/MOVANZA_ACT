@@ -134,18 +134,11 @@ d.querySelector('.registro-card').click();
 verificar(authModal.open && new URL(marcoAuth.src).pathname === '/signup.html', 'Crear cuenta también se abre sobre el Index');
 authModal.querySelector('button').click();
 const contacto = d.getElementById('formulario-contacto');
-d.getElementById('contacto-nombre').value = 'Prueba';
-d.getElementById('contacto-correo').value = 'prueba@example.test';
-d.getElementById('contacto-mensaje').value = 'Consulta de prueba';
-contacto.dispatchEvent(new e.window.Event('submit', { cancelable: true }));
-verificar(d.getElementById('contacto-estado').textContent.includes('Para enviarlo'), 'El formulario dirige al canal real y no simula un envío');
-d.getElementById('contacto-mensaje').value = '   ';
-contacto.dispatchEvent(new e.window.Event('submit', { cancelable: true }));
-verificar(!d.getElementById('contacto-mensaje').checkValidity(), 'El mensaje no acepta solo espacios');
-d.getElementById('contacto-mensaje').value = 'Mensaje corregido';
-d.getElementById('contacto-mensaje').dispatchEvent(new e.window.Event('input', { bubbles: true }));
-verificar(d.getElementById('contacto-mensaje').checkValidity(), 'La corrección del campo quita el error');
-verificar(!d.getElementById('contacto-estado').textContent, 'Editar limpia la confirmación anterior');
+verificar(contacto.querySelector('button[type="submit"]').textContent === 'Enviar mensaje', 'Contacto ofrece envío real');
+verificar(d.querySelector('script[type="module"][src="./scripts/contacto.js"]'), 'Carga el módulo de contacto independiente de Auth');
+verificar(d.querySelector('a[href="mailto:contacto@movanza.site"]'), 'Muestra el correo empresarial actual');
+// El envío, la validación y los errores se prueban con el módulo y las cards reales
+// en contacto-interfaz.mjs, sin sustituir la navegación pública ni Auth.
 verificar(d.querySelector('.movanza-loader').hidden, 'La revisión local del formulario no simula esperas');
 
 // La edición de perfil mantiene su funcionamiento en el Index.

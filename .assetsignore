@@ -1,0 +1,22 @@
+# Solo se publican los archivos que utiliza la aplicación estática.
+/*
+!/index.html
+!/login.html
+!/signup.html
+!/home_empresa_1.html
+!/home_empresa_2.html
+!/home_trabajador.html
+!/Carpeta_Imagenes/
+!/componentes/
+!/configuracion/
+!/estilos/
+!/informacion/
+!/paginas/
+!/politicas/
+!/recursos/
+!/scripts/
+/scripts/*.mjs
+**/.*
+**/node_modules/
+**/*.sql
+**/*.map

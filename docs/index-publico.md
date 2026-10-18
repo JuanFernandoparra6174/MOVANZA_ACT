@@ -45,8 +45,9 @@ legales y de las referencias contra la fuente, normalizando ese formato.
 
 Los enlaces de teléfono, WhatsApp y correo utilizan exclusivamente los datos
 proporcionados. El chat dirige al acceso existente para utilizar Mensajes.
-El formulario conserva su revisión local: aún no tiene servicio de envío,
-no transmite ni guarda datos y comunica esta limitación.
+El formulario envía mediante `POST /api/contacto` al Worker de MOVANZA, que
+utiliza Resend para notificar a `contacto@movanza.site`. No guarda solicitudes
+en Supabase. Configuración y pruebas: [contacto.md](contacto.md).
 
 ## Recursos visuales
 
@@ -105,7 +106,7 @@ solicitudes ni introduce temporizadores de espera.
 La portada lo utiliza al cargar el módulo Auth, comprobar sesión, guardar el
 perfil y cerrar sesión. Las páginas independientes lo utilizan para iniciar
 sesión y registrar cuentas. Se oculta al finalizar, incluidos los errores.
-El formulario de contacto y las páginas legales estáticas no simulan esperas.
+El formulario de contacto muestra su loader durante el envío real; las páginas legales estáticas no simulan esperas.
 `scripts/autenticacion.js` se adaptó a los formularios independientes conservando
 sus llamadas, datos y controles de acceso existentes.
 
@@ -125,7 +126,8 @@ del contenido legal a partir de sus seis páginas, sin los separadores y saltos
 de línea del TXT. No consultan ni modifican la
 base de datos real.
 
-Quedan pendientes el servicio de envío del formulario, las redes oficiales
+La activación del envío requiere el secreto de Resend y un dominio verificado;
+véase `docs/contacto.md`. Quedan pendientes las redes oficiales
 y la finalización de los borradores legales
 según sus notas originales. No se publicó el sitio desde esta tarea.
 La revisión visual de escritorio, móvil y animaciones requiere un navegador

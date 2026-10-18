@@ -59,20 +59,6 @@
     window.addEventListener('hashchange', abrirDesdeHash);
     abrirDesdeHash();
 
-    document.getElementById('formulario-contacto').addEventListener('submit', evento => {
-        evento.preventDefault();
-        const formulario = evento.currentTarget;
-        for (const campo of formulario.querySelectorAll('input, textarea')) {
-            campo.setCustomValidity(campo.value.trim() ? '' : 'Completa este campo.');
-        }
-        if (!formulario.reportValidity()) return;
-        document.getElementById('contacto-estado').textContent = 'Mensaje revisado. Para enviarlo, utiliza el correo electrónico o WhatsApp de contacto.';
-    });
-    document.getElementById('formulario-contacto').addEventListener('input', evento => {
-        evento.target.setCustomValidity?.('');
-        document.getElementById('contacto-estado').textContent = '';
-    });
-
     // Recupera el perfil existente. Login y Sign Up tienen páginas independientes.
     // La portada sigue disponible si el CDN o el servicio de acceso falla.
     const mensaje = document.getElementById('mensaje');

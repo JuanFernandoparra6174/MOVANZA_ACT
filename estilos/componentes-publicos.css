@@ -43,6 +43,9 @@
 .canales-contacto { display: grid; gap: 14px; margin-block: 24px; }
 .canales-contacto dt { color: #5f4d93; font-weight: 600; }
 .canales-contacto dd { margin: 2px 0 0; overflow-wrap: anywhere; }
+.contacto-trampa { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+#formulario-contacto[aria-busy="true"] button { cursor: wait; }
+#formulario-contacto .movanza-loader { display: flex; }
 @media (max-width: 700px) {
     .pagina-publica:has(.sitio-publico) { padding: 14px 10px; }
     .sitio-publico { border-radius: 10px; }
