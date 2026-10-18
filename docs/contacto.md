@@ -73,6 +73,75 @@ un identificador de correo. Eso confirma aceptación del envío, no entrega en
 la bandeja de Zoho. Se conservan los datos ante cualquier error. El formulario
 no produce confirmaciones optimistas ni abre aplicaciones de correo externas.
 
+## Diagnósticos del envío y corrección del 502
+
+El envío usa `redirect: 'manual'` y rechaza explícitamente cualquier HTTP 3xx
+con 502. No sigue `Location` ni reenvía Authorization a otro destino. La opción
+`redirect: 'error'` producía un TypeError en workerd antes de realizar la petición;
+las pruebas con fetch simulado en Node no detectaban esa incompatibilidad.
+
+Cada llamada al endpoint genera un `solicitudId` aleatorio que también se
+devuelve en la cabecera **`X-Contacto-Id`**. Se puede copiar desde Network del
+navegador para filtrar los logs de Cloudflare por ese identificador. No es la
+clave de idempotencia del visitante.
+
+Se emiten registros JSON con `evento: "contacto"`, identificador, `etapa`,
+`categoria`, duración y, cuando corresponda, estado HTTP y código Resend
+perteneciente a una lista cerrada. Las etapas son `solicitud`, `configuracion`,
+`resend_envio`, `resend_respuesta`, `interno` y `respuesta`.
+
+| Categoría | Significado |
+| --- | --- |
+| `secreto_ausente`, `limitador_ausente` | Configuración incompleta; respuesta 503. |
+| `redireccion_rechazada` | Resend devolvió 3xx; no se sigue el destino. |
+| `autenticacion_proveedor` | HTTP 401 del proveedor. |
+| `permiso_o_dominio_proveedor` | HTTP 403; el estado por sí solo no distingue la causa exacta. |
+| `validacion_proveedor` | HTTP 400 o 422. |
+| `conflicto_idempotencia` | HTTP 409. |
+| `limite_proveedor` | HTTP 429 de Resend; distinto de los límites locales. |
+| `error_proveedor` | HTTP 5xx de Resend. |
+| `error_http_proveedor` | Otro rechazo HTTP. |
+| `respuesta_invalida` | JSON inválido, cuerpo superior a 32 KiB o identificador ausente. |
+| `conexion_o_preparacion` | Fallo al construir o ejecutar la petición saliente. |
+| `lectura_fallida` | Fallo de lectura o cancelación posterior a las cabeceras. |
+| `tiempo_agotado` | Se agotó la señal de espera del envío o lectura. |
+| `aceptado` | Resend devolvió una respuesta válida; el endpoint devuelve 202. |
+
+Los rechazos de Resend se clasifican leyendo su JSON de forma acotada. Se
+conserva el estado HTTP aunque el cuerpo del error sea inválido. Nunca se
+registran mensajes crudos, stacks, cuerpos, nombres, correos, IP, URLs completas,
+Authorization, valores de secretos ni la clave de idempotencia. Los códigos o
+tipos de excepción desconocidos se sustituyen por etiquetas constantes.
+
+El frontend conserva las respuestas genéricas y los datos ante un error.
+Las categorías se utilizan para diagnóstico del servidor, sin exponer detalles
+internos al visitante. Un fallo del logger tampoco cambia el resultado del envío.
+
+`wrangler.jsonc` habilita Observability y sus logs con muestreo completo. Se
+desactivan los logs automáticos de invocación (`invocation_logs: false`) para
+evitar que el diagnóstico registre URLs completas con posibles datos en sus
+parámetros. Los registros propios de las etapas permiten seguir la solicitud.
+Esta configuración solo se activa en Cloudflare cuando el usuario publique los cambios.
+
+La regresión de runtime utiliza el Miniflare/workerd incluido en Wrangler y
+compila el Worker real sin sustituir su opción `redirect`. Toda salida se
+intercepta localmente y utiliza un secreto ficticio; no carga `.dev.vars`.
+Comprueba éxito, 401, redirección sin segunda llamada, JSON inválido, ausencia
+de id, respuesta excesiva, caída del proveedor y timeout real de diez segundos,
+además de la correlación y privacidad de los logs. No instala dependencias adicionales.
+
+El mismo comando monta también el Worker con los assets y sin secreto, y
+reutiliza `pruebas/contacto-local.mjs` para comparar todos los archivos públicos,
+la configuración pública de Supabase y las rutas privadas excluidas. Esta
+comprobación usa el transporte interno de Miniflare; no necesita iniciar sesión
+en Cloudflare ni ejecutar `wrangler dev` en otra terminal.
+
+```powershell
+npm run test:contacto
+npm run test:contacto:runtime
+npm run test:contacto:interfaz
+```
+
 ## Configurar Resend y DNS — pendiente de autorización
 
 1. En Resend, añade **`notificaciones.movanza.site`** como dominio de envío.
@@ -153,6 +222,7 @@ Requiere Node 22 o posterior; se comprobó con Node 24. En PowerShell utiliza
 ```powershell
 npm ci
 npm run test:contacto
+npm run test:contacto:runtime
 npm run test:contacto:interfaz
 npm run check:worker
 npm run dev

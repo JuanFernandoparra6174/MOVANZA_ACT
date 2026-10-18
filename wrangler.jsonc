@@ -4,6 +4,14 @@
   "main": "worker/index.mjs",
   "compatibility_date": "2025-10-01",
   "keep_vars": true,
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": false
+    }
+  },
   "assets": {
     "directory": ".",
     "binding": "ASSETS",

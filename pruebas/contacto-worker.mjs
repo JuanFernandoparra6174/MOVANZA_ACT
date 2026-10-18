@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { crearWorker } from '../worker/index.mjs';
+import { crearWorker as crearWorkerReal } from '../worker/index.mjs';
+const crearWorker = enviar => crearWorkerReal(enviar, () => {});
 
 const valido = { nombre: 'Ana <Equipo>', correo: 'ana@example.com', mensaje: 'Consulta & detalles\n¿Podemos conversar?', sitioWeb: '' };
 const clave = () => `contacto-${Date.now()}-${crypto.randomUUID()}`;
@@ -112,4 +113,84 @@ test('rutas estáticas pasan intactas a ASSETS; rutas API desconocidas responden
     }
     const respuesta = await worker.fetch(new Request('https://movanza.site/api/inexistente'), env);
     assert.equal(respuesta.status, 404); assert.equal((await respuesta.json()).ok, false);
+});
+
+test('rechaza explícitamente 3xx sin seguir Location ni reenviar credenciales', async () => {
+    for (const status of [300, 301, 302, 303, 304, 307, 308]) {
+        const registros = []; let llamadas = 0;
+        const worker = crearWorkerReal(async (url, opciones) => {
+            llamadas++; assert.equal(url, 'https://api.resend.com/emails');
+            assert.equal(opciones.redirect, 'manual');
+            return new Response(null, { status, headers: { Location: 'https://example.invalid/privado' } });
+        }, registro => registros.push(registro));
+        const respuesta = await worker.fetch(peticion(), entorno());
+        assert.equal(respuesta.status, 502); assert.equal(llamadas, 1);
+        assert.ok(registros.some(r => r.categoria === 'redireccion_rechazada' && r.estadoProveedor === status));
+        assert.ok(!JSON.stringify(registros).includes('example.invalid'));
+    }
+});
+
+test('clasifica HTTP y registra solo códigos Resend permitidos', async () => {
+    for (const [status, categoria] of [[400, 'validacion_proveedor'], [401, 'autenticacion_proveedor'], [403, 'permiso_o_dominio_proveedor'], [409, 'conflicto_idempotencia'], [422, 'validacion_proveedor'], [429, 'limite_proveedor'], [500, 'error_proveedor'], [503, 'error_proveedor']]) {
+        const registros = [];
+        const worker = crearWorkerReal(async () => Response.json({ name: 'validation_error', message: 'no registrar este mensaje' }, { status }), r => registros.push(r));
+        assert.equal((await worker.fetch(peticion(), entorno())).status, 502);
+        assert.ok(registros.some(r => r.categoria === categoria && r.estadoProveedor === status && r.codigoResend === 'validation_error'));
+        assert.ok(!JSON.stringify(registros).includes('no registrar'));
+    }
+});
+
+test('respuestas inválidas o excesivas no se confirman como enviadas', async () => {
+    for (const crearRespuesta of [() => new Response('no-json'), () => Response.json(null), () => Response.json({ id: ' ' }), () => new Response('x'.repeat(32769))]) {
+        const registros = [];
+        const respuesta = await crearWorkerReal(async () => crearRespuesta(), r => registros.push(r)).fetch(peticion(), entorno());
+        assert.equal(respuesta.status, 502);
+        assert.ok(registros.some(r => r.categoria === 'respuesta_invalida'));
+        assert.ok(!registros.some(r => r.etapa === 'resend_respuesta' && r.categoria === 'aceptado'));
+    }
+});
+
+test('mantiene el estado HTTP del proveedor aunque su cuerpo no sea JSON', async () => {
+    const registros = [];
+    const respuesta = await crearWorkerReal(async () => new Response('privado', { status: 401 }), r => registros.push(r)).fetch(peticion(), entorno());
+    assert.equal(respuesta.status, 502);
+    assert.ok(registros.some(r => r.categoria === 'autenticacion_proveedor' && r.cuerpoProveedor === 'invalido' && r.codigoResend === 'no_clasificado'));
+});
+
+test('fallos de conexión y timeout tienen categorías distintas sin exponer la excepción', async () => {
+    for (const [nombre, categoria] of [['TypeError', 'conexion_o_preparacion'], ['TimeoutError', 'tiempo_agotado'], ['AbortError', 'tiempo_agotado'], ['dato-privado', 'conexion_o_preparacion']]) {
+        const registros = [];
+        const worker = crearWorkerReal(async () => { const fallo = new Error('no registrar datos privados'); fallo.name = nombre; throw fallo; }, r => registros.push(r));
+        assert.equal((await worker.fetch(peticion(), entorno())).status, 502);
+        assert.ok(registros.some(r => r.categoria === categoria));
+        assert.ok(!JSON.stringify(registros).includes('privado'));
+    }
+});
+
+test('diagnósticos correlacionados sin datos personales, secretos ni cabeceras', async () => {
+    const registros = [], datos = { ...valido, nombre: 'NOMBRE-PRIVADO', correo: 'privado@example.com', mensaje: 'MENSAJE-PRIVADO' };
+    const request = peticion(datos, { Authorization: 'CABECERA-PRIVADA' });
+    const worker = crearWorkerReal(async () => Response.json({ name: 'CODIGO-PRIVADO', message: 'RESPUESTA-PRIVADA' }, { status: 400 }), r => registros.push(r));
+    const respuesta = await worker.fetch(request, entorno());
+    const id = respuesta.headers.get('X-Contacto-Id');
+    assert.match(id, /^[0-9a-f-]{36}$/);
+    assert.ok(registros.length >= 3 && registros.every(r => r.solicitudId === id && Number.isInteger(r.duracionMs)));
+    const serializados = JSON.stringify(registros) + await respuesta.text();
+    for (const privado of [datos.nombre, datos.correo, datos.mensaje, 'CABECERA-PRIVADA', 'CODIGO-PRIVADO', 'RESPUESTA-PRIVADA', 'secreto-solo-de-prueba', request.headers.get('Idempotency-Key')]) assert.ok(!serializados.includes(privado));
+});
+
+test('un fallo del logger no impide el envío ni expone errores internos', async () => {
+    const worker = crearWorkerReal(async () => Response.json({ id: 'id-simulado' }), () => { throw new Error('fallo de logger'); });
+    assert.equal((await worker.fetch(peticion(), entorno())).status, 202);
+});
+
+test('normaliza espacios al usar el secreto sin modificar su valor almacenado', async () => {
+    const env = entorno({ RESEND_API_KEY: ' \tsecreto-solo-de-prueba\n' });
+    const original = env.RESEND_API_KEY;
+    const worker = crearWorker(async (url, opciones) => {
+        assert.equal(opciones.headers.Authorization, 'Bearer secreto-solo-de-prueba');
+        return Response.json({ id: 'id-simulado' });
+    });
+    assert.equal((await worker.fetch(peticion(), env)).status, 202);
+    assert.equal(env.RESEND_API_KEY, original);
 });

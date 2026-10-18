@@ -6,6 +6,7 @@
     "dev": "wrangler dev --ip 127.0.0.1",
     "check:worker": "wrangler deploy --dry-run",
     "test:contacto": "node --test pruebas/contacto-worker.mjs",
+    "test:contacto:runtime": "node --test pruebas/contacto-runtime.mjs",
     "test:contacto:interfaz": "node --experimental-vm-modules --disable-warning=ExperimentalWarning pruebas/contacto-interfaz.mjs ."
   },
   "devDependencies": {
