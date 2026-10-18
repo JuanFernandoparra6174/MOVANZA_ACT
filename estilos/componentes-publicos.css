@@ -1,0 +1,55 @@
+/* Adaptaciones reutilizables de los recursos locales de Uiverse.io.
+   Card: bhaveshxrawat · Loader: xXJollyHAKERXx · Botón: adamgiebl
+   Input: AbanoubMagdy1 · Tooltip: Siyu1017. Los originales no se modifican. */
+
+/* El fondo usa directamente recursos/efecto_fondo/fondo.css (sin adaptaciones).
+   Estas reglas solo sitúan su contenedor detrás de la superficie del sitio. */
+.pagina-publica:has(.sitio-publico) { background: transparent; padding: 32px clamp(12px, 3vw, 64px); isolation: isolate; }
+.fondo-exterior { position: fixed; inset: 0; z-index: -1; pointer-events: none; user-select: none; }
+.sitio-publico { max-width: 1360px; margin-inline: auto; background: #fff; border-radius: 14px; box-shadow: 0 16px 70px #0005; }
+.sitio-publico > .cabecera-publica { border-radius: 14px 14px 0 0; }
+.sitio-publico > .pie-publico { border-radius: 0 0 14px 14px; padding-inline: clamp(24px, 4vw, 60px); }
+.pagina-publica .portada-texto > .lema-inicio { margin-top: 18px; font-weight: 600; font-size: 14px; }
+
+/* Borde con la banda giratoria original: 3 segundos, giro completo y máscara
+   interior. Una clase y un span decorativo permiten reutilizarlo con otra superficie. */
+.efecto-card { --efecto-card-base: #5f4d93; --efecto-card-uno: #8cc9f0; --efecto-card-dos: #efa8b0; --efecto-card-inset: 5px; position: relative; isolation: isolate; overflow: hidden; }
+.efecto-card > .efecto-card-borde { position: absolute; inset: 0; display: grid; place-items: center; z-index: -3; pointer-events: none; }
+.efecto-card-borde::before { content: ""; position: absolute; width: 100px; height: 130%; background-image: linear-gradient(180deg, var(--efecto-card-uno), var(--efecto-card-dos)); animation: movanza-rotar-borde 3s linear infinite; transition: all .2s linear; }
+.efecto-card-borde::after { content: ""; position: absolute; inset: var(--efecto-card-inset); background: var(--efecto-card-base); border-radius: inherit; }
+.card-imagen { position: absolute; inset: 5px; z-index: -2; overflow: hidden; border-radius: 6px; }
+.card-principal.efecto-card::before { inset: 5px; border-radius: 6px; }
+/* El recorte interior conserva el zoom existente sin cubrir el borde animado. */
+@keyframes movanza-rotar-borde { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Loader circular del recurso, a escala de un formulario y con colores de marca. */
+.movanza-loader { display: inline-flex; align-items: center; gap: 14px; min-height: 40px; padding: 8px 2px; color: #5f4d93; font-size: 14px; }
+.movanza-spinner { display: block; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background-image: linear-gradient(#5f4d93 35%, #8cc9f0); animation: movanza-girar-loader 1.7s linear infinite; filter: blur(.28px); box-shadow: 0 -1.4px 5.6px #5f4d9360, 0 1.4px 5.6px #8cc9f080; }
+.movanza-spinner-centro { display: block; width: 100%; height: 100%; background: #fff; border-radius: 50%; filter: blur(2.8px); }
+@keyframes movanza-girar-loader { to { transform: rotate(360deg); } }
+
+.pagina-publica .movanza-input { transition: border-color .2s, box-shadow .2s; }
+.pagina-publica .movanza-input:focus { border-color: #5f4d93; box-shadow: inset 0 -2px 0 #5f4d93; }
+.pagina-publica :is(.boton, .cerrar-dialogo, .boton-secundario) { transition: box-shadow .25s ease-out, color .25s, transform .2s; }
+.pagina-publica :is(.cerrar-dialogo, .boton-secundario):hover { color: #fff; box-shadow: inset 0 -100px 0 #5f4d93; }
+.pagina-publica :is(.boton, .cerrar-dialogo, .boton-secundario):active { transform: scale(.98); }
+.movanza-tooltip { position: relative; display: inline-block; }
+.movanza-tooltip-texto { position: absolute; bottom: calc(100% + 10px); left: 0; width: max-content; max-width: min(260px, 65vw); background: #fff; color: #303044; padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 16px #5f4d9326; font-size: 13px; opacity: 0; visibility: hidden; transform: translateY(6px) scale(.95); transition: opacity .2s, transform .2s; z-index: 3; }
+.movanza-tooltip-texto::after { content: ""; position: absolute; width: 8px; height: 8px; bottom: -5px; left: 20px; background: #fff; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transform: rotate(45deg); }
+.movanza-tooltip:hover .movanza-tooltip-texto, .movanza-tooltip:focus-within .movanza-tooltip-texto { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+.resumen-politica { border-top: 1px solid #ddd; padding-block: 20px; }
+.resumen-politica h3 { margin: 0; font-size: 20px; letter-spacing: -.02em; }
+.resumen-politica p { margin-block: 10px; }
+.canales-contacto { display: grid; gap: 14px; margin-block: 24px; }
+.canales-contacto dt { color: #5f4d93; font-weight: 600; }
+.canales-contacto dd { margin: 2px 0 0; overflow-wrap: anywhere; }
+@media (max-width: 700px) {
+    .pagina-publica:has(.sitio-publico) { padding: 14px 10px; }
+    .sitio-publico { border-radius: 10px; }
+    .sitio-publico > .pie-publico { padding-inline: 20px; }
+}
+/* El fondo original conserva sus animaciones, tal como se solicitó. */
+@media (prefers-reduced-motion: reduce) {
+    .efecto-card-borde::before, .movanza-spinner { animation: none; }
+    .movanza-tooltip-texto { transition: none; }
+}

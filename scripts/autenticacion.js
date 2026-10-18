@@ -1,6 +1,7 @@
 
 import { supabase } from '../configuracion/supabase.js';
-import { consultarAcceso, crearNavegacion, NOMBRES_ROL } from './acceso.js';
+import { consultarAcceso } from './acceso.js';
+import { crearCuentaElemento } from './cuenta-interfaz.js';
 
 // Elementos de la interfaz
 const seccionAcceso = document.getElementById('seccion-acceso');
@@ -10,17 +11,35 @@ const mensaje = document.getElementById('mensaje');
 
 const formularioAcceso = document.getElementById('formulario-acceso');
 const formularioRegistro = document.getElementById('formulario-registro');
-const formularioPerfil = document.getElementById('formulario-perfil');
 let usuarioPerfilId = null;
+const vista = document.body.dataset.autenticacion || 'perfil';
+let operacionEnCurso = false;
+const destinos = Object.freeze({
+    empresa: './home_empresa_1.html',
+    trabajador: './home_trabajador.html',
+    administrador: './paginas/administracion.html'
+});
 
 function mostrarSeccion(seccion) {
-    seccionAcceso.classList.add('oculto');
-    seccionRegistro.classList.add('oculto');
-    seccionPerfil.classList.add('oculto');
+    [seccionAcceso, seccionRegistro, seccionPerfil].forEach(elemento => elemento?.classList.add('oculto'));
 
-    seccion.classList.remove('oculto');
+    seccion?.classList.remove('oculto');
     mensaje.textContent = '';
     mensaje.className = '';
+    // El encabezado público solo cambia después de verificar el perfil.
+    if (vista === 'perfil') {
+        const cabecera = document.querySelector('.cabecera-publica');
+        if (!cabecera) return;
+        const autenticado = seccion === seccionPerfil && usuarioPerfilId !== null;
+        let cuenta = cabecera.querySelector('.menu-cuenta');
+        if (autenticado && !cuenta) {
+            cuenta = crearCuentaElemento({}, () => document.getElementById('boton-salir').click());
+            cabecera.append(cuenta);
+        }
+        if (cuenta) { cuenta.hidden = !autenticado; if (!autenticado) cuenta.open = false; }
+        const acceso = cabecera.querySelector('.boton-acceso');
+        if (acceso) acceso.hidden = autenticado;
+    }
 }
 
 function mostrarMensaje(texto, tipo = '') {
@@ -36,18 +55,19 @@ function bloquearFormulario(formulario, bloquear) {
 
 // Navegación entre inicio de sesión y registro
 document.getElementById('mostrar-registro')
-    .addEventListener('click', () => {
+    ?.addEventListener('click', () => {
         mostrarSeccion(seccionRegistro);
     });
 
 document.getElementById('mostrar-acceso')
-    .addEventListener('click', () => {
+    ?.addEventListener('click', () => {
         mostrarSeccion(seccionAcceso);
     });
 
 // REGISTRAR USUARIO
-formularioRegistro.addEventListener('submit', async (evento) => {
+formularioRegistro?.addEventListener('submit', async (evento) => {
     evento.preventDefault();
+    if (operacionEnCurso || !formularioRegistro.reportValidity()) return;
 
     const correo = document.getElementById('correo-registro')
         .value.trim();
@@ -68,6 +88,7 @@ formularioRegistro.addEventListener('submit', async (evento) => {
         return;
     }
 
+    operacionEnCurso = true;
     bloquearFormulario(formularioRegistro, true);
     mostrarMensaje('Creando cuenta...');
 
@@ -84,6 +105,10 @@ formularioRegistro.addEventListener('submit', async (evento) => {
             sessionStorage.removeItem('movanza_empresa_activa');
             await cargarPerfil();
         } else {
+            if (vista === 'signup') {
+                location.replace('./login.html?registro=confirmar' + (document.body.dataset.presentacion === 'modal' ? '&presentacion=modal' : ''));
+                return;
+            }
             mostrarSeccion(seccionAcceso);
             mostrarMensaje(
                 'Registro solicitado. Revisa tu correo si la confirmación está activada. Si la cuenta ya existe, intenta iniciar sesión.',
@@ -95,19 +120,22 @@ formularioRegistro.addEventListener('submit', async (evento) => {
         mostrarMensaje(error.message, 'error');
         console.error('Error de registro:', error);
     } finally {
+        operacionEnCurso = false;
         bloquearFormulario(formularioRegistro, false);
     }
 });
 
 // INICIAR SESIÓN
-formularioAcceso.addEventListener('submit', async (evento) => {
+formularioAcceso?.addEventListener('submit', async (evento) => {
     evento.preventDefault();
+    if (operacionEnCurso || !formularioAcceso.reportValidity()) return;
 
     const correo = document.getElementById('correo-acceso')
         .value.trim();
 
     const clave = document.getElementById('clave-acceso').value;
 
+    operacionEnCurso = true;
     bloquearFormulario(formularioAcceso, true);
     mostrarMensaje('Iniciando sesión...');
 
@@ -123,9 +151,14 @@ formularioAcceso.addEventListener('submit', async (evento) => {
         await cargarPerfil();
 
     } catch (error) {
-        mostrarMensaje(error.message, 'error');
+        mostrarMensaje(
+            error.code === 'invalid_credentials' || error.message === 'Invalid login credentials'
+                ? 'El correo o la contraseña no son correctos.' : error.message,
+            'error'
+        );
         console.error('Error al iniciar sesión:', error);
     } finally {
+        operacionEnCurso = false;
         bloquearFormulario(formularioAcceso, false);
     }
 });
@@ -134,81 +167,26 @@ formularioAcceso.addEventListener('submit', async (evento) => {
 async function cargarPerfil() {
     const acceso = await consultarAcceso();
     if (!acceso) {
-        mostrarSeccion(seccionAcceso);
+        mostrarSeccion(vista === 'signup' ? seccionRegistro : seccionAcceso);
         return;
     }
     const { usuario, perfil } = acceso;
     usuarioPerfilId = usuario.id;
-
-    document.getElementById('perfil-id').textContent = perfil.id;
-
-    document.getElementById('perfil-correo').textContent =
-        usuario.email || '';
-
-    document.getElementById('nombre-usuario').value =
-        perfil.nombre_usuario;
-
-    document.getElementById('nombre-completo').value =
-        perfil.nombre_completo || '';
-
-    document.getElementById('perfil-rol').textContent = NOMBRES_ROL[perfil.rol];
-    document.querySelectorAll('[data-roles]').forEach(elemento => {
-        elemento.classList.toggle(
-            'oculto', !elemento.dataset.roles.split(' ').includes(perfil.rol)
-        );
-    });
-    document.getElementById('modulos-cuenta').replaceChildren(
-        crearNavegacion(perfil.rol, './paginas/')
-    );
+    if (vista === 'login' || vista === 'signup') {
+        if (document.body.dataset.presentacion === 'modal') {
+            window.parent.postMessage({ tipo: 'movanza:auth-completa', destino: destinos[perfil.rol] }, window.location.origin);
+        } else {
+            location.replace(destinos[perfil.rol]);
+        }
+        return;
+    }
 
     mostrarSeccion(seccionPerfil);
-    mostrarMensaje('Perfil cargado correctamente.', 'exito');
 }
-
-// ACTUALIZAR PERFIL
-formularioPerfil.addEventListener('submit', async (evento) => {
-    evento.preventDefault();
-
-    const nombreUsuario = document.getElementById('nombre-usuario')
-        .value.trim().toLowerCase();
-
-    const nombreCompleto = document.getElementById('nombre-completo')
-        .value.trim();
-
-    bloquearFormulario(formularioPerfil, true);
-    mostrarMensaje('Guardando perfil...');
-
-    try {
-        // Función SQL creada en nuestra migración
-        const { error } = await supabase.rpc('actualizar_mi_perfil', {
-            nombre_usuario: nombreUsuario,
-            nombre_completo: nombreCompleto
-        });
-
-        if (error) throw error;
-
-        await cargarPerfil();
-        mostrarMensaje('Perfil actualizado correctamente.', 'exito');
-
-    } catch (error) {
-        if (error.code === '23505') {
-            mostrarMensaje(
-                'Este nombre de usuario ya está ocupado.',
-                'error'
-            );
-        } else {
-            mostrarMensaje(error.message, 'error');
-        }
-
-        console.error('Error al actualizar perfil:', error);
-    } finally {
-        bloquearFormulario(formularioPerfil, false);
-    }
-});
 
 // CERRAR SESIÓN
 document.getElementById('boton-salir')
-    .addEventListener('click', async () => {
+    ?.addEventListener('click', async () => {
         const boton = document.getElementById('boton-salir');
         boton.disabled = true;
 
@@ -218,9 +196,8 @@ document.getElementById('boton-salir')
             if (error) throw error;
 
             sessionStorage.removeItem('movanza_empresa_activa');
-            formularioAcceso.reset();
-            formularioRegistro.reset();
-            formularioPerfil.reset();
+            formularioAcceso?.reset();
+            formularioRegistro?.reset();
 
             mostrarSeccion(seccionAcceso);
             mostrarMensaje('Sesión cerrada correctamente.', 'exito');
@@ -244,7 +221,10 @@ async function iniciarAplicacion() {
         if (data.session) {
             await cargarPerfil();
         } else {
-            mostrarSeccion(seccionAcceso);
+            mostrarSeccion(vista === 'signup' ? seccionRegistro : seccionAcceso);
+            if (vista === 'login' && new URLSearchParams(location.search).get('registro') === 'confirmar') {
+                mostrarMensaje('Registro solicitado. Revisa tu correo si la confirmación está activada. Si la cuenta ya existe, intenta iniciar sesión.', 'exito');
+            }
         }
 
     } catch (error) {
@@ -263,14 +243,13 @@ supabase.auth.onAuthStateChange((evento, sesion) => {
     if (evento === 'SIGNED_OUT') {
         usuarioPerfilId = null;
         sessionStorage.removeItem('movanza_empresa_activa');
-        formularioPerfil.reset();
-        mostrarSeccion(seccionAcceso);
-    } else if (evento === 'SIGNED_IN' && sesion?.user.id !== usuarioPerfilId) {
+        mostrarSeccion(vista === 'signup' ? seccionRegistro : seccionAcceso);
+    } else if (evento === 'SIGNED_IN' && sesion?.user.id !== usuarioPerfilId && !operacionEnCurso) {
         sessionStorage.removeItem('movanza_empresa_activa');
-        mostrarSeccion(seccionAcceso);
+        mostrarSeccion(vista === 'signup' ? seccionRegistro : seccionAcceso);
         // Consultar Auth fuera del callback evita bloquear su actualización de sesión.
         setTimeout(() => cargarPerfil().catch(error => {
-            mostrarSeccion(seccionAcceso);
+            mostrarSeccion(vista === 'signup' ? seccionRegistro : seccionAcceso);
             mostrarMensaje('No se pudo verificar tu cuenta. ' + error.message, 'error');
         }), 0);
     }

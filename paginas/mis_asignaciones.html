@@ -1,137 +1,76 @@
-
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>MOVANZA | Mis asignaciones</title>
-
-    <link rel="stylesheet"
-          href="../estilos/general.css">
-</head>
-
-<body data-modulo="mis_asignaciones">
-<main class="contenedor contenedor-amplio" hidden>
-
-    <!-- ENCABEZADO -->
-    <header>
-        <h1>MOVANZA</h1>
-        <p>Mis tareas y asignaciones</p>
-    </header>
-
-    <nav>
-        <a href="../index.html">
-            ← Volver a mi perfil
-        </a>
-    </nav>
-
-    <!-- DATOS DEL TRABAJADOR -->
-    <section class="tarjeta bloque">
-        <h2>Mi espacio de trabajo</h2>
-
-        <p>
-            <strong>Usuario:</strong>
-            <span id="nombre-usuario-actual">
-                Cargando...
-            </span>
-        </p>
-
-        <p>
-            Aquí puedes aceptar, rechazar, iniciar
-            y finalizar tus tareas.
-        </p>
-    </section>
-
-    <!-- RESUMEN -->
-    <section class="tarjeta bloque">
-        <h2>Resumen de asignaciones</h2>
-
-        <div class="resumen-asignaciones">
-            <div>
-                <strong id="total-pendientes">0</strong>
-                <span>Pendientes</span>
+<html lang="es"><head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex">
+    <title>Mis asignaciones | MOVANZA</title>
+    <link rel="stylesheet" href="../estilos/general.css">
+    <link rel="stylesheet" href="../estilos/alertas.css" data-estilo-alertas>
+    <script type="module" src="../scripts/alertas.js"></script><link rel="stylesheet" href="../estilos/index.css">
+    <link rel="stylesheet" href="../recursos/efecto_fondo/fondo.css"><link rel="stylesheet" href="../estilos/componentes-publicos.css">
+    <link rel="stylesheet" href="../estilos/cuenta.css"><link rel="stylesheet" href="../estilos/home-trabajador.css"><link rel="stylesheet" href="../estilos/mis-asignaciones.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+    <script src="../scripts/componentes-publicos.js" defer></script><script src="../scripts/asignaciones-carga.js" defer></script>
+</head><body class="pagina-publica pagina-asignaciones" data-modulo="mis_asignaciones" data-presentacion="asignaciones-mapa">
+    <div class="container fondo-exterior" aria-hidden="true" inert><div id="stars"></div><div id="stars2"></div><div id="stars3"></div><div></div></div>
+    <section id="estado-acceso" class="estado-acceso"><p id="mensaje-acceso" role="status">Comprobando tu cuenta…</p><a href="../login.html">Iniciar sesión</a></section>
+    <div class="sitio-publico" id="sitio-asignaciones" hidden>
+        <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+        <header class="cabecera-publica cabecera-trabajador" id="inicio">
+            <a class="marca" href="../home_trabajador.html" aria-label="MOVANZA, inicio del trabajador"><img src="../Carpeta_Imagenes/Logo/Logotipo%20MOVANZA.png" alt="MOVANZA" width="170" height="54"></a>
+            <button class="menu-boton" type="button" aria-expanded="false" aria-controls="navegacion-trabajador">Menú <span aria-hidden="true">☰</span></button>
+            <nav id="navegacion-trabajador" aria-label="Espacio del trabajador"><a href="../home_trabajador.html">Inicio</a><a href="../paginas/mis_asignaciones.html" aria-current="page">Mis asignaciones</a><a href="../paginas/mis_invitaciones.html">Mis invitaciones</a></nav>
+            <details class="cuenta-empresarial menu-cuenta"><summary class="boton-relleno boton-cuenta">Cuenta <span aria-hidden="true">⌄</span></summary><div class="opciones-cuenta"><button type="button" data-abrir-perfil aria-haspopup="dialog">Mi perfil</button><button type="button" id="cerrar-sesion">Cerrar sesión</button></div></details>
+        </header>
+        <main id="contenido" class="asignaciones-principal" hidden>
+            <section class="banner-asignaciones" aria-labelledby="titulo-asignaciones"><div><p class="antetitulo">TU AGENDA · TU RECORRIDO</p><h1 id="titulo-asignaciones">Tus asignaciones, en un solo lugar</h1><p>Consulta tus actividades, encuentra sus ubicaciones y gestiona tus trabajos de forma sencilla y organizada.</p></div><span class="simbolo-agenda" aria-hidden="true">↗</span></section>
+            <div class="resumen-asignaciones" aria-label="Resumen de asignaciones"><span><strong id="total-pendientes">—</strong> Pendientes</span><span><strong id="total-aceptadas">—</strong> Aceptadas</span><span><strong id="total-en-curso">—</strong> En curso</span><span><strong id="total-finalizadas">—</strong> Finalizadas</span></div>
+            <div id="anclaje-estado"><div id="estado-operacion"><p id="mensaje" role="status" aria-live="polite"></p></div></div>
+            <div class="espacio-asignaciones">
+                <section class="explorador-asignaciones" aria-labelledby="titulo-listado"><div class="filtros-asignaciones"><div class="fila-asignaciones"><h2 id="titulo-listado">Mis asignaciones</h2><button id="boton-actualizar" type="button" aria-label="Actualizar asignaciones">↻ Actualizar</button></div><label for="buscar-asignaciones">Buscar actividad o trabajo</label><input id="buscar-asignaciones" type="search" placeholder="¿Qué actividad buscas?" autocomplete="off"><label for="filtro-estado">Estado de la asignación</label><select id="filtro-estado"><option value="todas">Todos los estados</option><option value="pendiente">Pendientes</option><option value="aceptada">Aceptadas</option><option value="en_curso">En curso</option><option value="finalizada">Finalizadas</option><option value="rechazada">Rechazadas</option><option value="cancelada">Canceladas</option></select><p id="cantidad-visibles" aria-live="polite"></p></div><div id="lista-asignaciones"><p>Cargando tus actividades…</p></div></section>
+                <section class="geografia-asignaciones" aria-labelledby="titulo-mapa"><div class="barra-mapa"><div><p class="antetitulo">ENCUENTRA TU PRÓXIMO PUNTO</p><h2 id="titulo-mapa">Tu mapa de trabajo</h2></div><div><button type="button" id="ver-puntos">Ver trabajos</button><button type="button" id="ubicarme" class="accion-primaria">◎ Ubicarme</button></div></div><div id="mapa-asignaciones" role="region" aria-label="Mapa de los trabajos asignados"></div><p id="error-mapa" role="status" hidden></p><div class="pie-mapa-asignaciones"><p class="leyenda-mapa"><span><i class="leyenda-trabajo" aria-hidden="true"></i> Trabajo · radio autorizado</span><span><i class="leyenda-personal" aria-hidden="true"></i> Mi ubicación · precisión GPS</span></p><p id="estado-gps" role="status">Tu posición se consulta solo cuando tú lo solicitas.</p><details class="ayuda-ubicacion"><summary>¿Cómo se utiliza mi ubicación?</summary><p>Ubicarme muestra tu posición en este mapa. Iniciar y finalizar solicitan una posición nueva y verifican la precisión y el radio en el servidor. No hay seguimiento continuo. Ubicarme no guarda ni envía tu posición a MOVANZA.</p></details></div>
+                    <section class="detalle-asignacion" aria-labelledby="titulo-detalle"><div class="fila-asignaciones"><h2 id="titulo-detalle" tabindex="-1">Detalle de la actividad</h2><button type="button" id="cerrar-detalle" hidden>Cerrar detalle</button></div><div id="contenido-detalle"><div class="detalle-vacio"><span aria-hidden="true">⌖</span><h3>Elige tu siguiente actividad</h3><p>Selecciona una asignación o un punto en el mapa para consultar sus detalles y acciones disponibles.</p></div></div></section>
+                </section>
             </div>
-
-            <div>
-                <strong id="total-aceptadas">0</strong>
-                <span>Aceptadas</span>
-            </div>
-
-            <div>
-                <strong id="total-en-curso">0</strong>
-                <span>En curso</span>
-            </div>
-
-            <div>
-                <strong id="total-finalizadas">0</strong>
-                <span>Finalizadas</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- INFORMACIÓN GPS -->
-    <section class="tarjeta bloque">
-        <h2>Ubicación y seguridad</h2>
-
-        <p>
-            Para iniciar o finalizar una tarea,
-            MOVANZA solicitará tu ubicación actual.
-        </p>
-
-        <p>
-            Debes encontrarte dentro del radio
-            autorizado por la empresa y tener
-            suficiente precisión GPS.
-        </p>
-
-        <small class="texto-ayuda">
-            Tu navegador solicitará permiso para
-            acceder a la ubicación. No realizaremos
-            seguimiento continuo: la ubicación se
-            solicitará únicamente cuando decidas
-            iniciar o finalizar una tarea.
-        </small>
-
-        <p id="estado-gps" role="status">
-            GPS sin consultar.
-        </p>
-    </section>
-
-    <!-- LISTADO -->
-    <section class="tarjeta bloque">
-        <h2>Mis asignaciones</h2>
-
-        <label for="filtro-estado">
-            Filtrar por estado
-        </label>
-
-        <select id="filtro-estado">
-            <option value="todas">Todas</option>
-            <option value="pendiente">Pendientes</option>
-            <option value="aceptada">Aceptadas</option>
-            <option value="rechazada">Rechazadas</option>
-            <option value="en_curso">En curso</option>
-            <option value="finalizada">Finalizadas</option>
-            <option value="cancelada">Canceladas</option>
-        </select>
-
-        <button
-            id="boton-actualizar"
-            type="button"
-            class="boton-secundario"
-        >
-            Actualizar asignaciones
-        </button>
-
-        <div id="lista-asignaciones" class="bloque">
-            Cargando asignaciones...
-        </div>
-    </section>
-
-    <!-- RECHAZAR ASIGNACIÓN -->
-    <section
+        </main>
+        <footer class="pie-publico">
+                <div class="pie-columnas">
+                    <div>
+                        <a href="../index.html#inicio" class="marca-pie">MOVANZA<span aria-hidden="true">↗</span></a>
+                        <p>Gestión de trabajos presenciales.</p>
+                        <p>Manizales, Caldas, Colombia.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Manizales%2C%20Caldas%2C%20Colombia" target="_blank" rel="noopener noreferrer">Ver ubicación en el mapa ↗</a>
+                    </div>
+                    <div>
+                        <h2>Explora MOVANZA</h2>
+                        <nav aria-label="Mapa de navegación">
+                            <a href="../index.html#inicio">Inicio</a>
+                            <a href="../index.html#nosotros">Nosotros</a>
+                            <a href="../index.html#servicios">Servicios</a>
+                            <a href="../index.html#preguntas">Preguntas frecuentes</a>
+                            <a href="../index.html#experiencias">Experiencia</a>
+                            <a href="../index.html#contacto">Contacto</a>
+                            <a href="../index.html#politicas">Políticas</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <h2>Horarios de atención</h2>
+                        <dl class="horarios">
+                            <dt>Lunes a viernes</dt>
+                            <dd>8:00 a. m. – 6:00 p. m.</dd>
+                            <dt>Sábados</dt>
+                            <dd>9:00 a. m. – 1:00 p. m.</dd>
+                            <dt>Domingos y festivos</dt>
+                            <dd>No disponible.</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="pie-final">
+                    <p>© 2026 MOVANZA. Todos los derechos reservados.</p>
+                    <a href="../index.html#inicio">Volver al inicio ↑</a>
+                </div>
+            </footer>
+    </div>
+    <dialog id="acciones-asignacion" aria-labelledby="titulo-accion"><div class="fila-asignaciones"><p class="antetitulo" id="titulo-accion">GESTIONA TU ACTIVIDAD</p><button type="button" id="cerrar-accion" aria-label="Cerrar formulario">×</button></div><section
         id="seccion-rechazo"
         class="tarjeta bloque oculto"
     >
@@ -173,9 +112,7 @@
             </button>
         </form>
     </section>
-
-    <!-- FINALIZAR ASIGNACIÓN -->
-    <section
+<section
         id="seccion-finalizacion"
         class="tarjeta bloque oculto"
     >
@@ -238,22 +175,6 @@
             </button>
 
         </form>
-    </section>
-
-    <!-- MENSAJES -->
-    <p
-        id="mensaje"
-        role="status"
-        aria-live="polite"
-    ></p>
-
-</main>
-
-<script
-    type="module"
-    src="../scripts/modulo.js"
-></script>
-
-</body>
-</html>
-
+    </section><div id="estado-en-formulario"></div></dialog>
+    <noscript><p class="aviso-noscript">Activa JavaScript para consultar tus asignaciones.</p></noscript>
+</body></html>

@@ -1,0 +1,14 @@
+.administracion-principal { padding: 38px clamp(24px, 4vw, 60px) 64px; }
+.bienvenida-administracion { padding: 42px; margin-bottom: 32px; border-radius: 12px; background: linear-gradient(115deg, #5f4d93, #303044); color: #fff; box-shadow: 0 8px 28px #5f4d931a; }
+.bienvenida-administracion .antetitulo { color: #fff; margin-bottom: 14px; }
+.bienvenida-administracion h1 { max-width: 800px; margin: 0 0 18px; font-size: clamp(30px, 3.4vw, 43px); font-weight: 600; }
+.bienvenida-administracion > p:not(.antetitulo, .empresa-identificada) { max-width: 750px; margin: 0; font-size: 16px; }
+.empresa-identificada { display: flex; align-items: baseline; gap: 16px; margin: 26px 0 0; padding-left: 16px; border-left: 3px solid #a89cc8; }
+.empresa-identificada span { color: #fff; font-size: 14px; }
+.empresa-identificada strong { color: #fff; font-size: 23px; font-weight: 600; overflow-wrap: anywhere; min-width: 0; }
+.mosaico-administracion { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.mosaico-administracion > .card-principal:nth-child(n) { grid-column: auto; min-height: 380px; }
+.mosaico-administracion h2 { margin: 0 0 14px; font-size: 29px; font-weight: 600; }
+.mosaico-administracion .card-contenido { padding: 30px 28px; }
+@media (max-width: 1000px) and (min-width: 701px) { .mosaico-administracion { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mosaico-administracion > .card-principal:last-child { grid-column: 1 / -1; min-height: 320px; } }
+@media (max-width: 700px) { .administracion-principal { padding: 20px 20px 40px; } .bienvenida-administracion { padding: 30px 24px; } .empresa-identificada { display: block; } .empresa-identificada span { display: block; margin-bottom: 6px; } .mosaico-administracion { grid-template-columns: 1fr; gap: 18px; } .mosaico-administracion > .card-principal:nth-child(n) { min-height: 330px; } }

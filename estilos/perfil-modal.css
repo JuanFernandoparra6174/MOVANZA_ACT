@@ -1,0 +1,44 @@
+html:has(#perfil-modal[open]) { overflow: hidden; scrollbar-gutter: stable; }
+dialog.perfil-modal { box-sizing: border-box; width: min(700px, calc(100% - 32px)); max-width: none; max-height: calc(100dvh - 40px); margin: auto; padding: 30px; border: 1px solid #ddd; border-radius: 24px; background: #f7f7f7; color: #303044; box-shadow: 0 24px 90px #30304430; overflow: auto; overscroll-behavior: contain; font: 15px/1.6 Aptos, Inter, 'Segoe UI', sans-serif; text-align: left; }
+.perfil-modal::backdrop { background: #30304470; backdrop-filter: blur(6px); }
+.perfil-modal[open] { animation: perfil-entrada .22s ease-out; }
+.perfil-modal *, .perfil-modal *::before, .perfil-modal *::after { box-sizing: border-box; }
+.perfil-modal [hidden] { display: none !important; }
+.perfil-modal h2, .perfil-modal h3, .perfil-modal p { margin: 0; color: inherit; letter-spacing: normal; }
+.perfil-modal h2 { font-size: 28px; font-weight: 700; line-height: 1.3; }
+.perfil-modal h3 { font-size: 17px; font-weight: 650; }
+.perfil-modal .perfil-antetitulo { margin: 0 0 6px; color: #5f4d93; font-size: 11px; font-weight: 700; letter-spacing: .12em; }
+.perfil-cabecera, .perfil-seccion, .perfil-cuenta { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.perfil-modal button { height: auto; min-height: 44px; margin: 0; padding: 10px 16px; border: 1px solid #d8d1e6; border-radius: 10px; background: #fff; color: #5f4d93; box-shadow: none; font: inherit; font-size: 14px; font-weight: 600; line-height: 1.5; letter-spacing: normal; text-transform: none; cursor: pointer; transition: background .18s, border-color .18s; white-space: normal; }
+.perfil-modal button:hover { background: #ede8fa; border-color: #a89cc8; }
+.perfil-modal :is(button, input, [tabindex]):focus-visible { outline: 3px solid #5f4d93; outline-offset: 3px; }
+.perfil-modal button:disabled { opacity: .65; cursor: wait; }
+.perfil-modal .perfil-primario { background: #5f4d93; border-color: #5f4d93; color: #fff; }
+.perfil-modal .perfil-primario:hover { background: #4b3b78; }
+.perfil-identidad { display: flex; align-items: center; gap: 18px; padding: 24px 0; min-width: 0; }
+.perfil-identidad > div { min-width: 0; }
+.perfil-identidad h3 { font-size: 23px; overflow-wrap: anywhere; }
+.perfil-identidad p { color: #625b71; overflow-wrap: anywhere; }
+.perfil-avatar { display: grid; place-items: center; flex: 0 0 70px; height: 70px; border: 1px solid #d8d1e6; border-radius: 22px; background: linear-gradient(140deg, #ede8fa, #e0f2ff); color: #5f4d93; font-size: 24px; font-weight: 700; }
+.perfil-insignia { display: inline-block; margin-top: 8px; padding: 3px 10px; border-radius: 20px; background: #ede8fa; color: #5f4d93; font-size: 12px; font-weight: 600; }
+.perfil-tarjeta { padding: 24px; border: 1px solid #ddd; border-radius: 16px; background: #fff; }
+.perfil-datos, .perfil-campos { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0 0; }
+.perfil-datos > div, .perfil-campos > div { min-width: 0; }
+.perfil-datos dt { color: #625b71; font-size: 12px; margin-bottom: 5px; }
+.perfil-datos dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.perfil-ancho { grid-column: 1 / -1; padding-top: 18px; border-top: 1px solid #eee; }
+.perfil-formulario { margin: 0; animation: perfil-entrada .18s ease-out; }
+.perfil-modal label { display: block; margin: 0 0 8px; color: #303044; font-size: 13px; font-weight: 600; }
+.perfil-modal input { display: block; width: 100%; height: 46px; margin: 0; padding: 10px 12px; border: 1px solid #a89cc8; border-radius: 9px; background: #f7f7f7; color: #303044; font: inherit; font-size: 16px; transition: border-color .18s, box-shadow .18s; }
+.perfil-modal input:focus { border-color: #5f4d93; box-shadow: 0 0 0 3px #5f4d9318; }
+.perfil-modal small { display: block; margin-top: 8px; color: #625b71; font-size: 12px; line-height: 1.5; }
+.perfil-acciones { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #eee; }
+.perfil-cuenta { margin-top: 24px; padding: 0 2px; }
+.perfil-cuenta p { color: #625b71; font-size: 13px; }
+.perfil-modal .perfil-estado:not(:empty) { margin-top: 18px; padding: 12px 14px; border: 1px solid #d8d1e6; border-radius: 10px; background: #ede8fa; color: #4b3b78; overflow-wrap: anywhere; }
+.perfil-modal .perfil-error:not(:empty) { background: #fce5e7; color: #91273a; border-color: #efc3ca; }
+.perfil-modal[aria-busy="true"] .perfil-estado::before { content: ''; display: inline-block; width: 14px; height: 14px; margin-right: 10px; vertical-align: middle; border: 2px solid #a89cc8; border-top-color: #5f4d93; border-radius: 50%; animation: perfil-girar .8s linear infinite; }
+@keyframes perfil-entrada { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes perfil-girar { to { transform: rotate(360deg); } }
+@media (max-width: 560px) { dialog.perfil-modal { width: calc(100% - 16px); max-height: calc(100dvh - 16px); padding: 20px 16px; border-radius: 18px; } .perfil-modal h2 { font-size: 24px; } .perfil-tarjeta { padding: 18px; } .perfil-seccion, .perfil-cuenta { align-items: flex-start; flex-direction: column; gap: 14px; } .perfil-datos, .perfil-campos { grid-template-columns: 1fr; gap: 18px; } .perfil-identidad h3 { font-size: 20px; } .perfil-avatar { flex-basis: 56px; height: 56px; border-radius: 18px; } .perfil-cuenta button { width: 100%; } .perfil-acciones button { flex: 1; } }
+@media (prefers-reduced-motion: reduce) { .perfil-modal[open], .perfil-modal *, .perfil-modal[aria-busy="true"] .perfil-estado::before { animation: none; transition: none; } }

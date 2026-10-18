@@ -1,0 +1,62 @@
+.pagina-legal { background: #f7f7f7; }
+.cabecera-legal { max-width: 1240px; margin: auto; padding: 30px 24px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; text-align: left; }
+.cabecera-legal > a:last-child { font-size: 14px; text-decoration: none; }
+.cabecera-legal > a:last-child:hover { text-decoration: underline; }
+.lectura-legal { max-width: 1240px; margin: 8px auto 48px; padding-inline: 24px; display: grid; grid-template-columns: 245px minmax(0, 1fr); gap: 36px; align-items: start; }
+.indice-escritorio { position: sticky; top: 28px; }
+.indice-legal { margin: 0; }
+.indice-legal h2 { margin: 12px 0 20px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #59546a; }
+.indice-legal ol, .indice-movil ol { margin: 0; padding-left: 26px; }
+.indice-legal ol { max-height: calc(100dvh - 195px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #a89cc8 transparent; }
+.indice-legal li, .indice-movil li { padding: 0 8px 12px 4px; color: #a89cc8; font-size: 12px; }
+.indice-legal li::marker, .indice-movil li::marker { color: #5f4d93; font-weight: 600; }
+.indice-legal li a, .indice-movil li a { display: block; font-weight: 400; line-height: 1.5; text-decoration: none; color: #59546a; }
+.indice-legal li a:hover, .indice-movil li a:hover { color: #5f4d93; text-decoration: underline; }
+.indice-regreso { display: inline-block; margin-top: 16px; padding-top: 18px; border-top: 1px solid #ddd; font-size: 13px; }
+.documento-legal { min-width: 0; padding: 48px clamp(28px, 4vw, 56px); border: 1px solid #ddd; border-radius: 14px; background: #fff; box-shadow: 0 8px 30px #30304405; }
+.introduccion-legal { padding-bottom: 32px; border-bottom: 1px solid #ddd; }
+.documento-legal h1 { font-size: clamp(28px, 3vw, 38px); font-weight: 600; line-height: 1.2; letter-spacing: -.035em; margin: 0 0 24px; text-wrap: balance; }
+.documento-legal .antetitulo { color: #5f4d93; margin-bottom: 20px; font-size: 10px; }
+.apartado-legal { padding-top: 32px; scroll-margin-top: 28px; }
+.apartado-legal + .apartado-legal { margin-top: 26px; border-top: 1px solid #eee; }
+.pagina-legal .apartado-legal h2 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 15px; color: #5f4d93; font-size: 15px; line-height: 1.5; font-weight: 650; letter-spacing: .015em; }
+.numero-apartado { flex-shrink: 0; min-width: 26px; font-size: 15px; font-weight: 500; color: #807392; }
+.apartado-legal p { margin: 0; line-height: 1.85; font-size: 16px; color: #303044; overflow-wrap: anywhere; }
+.indice-movil { display: none; }
+.notas-documento { margin-top: 44px; padding-top: 12px; border-top: 1px solid #ddd; }
+.notas-originales { border-bottom: 1px solid #ddd; padding-block: 18px; }
+.notas-originales summary, .indice-movil summary { color: #5f4d93; cursor: pointer; font-size: 14px; font-weight: 600; }
+.notas-originales[open] > div { padding: 12px 0 4px; }
+.notas-originales h3 { font-size: 13px; color: #5f4d93; letter-spacing: .025em; line-height: 1.5; margin-top: 24px; }
+.notas-originales p, .notas-originales li { font-size: 14px; line-height: 1.8; }
+.fuentes-legales li { padding-left: 6px; margin-bottom: 12px; }
+.fuentes-legales { padding-left: 20px; }
+.fuentes-legales a { display: block; font-size: 12px; overflow-wrap: anywhere; }
+.navegacion-legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; margin: 28px 0 0; font-size: 13px; }
+.pie-legal { text-align: center; padding: 0 24px 32px; color: #59546a; font-size: 12px; }
+@media (max-width: 1000px) {
+    .lectura-legal { display: block; max-width: 810px; }
+    .cabecera-legal { max-width: 810px; }
+    .indice-escritorio { display: none; }
+    .indice-movil { display: block; margin-top: 24px; border: 1px solid #ddd; border-radius: 8px; padding: 14px 18px; }
+    .indice-movil nav { margin: 18px 0 0; }
+    .indice-movil ol { max-height: 280px; overflow-y: auto; }
+}
+@media (max-width: 600px) {
+    .lectura-legal { padding-inline: 12px; margin-top: 0; }
+    .cabecera-legal { padding: 22px 20px; }
+    .documento-legal { padding: 30px 22px; border-radius: 10px; }
+    .documento-legal h1 { font-size: 28px; }
+    .introduccion-legal { padding-bottom: 24px; }
+    .apartado-legal p { font-size: 15px; line-height: 1.85; }
+    .apartado-legal { padding-top: 26px; }
+    .pagina-legal .apartado-legal h2 { gap: 7px; font-size: 14px; }
+    .numero-apartado { min-width: 23px; }
+}
+@media print {
+    .cabecera-legal, .indice-escritorio, .indice-movil, .navegacion-legal, .saltar-contenido, .pie-legal { display: none; }
+    .lectura-legal { display: block; margin: 0; padding: 0; max-width: none; }
+    .documento-legal { border: 0; box-shadow: none; margin: 0; padding: 0; }
+    .apartado-legal h2 { break-after: avoid; }
+    .apartado-legal p { orphans: 3; widows: 3; }
+}

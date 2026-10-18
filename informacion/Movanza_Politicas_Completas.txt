@@ -1,0 +1,708 @@
+MOVANZA — POLÍTICAS Y CONDICIONES DE USO Borrador integral para revisión
+y adaptación en Colombia Versión de trabajo: 17 de octubre de 2026
+
+IMPORTANTE ANTES DE PUBLICAR Este archivo contiene borradores extensos y
+separados de seis documentos. NO son políticas adoptadas ni una
+certificación de cumplimiento legal. Sustituir todos los campos
+[PENDIENTE], verificar que las medidas y funciones descritas existan,
+determinar quién es el responsable de los datos y obtener revisión
+jurídica antes de publicarlos. La política de garantías y la de
+cancelaciones deben ajustarse a los planes y contratos realmente
+ofrecidos. Los ejemplos de plazos no son compromisos comerciales
+automáticos.
+
+DATOS INSTITUCIONALES POR COMPLETAR Operador legal o razón social:
+[PENDIENTE] NIT o identificación: [PENDIENTE] Domicilio: Manizales,
+Caldas, Colombia [CONFIRMAR DOMICILIO LEGAL] Dirección de
+notificaciones: [PENDIENTE] Correo para privacidad y habeas data:
+[PENDIENTE] Correo para soporte y reclamaciones: [PENDIENTE] Teléfono de
+contacto: [PENDIENTE] Sitio web oficial: [PENDIENTE] Fecha de entrada en
+vigor: [PENDIENTE]
+
+================================================================
+DOCUMENTO 1. POLÍTICA DE TRATAMIENTO DE DATOS PERSONALES Y PRIVACIDAD
+================================================================
+
+1.  OBJETO Y ALCANCE MOVANZA es una plataforma digital destinada a
+    facilitar la organización de empresas y trabajadores, la vinculación
+    de integrantes a empresas, la asignación y seguimiento de tareas, la
+    verificación de ubicación para iniciar y finalizar actividades y el
+    registro de marcas temporales asociadas con dichas operaciones. Esta
+    política describe los criterios para recopilar, utilizar, almacenar,
+    consultar, transmitir y eliminar datos personales relacionados con
+    su funcionamiento. Aplica a visitantes que entreguen información,
+    titulares de cuentas, representantes de empresas, trabajadores y
+    personas que contacten al soporte.
+
+2.  IDENTIDAD DEL RESPONSABLE El responsable de los datos tratados para
+    fines propios de administración de la plataforma será [OPERADOR
+    LEGAL, IDENTIFICACIÓN, DIRECCIÓN, CORREO Y TELÉFONO PENDIENTES]. En
+    la información de trabajadores incorporada por una empresa cliente,
+    la determinación de quién actúa como responsable y quién como
+    encargado dependerá de las decisiones efectivas sobre finalidades y
+    medios de tratamiento, los acuerdos suscritos y la legislación
+    aplicable. No se presume que MOVANZA sea responsable único de todos
+    los datos. La empresa cliente deberá comunicar al trabajador quién
+    determina los fines del tratamiento.
+
+3.  MARCO NORMATIVO Y PRINCIPIOS Esta política se interpreta de acuerdo
+    con la Constitución Política de Colombia, artículo 15; Ley 1581 de
+    2012; disposiciones reglamentarias compiladas en el Decreto 1074 de
+    2015; y demás normas aplicables. El tratamiento deberá observar
+    legalidad, finalidad, libertad, veracidad o calidad, transparencia,
+    acceso y circulación restringida, seguridad y confidencialidad. Solo
+    se recolectará información necesaria y pertinente para finalidades
+    específicas e informadas.
+
+4.  CATEGORÍAS DE DATOS Según la función utilizada, podrán tratarse: (a)
+    identificación y contacto, como nombre, correo y datos aportados al
+    crear una cuenta; (b) información de afiliación a una empresa y rol
+    autorizado; (c) datos de tareas, instrucciones, invitaciones,
+    aceptaciones, rechazos, cancelaciones y estados; (d) fechas, horas y
+    eventos de inicio y finalización; (e) ubicación geográfica puntual
+    obtenida al solicitar la verificación de una actividad, su precisión
+    y el resultado de la validación, si técnicamente se registran; (f)
+    datos técnicos necesarios para seguridad, diagnóstico y continuidad,
+    según la implementación real; (g) consultas o comunicaciones de
+    soporte. No se entenderá autorizada la recolección de datos
+    biométricos, de salud, políticos, religiosos o de menores por el
+    solo hecho de utilizar la plataforma.
+
+5.  FINALIDADES ESPECÍFICAS Los datos podrán utilizarse para crear y
+    administrar cuentas; verificar accesos; vincular trabajadores con
+    empresas autorizadas; mostrar y gestionar tareas; permitir
+    aceptación o rechazo de invitaciones y asignaciones; comprobar el
+    cumplimiento de condiciones geográficas definidas para el inicio y
+    finalización de tareas; registrar marcas de tiempo generadas por el
+    servidor; mantener historiales operativos; atender solicitudes;
+    prevenir usos fraudulentos; corregir errores; cumplir obligaciones
+    legales; y elaborar estadísticas operativas dentro de límites
+    legítimos. No se utilizarán datos de ubicación para publicidad
+    conductual ni se comercializarán historiales individuales de
+    movimiento sin una base jurídica específica y comunicación adecuada.
+
+6.  GEOLOCALIZACIÓN Y LIMITACIÓN DEL SEGUIMIENTO La ubicación puede ser
+    requerida cuando el trabajador solicita iniciar o finalizar una
+    tarea sujeta a un radio geográfico. El sistema podrá comparar la
+    posición reportada por el dispositivo con el punto y radio
+    configurados para determinar si se permite la acción. La exactitud
+    depende del dispositivo, permisos, señal y condiciones ambientales.
+    Una verificación geográfica no demuestra por sí sola que una tarea
+    se ejecutó correctamente ni que una persona permaneció en un sitio
+    durante toda su duración. El diseño previsto no supone seguimiento
+    permanente fuera de las verificaciones puntuales; si se incorpora
+    rastreo continuo, deberá revisarse esta política, la base jurídica,
+    los avisos y los controles antes de activarlo. Debe definirse
+    expresamente si se almacena la coordenada exacta o solamente el
+    resultado de la verificación: [PENDIENTE DE CONFIRMACIÓN TÉCNICA].
+
+7.  AUTORIZACIÓN Y BASES LEGÍTIMAS Cuando la autorización sea necesaria,
+    se solicitará de forma previa, expresa e informada, con indicación
+    de las finalidades. Se conservará evidencia verificable de su
+    obtención. En los supuestos exceptuados por ley, el tratamiento se
+    sustentará en la habilitación correspondiente. La aceptación de
+    términos generales no sustituye automáticamente una autorización
+    específica cuando sea exigible. La participación en una relación de
+    trabajo o prestación de servicios no elimina los derechos del
+    titular ni autoriza vigilancia desproporcionada. Las empresas
+    deberán informar adecuadamente a sus trabajadores acerca del uso de
+    la herramienta.
+
+8.  DATOS SENSIBLES Y MENORES MOVANZA no está concebida para recolectar
+    datos sensibles ni para el uso autónomo de menores de edad. Si una
+    función futura exige tratar datos sensibles, se analizarán las
+    excepciones legales, la autorización explícita cuando corresponda,
+    la voluntariedad de las respuestas y las garantías reforzadas. No
+    deberá solicitarse información sensible por formularios genéricos de
+    soporte si no resulta indispensable.
+
+9.  ACCESO POR ROLES Y EMPRESAS El acceso a datos personales debe
+    limitarse a usuarios autorizados de acuerdo con su rol y su
+    vinculación efectiva a una empresa. Una empresa no debe poder
+    consultar datos de trabajadores de otra empresa sin fundamento
+    legítimo. Los trabajadores deben acceder únicamente a sus
+    asignaciones e información permitida. Los administradores técnicos
+    podrán tener accesos excepcionales estrictamente necesarios para
+    soporte, seguridad y mantenimiento, sujetos a controles y
+    confidencialidad. La existencia y efectividad de estos controles
+    debe comprobarse antes de declararlos implementados.
+
+10. TERCEROS, ENCARGADOS Y TRANSFERENCIAS Para operar la plataforma
+    podrían utilizarse proveedores de alojamiento, autenticación, bases
+    de datos, mapas, correo electrónico, monitoreo y otros servicios.
+    Antes de publicar, identificar los proveedores reales [PENDIENTE],
+    sus funciones, ubicación de tratamiento y condiciones contractuales.
+    Cuando terceros traten datos por instrucciones de MOVANZA, deberán
+    existir obligaciones adecuadas de confidencialidad, seguridad y
+    tratamiento. Las transferencias o transmisiones internacionales se
+    analizarán conforme a las reglas colombianas aplicables; no se
+    presumirá que todos los datos permanecen en Colombia.
+
+11. CONSERVACIÓN Y SUPRESIÓN Los datos se conservarán solo durante el
+    tiempo necesario para las finalidades informadas y obligaciones
+    legales o contractuales aplicables. Se definirán periodos
+    diferenciados para cuentas, invitaciones, registros de tareas,
+    verificaciones de ubicación, respaldos y solicitudes de soporte:
+    [TABLA DE RETENCIÓN PENDIENTE]. Al finalizar la relación, se
+    evaluará la eliminación, anonimización o bloqueo de la información
+    según corresponda. La supresión puede estar limitada por deberes
+    legales, contractuales o por la necesidad de conservar pruebas
+    legítimas, lo que deberá comunicarse al solicitante.
+
+12. DERECHOS DE LOS TITULARES Los titulares pueden conocer, actualizar y
+    rectificar sus datos; solicitar prueba de la autorización cuando
+    proceda; recibir información sobre su uso; presentar quejas ante la
+    SIC; revocar la autorización y solicitar supresión en los casos
+    previstos por la ley; y acceder gratuitamente a sus datos en las
+    condiciones legales. Estos derechos se ejercen conforme a las
+    excepciones y requisitos aplicables. MOVANZA no podrá rechazar
+    automáticamente una solicitud solo porque el usuario esté vinculado
+    a una empresa.
+
+13. CANALES Y PROCEDIMIENTO Las consultas y reclamos se recibirán en
+    [CORREO DE PRIVACIDAD PENDIENTE] o [CANAL FÍSICO PENDIENTE]. El
+    solicitante deberá aportar datos suficientes para verificar su
+    identidad y concretar la solicitud, sin exigir información excesiva.
+    Las consultas se atenderán, como regla legal, en máximo diez (10)
+    días hábiles desde su recibo; si no es posible, se informará la
+    razón y la nueva fecha, que no excederá cinco (5) días hábiles
+    adicionales. Los reclamos se atenderán, como regla, en quince (15)
+    días hábiles contados desde el día siguiente a su recibo completo;
+    si no es posible, se informará la razón y la nueva fecha, que no
+    excederá ocho (8) días hábiles adicionales. Cuando un reclamo
+    resulte incompleto se seguirá el procedimiento legal de subsanación.
+    Si la petición corresponde a una empresa responsable, MOVANZA
+    coordinará su gestión según el contrato y la ley, sin obstaculizar
+    los derechos del titular.
+
+14. SEGURIDAD Y EVENTOS Se aplicarán medidas administrativas, técnicas y
+    organizativas proporcionales a los riesgos y a la naturaleza de los
+    datos. Ningún sistema conectado a Internet puede prometer seguridad
+    absoluta. Se documentará el procedimiento de identificación,
+    contención, investigación, notificación y corrección de incidentes,
+    y se evaluarán las obligaciones de reporte a autoridades y titulares
+    según cada caso. No se afirmará que existen controles no
+    verificados.
+
+15. CAMBIOS A LA POLÍTICA Las modificaciones sustanciales se comunicarán
+    de manera adecuada antes de aplicarse cuando sea necesario,
+    indicando fecha, versión y forma de consulta. Si un cambio introduce
+    finalidades que requieran nueva autorización, esta deberá obtenerse
+    conforme a la ley. Versión vigente: [PENDIENTE]. Fecha de vigencia:
+    [PENDIENTE].
+
+================================================================
+DOCUMENTO 2. POLÍTICA DE SEGURIDAD DE LA INFORMACIÓN
+================================================================
+
+1.  PROPÓSITO Establecer compromisos y reglas de seguridad para proteger
+    la confidencialidad, integridad y disponibilidad de la información
+    de MOVANZA, de las empresas y de los trabajadores. Este documento
+    describe controles esperados y obligaciones de los usuarios; su
+    publicación como política vigente requiere confirmar la
+    implementación real de cada control.
+
+2.  ALCANCE Comprende cuentas, credenciales, datos de empresas, tareas,
+    ubicaciones, marcas temporales, archivos, sistemas de soporte,
+    infraestructura, servicios de terceros y personas con acceso
+    autorizado. La seguridad es una responsabilidad compartida: MOVANZA
+    administra la plataforma dentro de su alcance y cada empresa
+    gestiona correctamente a sus usuarios, permisos y dispositivos.
+
+3.  CLASIFICACIÓN DE LA INFORMACIÓN La información se clasificará por
+    sensibilidad y necesidad de acceso. La información pública podrá
+    difundirse; la información interna se reservará a operaciones
+    autorizadas; los datos personales y registros de ubicación se
+    tratarán con acceso restringido. Los secretos técnicos, claves,
+    tokens y credenciales no deberán publicarse en repositorios,
+    documentos públicos o mensajes de soporte.
+
+4.  IDENTIDADES Y CONTROL DE ACCESO Se promoverá la autenticación
+    individual, la asignación del mínimo privilegio y la revocación de
+    accesos cuando termine una vinculación. Los permisos deberán
+    distinguir las funciones de empresa, trabajador y administración.
+    Las operaciones sobre una empresa deberán validar en el servidor que
+    el usuario pertenece a ella y tiene el rol necesario. No es
+    suficiente ocultar botones en la interfaz. La separación efectiva
+    entre empresas deberá comprobarse mediante pruebas de autorización.
+
+5.  CREDENCIALES Y SESIONES Los usuarios deben proteger sus
+    credenciales, no compartir contraseñas y cerrar sesiones en
+    dispositivos ajenos. MOVANZA deberá configurar las sesiones,
+    recuperación de acceso y políticas de autenticación conforme a las
+    capacidades reales del proveedor utilizado. Las contraseñas no deben
+    almacenarse en texto plano. La disponibilidad de autenticación
+    multifactor se indicará únicamente si está implementada.
+
+6.  INTEGRIDAD DE REGISTROS Las marcas de tiempo utilizadas para
+    calcular duración de tareas deberán originarse en el servidor y no
+    ser editables libremente desde el navegador. Las acciones de
+    aceptación, rechazo, inicio, finalización y cancelación deben
+    respetar las reglas de negocio. Los registros finalizados o
+    cancelados conservarán el historial que resulte legítimamente
+    necesario y las correcciones deberán ser trazables cuando exista una
+    función de auditoría. No se presumirá que los registros son
+    infalsificables.
+
+7.  GEOLOCALIZACIÓN Y CONFIABILIDAD El GPS y otros métodos de
+    posicionamiento pueden presentar errores, manipulación o
+    imprecisión. La validación de radio geográfico debe ejecutarse con
+    criterios documentados y mensajes claros ante fallos. El resultado
+    debe interpretarse como una comprobación técnica sujeta a
+    limitaciones, no como evidencia definitiva de desempeño. Las
+    empresas no deben emplear estos resultados de forma automática para
+    decisiones laborales sin revisión humana y contexto suficiente.
+
+8.  CIFRADO, TRANSPORTE Y ALMACENAMIENTO Las comunicaciones con el
+    servicio deberán protegerse con protocolos seguros, y los secretos
+    de aplicación deberán almacenarse fuera del código público. Los
+    datos almacenados deberán protegerse según su sensibilidad y los
+    controles ofrecidos por la infraestructura. Antes de publicar
+    afirmaciones específicas sobre cifrado en reposo, rotación de claves
+    o aislamiento, verificar configuración y contratos de los
+    proveedores.
+
+9.  COPIAS DE SEGURIDAD Y RECUPERACIÓN Se definirán responsables,
+    periodicidad, retención y procedimientos de restauración para los
+    respaldos necesarios. Las copias deberán protegerse frente a acceso
+    no autorizado. La existencia de respaldos no garantiza recuperación
+    instantánea: los objetivos de recuperación y los tiempos de
+    indisponibilidad solo podrán prometerse después de realizar pruebas
+    y establecer compromisos operativos.
+
+10. ACTUALIZACIONES Y VULNERABILIDADES Se mantendrá un procedimiento
+    para actualizar componentes, evaluar dependencias, corregir fallas y
+    revisar configuraciones. Los accesos privilegiados deberán limitarse
+    y registrarse cuando sea técnicamente viable. Se deberán realizar
+    pruebas de seguridad antes de cambios relevantes, especialmente en
+    permisos por empresa, ubicación y operaciones de tareas.
+
+11. INCIDENTES DE SEGURIDAD Ante sospecha de exposición, pérdida o
+    acceso indebido, se deberá registrar el evento, contenerlo, analizar
+    su alcance, corregir causas y determinar si corresponde informar a
+    autoridades, empresas y titulares. Canal para reportes: [PENDIENTE].
+    Los plazos de reporte a autoridades se aplicarán según el régimen y
+    la obligación concreta; no se promete un plazo único sin evaluación
+    jurídica.
+
+12. PROVEEDORES Y PERSONAL AUTORIZADO Los proveedores y colaboradores
+    con acceso a información deberán estar sujetos a deberes de
+    confidencialidad y obligaciones contractuales proporcionales. El
+    acceso de soporte a datos de clientes debe ser excepcional y
+    justificado. Al finalizar la relación de una persona autorizada se
+    deberán revocar los accesos pertinentes.
+
+13. RESPONSABILIDADES DE LOS USUARIOS Las empresas deben mantener
+    actualizadas las vinculaciones de su equipo, retirar accesos cuando
+    corresponda y evitar compartir información con personas no
+    autorizadas. Los trabajadores deben usar sus propias cuentas, no
+    falsificar ubicación ni intentar acceder a datos de terceros. La
+    detección de una anomalía deberá comunicarse por el canal de
+    soporte.
+
+14. REVISIÓN Y VIGENCIA La política se revisará ante cambios de
+    arquitectura, incidentes relevantes, nuevas funcionalidades o
+    cambios regulatorios. Responsable interno de seguridad: [PENDIENTE].
+    Fecha de vigencia: [PENDIENTE].
+
+================================================================
+DOCUMENTO 3. TÉRMINOS Y CONDICIONES DE USO
+================================================================
+
+1.  IDENTIFICACIÓN Y ACEPTACIÓN Estos términos regulan el uso de
+    MOVANZA, operada por [OPERADOR LEGAL PENDIENTE]. La aceptación debe
+    producirse mediante un mecanismo claro que permita consultar los
+    documentos antes de continuar. El uso de la plataforma está sujeto a
+    la ley colombiana, a los acuerdos válidos con clientes y a las
+    condiciones particulares que se informen oportunamente. Una cláusula
+    no podrá suprimir derechos irrenunciables.
+
+2.  DESCRIPCIÓN DEL SERVICIO MOVANZA ofrece herramientas digitales para
+    administrar organizaciones, gestionar vinculaciones de trabajadores,
+    crear y asignar tareas, registrar estados y marcas temporales y
+    verificar ubicaciones para determinados eventos operativos. La
+    plataforma es una herramienta tecnológica de apoyo y no garantiza
+    por sí misma la ejecución material, calidad o resultado comercial de
+    las tareas.
+
+3.  TIPOS DE USUARIO La empresa es la organización que administra su
+    equipo y sus actividades. El trabajador es la persona autorizada a
+    consultar y ejecutar tareas de empresas a las que se encuentre
+    válidamente vinculada. Los permisos específicos dependerán del rol y
+    del modelo de acceso implementado. Una persona puede tener
+    relaciones con varias empresas si el sistema y las autorizaciones lo
+    permiten, sin que ello otorgue acceso cruzado a datos ajenos.
+
+4.  REGISTRO Y VERACIDAD Los usuarios deberán suministrar información
+    veraz, mantenerla actualizada y custodiar sus credenciales. La
+    plataforma podrá establecer procedimientos razonables de
+    verificación de cuentas. No se permite suplantar identidades,
+    registrar organizaciones sin autorización ni proporcionar
+    información falsa sobre actividades o ubicación.
+
+5.  VINCULACIÓN A EMPRESAS Las invitaciones deberán provenir de personas
+    autorizadas. El trabajador podrá aceptar o rechazar invitaciones
+    según las funciones disponibles. La vinculación a una empresa no
+    equivale por sí misma a un contrato laboral ni sustituye los
+    acuerdos que deban existir entre las partes. La empresa debe
+    verificar que tiene legitimidad para gestionar los datos de sus
+    trabajadores y asignarles actividades.
+
+6.  ASIGNACIONES Y REGLAS OPERATIVAS Las tareas podrán tener
+    instrucciones, ubicación, radio y estados. Un trabajador no debe
+    ejecutar tareas de una empresa a la que no pertenezca. Una tarea
+    rechazada no puede iniciarse; una tarea no puede finalizarse si no
+    comenzó; las marcas de tiempo deben calcularse con datos del
+    servidor; una tarea finalizada no podrá modificarse libremente; una
+    cancelación no deberá borrar arbitrariamente el historial necesario.
+    Estas reglas se describen como requisitos funcionales de MOVANZA y
+    deberán verificarse técnicamente antes de su publicación como
+    capacidades efectivas.
+
+7.  VALIDACIÓN DE INICIO Y FINALIZACIÓN Cuando una tarea requiera
+    ubicación, el inicio y la finalización estarán condicionados a la
+    comprobación de que el dispositivo se encuentra dentro del radio
+    definido. Si el permiso de ubicación se deniega, la posición es
+    imprecisa o el sistema no puede verificarla, la operación podrá
+    permanecer sin completar y deberá informarse la causa. La empresa
+    debe disponer de un procedimiento razonable para revisar
+    controversias o fallos técnicos, sin asumir que la aplicación
+    constituye una prueba absoluta.
+
+8.  RESPONSABILIDADES DE LA EMPRESA La empresa deberá establecer tareas
+    legítimas, instrucciones claras y radios razonables; mantener
+    actualizado su equipo; informar a los trabajadores sobre el
+    tratamiento de datos; usar los registros de manera proporcionada;
+    respetar la normativa laboral, contractual y de privacidad; y no
+    solicitar a MOVANZA actividades ilegales o discriminatorias. Las
+    decisiones de contratación, pago, sanción o terminación de vínculos
+    corresponden a quienes legalmente sean responsables de ellas, con
+    respeto al debido proceso y las normas aplicables.
+
+9.  RESPONSABILIDADES DEL TRABAJADOR El trabajador deberá proteger su
+    cuenta, revisar las tareas asignadas, reportar problemas y no
+    manipular indebidamente ubicación, tiempos o estados. No deberá
+    compartir información confidencial de las empresas a las que acceda.
+    La imposibilidad técnica de iniciar o terminar una tarea deberá
+    reportarse por el canal disponible, sin que este documento prejuzgue
+    las consecuencias laborales de un incidente.
+
+10. USOS PROHIBIDOS Se prohíben el acceso no autorizado, la
+    suplantación, la explotación de vulnerabilidades, la extracción
+    masiva ilegítima de datos, la manipulación de registros, el uso de
+    cuentas ajenas y la utilización de la plataforma para vigilancia
+    abusiva, discriminación o actividades contrarias a la ley. Las
+    medidas de restricción de cuentas deberán ser proporcionales y
+    respetar los derechos de los usuarios.
+
+11. PROPIEDAD INTELECTUAL La plataforma, su código, marca y elementos
+    propios están protegidos conforme a las normas aplicables, sin
+    perjuicio de licencias de terceros. Cada empresa y usuario conserva
+    los derechos que legalmente correspondan sobre su información y
+    contenidos. El acceso a MOVANZA no transfiere derechos de propiedad
+    sobre el software.
+
+12. DISPONIBILIDAD Y CAMBIOS Podrán realizarse actualizaciones,
+    mantenimientos y correcciones. La disponibilidad depende también de
+    proveedores, Internet, equipos y servicios de localización. Los
+    cambios materiales en funciones o condiciones se comunicarán de
+    manera adecuada. Las condiciones comerciales específicas deberán
+    acordarse por separado cuando se habiliten planes pagos.
+
+13. SUSPENSIÓN Y TERMINACIÓN La cuenta podrá suspenderse o cerrarse por
+    solicitud válida, finalización de la relación contractual o
+    incumplimientos relevantes, conforme a la ley y los contratos
+    aplicables. Antes de eliminar información se revisarán obligaciones
+    de conservación, derechos de titulares y necesidades de exportación.
+    Los procedimientos y plazos de cierre deberán concretarse:
+    [PENDIENTE].
+
+14. LIMITACIONES Y RESPONSABILIDAD MOVANZA no controla todos los
+    factores externos que pueden afectar al GPS, Internet o
+    dispositivos. Sin embargo, ninguna cláusula excluye responsabilidad
+    por dolo, culpa grave, incumplimientos legales o garantías
+    imperativas cuando correspondan. Los errores de geolocalización
+    deberán poder ser reportados y evaluados. No se promete exactitud
+    perfecta ni ausencia absoluta de interrupciones.
+
+15. SOLUCIÓN DE CONTROVERSIAS Los usuarios podrán presentar solicitudes
+    y reclamaciones en [CANAL PENDIENTE]. Se buscará una respuesta
+    razonada y documentada. Las controversias se resolverán por las
+    autoridades competentes o mecanismos válidos previstos por la ley y
+    los contratos, sin impedir el acceso a derechos de consumidores o
+    titulares de datos.
+
+16. LEY APLICABLE Y VIGENCIA Estos términos se interpretarán conforme a
+    la legislación colombiana y los regímenes imperativos que resulten
+    aplicables. Operador, versión y fecha de vigencia: [PENDIENTES].
+
+================================================================
+DOCUMENTO 4. POLÍTICA DE PRESTACIÓN DEL SERVICIO
+================================================================
+
+1.  OBJETIVO Describir el alcance operativo del servicio MOVANZA, las
+    condiciones normales de uso, las dependencias técnicas, los
+    procedimientos de soporte y los límites de los registros generados
+    por la plataforma.
+
+2.  SERVICIOS INCLUIDOS Según la versión contratada o habilitada,
+    MOVANZA podrá permitir registro y acceso de usuarios, administración
+    de empresas, invitaciones, asignación de tareas, estados de
+    ejecución, validaciones geográficas al inicio y finalización, marcas
+    de tiempo e historiales. La disponibilidad de módulos concretos debe
+    verificarse en la versión publicada; no se considerarán contratadas
+    funciones anunciadas solo como futuras.
+
+3.  REQUISITOS DEL USUARIO Para utilizar funciones conectadas se
+    requiere un dispositivo compatible, conexión suficiente, navegador o
+    aplicación compatible y permisos pertinentes. Las verificaciones
+    geográficas dependen de servicios de ubicación del equipo y de que
+    el usuario permita su uso cuando corresponda. MOVANZA no puede
+    garantizar la precisión uniforme de todos los dispositivos.
+
+4.  DISPONIBILIDAD Y MANTENIMIENTO Se procurará mantener el servicio
+    accesible, sujeto a mantenimientos programados, actualizaciones,
+    fallas, incidentes de seguridad y eventos externos. No se ofrece un
+    porcentaje específico de disponibilidad ni un acuerdo de nivel de
+    servicio hasta que exista un compromiso expreso y verificable.
+    Cuando sea posible, se comunicarán interrupciones relevantes y su
+    recuperación estimada, sin prometer plazos no sustentados.
+
+5.  VERIFICACIÓN DE UBICACIÓN La plataforma podrá evaluar si una
+    coordenada reportada se encuentra dentro del radio de una tarea. La
+    precisión de la medición, las restricciones del navegador y las
+    condiciones físicas pueden impedir una validación. Si falla, el
+    usuario deberá recibir un motivo comprensible y podrá acudir al
+    soporte o a su empresa para gestionar el incidente. La empresa debe
+    evitar interpretar un rechazo técnico como prueba automática de
+    incumplimiento laboral.
+
+6.  REGISTRO DE TIEMPOS Las marcas temporales de inicio y finalización
+    se generarán por el servidor cuando las operaciones sean válidas. El
+    tiempo registrado representa el intervalo entre eventos aceptados
+    por el sistema; no necesariamente equivale a horas remunerables,
+    tiempo total trabajado o calidad de la tarea. Las decisiones
+    laborales y contractuales siguen siendo responsabilidad de las
+    partes correspondientes.
+
+7.  CONTINUIDAD DE LAS OPERACIONES En caso de interrupción, algunas
+    tareas podrán quedar pendientes de validación. No se presume que el
+    sistema admita ejecución fuera de línea o sincronización posterior
+    si tales capacidades no están implementadas. Los mecanismos
+    alternativos de constancia y revisión deberán acordarse con las
+    empresas, evitando modificaciones ocultas de registros históricos.
+
+8.  SOPORTE Y SOLICITUDES El usuario podrá reportar errores, problemas
+    de acceso, dudas y controversias operativas por [CANAL PENDIENTE].
+    El reporte debería incluir descripción, fecha, tarea afectada y
+    evidencia pertinente, sin compartir contraseñas. La clasificación,
+    horarios de soporte y tiempos de respuesta comerciales deberán
+    definirse y publicarse solo cuando sean sostenibles.
+
+9.  CAMBIOS DEL SERVICIO Las mejoras, correcciones y retiros de
+    funciones se gestionarán procurando minimizar afectaciones y
+    respetar contratos vigentes y derechos aplicables. Los cambios
+    sustanciales que afecten prestaciones contratadas requerirán la
+    comunicación y el tratamiento jurídico que corresponda.
+
+10. RELACIÓN CON TERCEROS MOVANZA puede depender de infraestructura,
+    servicios de mapas, autenticación o comunicaciones de terceros. Las
+    fallas externas no eliminan las obligaciones legales propias de
+    MOVANZA. Se analizarán las causas de cada incidente y las soluciones
+    procedentes.
+
+11. VIGENCIA Operador, canales, versión y fecha de vigencia:
+    [PENDIENTES].
+
+================================================================
+DOCUMENTO 5. POLÍTICA DE GARANTÍAS Y ATENCIÓN DE FALLAS
+================================================================
+
+1.  FINALIDAD Establecer un procedimiento claro para recibir, analizar y
+    solucionar inconvenientes relacionados con el funcionamiento de
+    MOVANZA, sin limitar los derechos legales que correspondan a
+    usuarios o consumidores.
+
+2.  ÁMBITO DE APLICACIÓN La aplicación concreta de garantías legales
+    depende de la naturaleza de la relación contractual, el tipo de
+    cliente, las condiciones ofrecidas y el régimen jurídico aplicable.
+    Esta política no constituye una promesa de resultados,
+    disponibilidad continua o compensación económica automática. Las
+    garantías obligatorias no podrán excluirse mediante cláusulas
+    generales.
+
+3.  FUNCIONES OBJETO DE REVISIÓN Se podrán reportar, entre otros,
+    problemas de inicio de sesión, permisos incorrectos, fallas en
+    invitaciones, errores de asignación, registros inconsistentes,
+    interrupciones y problemas de verificación geográfica. Una
+    discrepancia derivada exclusivamente de condiciones externas no será
+    calificada automáticamente como defecto de la plataforma; deberá
+    investigarse.
+
+4.  PRESENTACIÓN DE SOLICITUDES El usuario o cliente podrá contactar a
+    [CANAL DE SOPORTE PENDIENTE], aportando identificación de cuenta o
+    empresa, descripción del problema, momento aproximado, pasos para
+    reproducirlo y evidencias pertinentes. No se solicitarán contraseñas
+    ni secretos de acceso. Se proporcionará un número o medio de
+    seguimiento cuando el proceso esté implementado.
+
+5.  EVALUACIÓN Y RESPUESTA MOVANZA analizará la incidencia, determinará
+    su alcance y comunicará el estado de la gestión. Podrá aplicar
+    correcciones técnicas, instrucciones de uso, recuperación de acceso
+    u otras medidas procedentes. Los plazos de respuesta y reparación
+    específicos se definirán en contratos o condiciones publicadas y
+    deberán respetar los mínimos legales que correspondan.
+
+6.  REMEDIOS Y DERECHOS Cuando exista incumplimiento de una garantía
+    legal o contractual, se ofrecerán las soluciones que procedan según
+    la normativa y el contrato aplicable, que pueden incluir corrección
+    del servicio, nueva prestación, terminación o devolución en los
+    supuestos correspondientes. No se condicionará el ejercicio de
+    derechos imperativos a renuncias generales.
+
+7.  LIMITACIONES TÉCNICAS El GPS, los equipos, la red móvil y otros
+    servicios externos pueden afectar la experiencia. Estas
+    circunstancias se evaluarán caso por caso y no constituyen una
+    exoneración automática de responsabilidad. Las empresas deben
+    disponer de criterios de revisión humana ante controversias sobre
+    registros.
+
+8.  SERVICIOS GRATUITOS Y PAGOS Si existe una fase de prueba gratuita,
+    sus características, duración y limitaciones deberán explicarse. Si
+    se habilitan planes pagos, se detallarán las prestaciones ofrecidas,
+    condiciones comerciales, soporte y garantías aplicables. No se
+    presentará una fase experimental como un servicio comercial
+    garantizado si no corresponde.
+
+9.  RECLAMACIONES Y AUTORIDADES Las reclamaciones se recibirán en [CANAL
+    PENDIENTE]. Los clientes y consumidores conservarán los mecanismos
+    legales de reclamación y acceso a las autoridades competentes,
+    cuando proceda.
+
+10. VIGENCIA Fecha de vigencia, versión y datos del prestador:
+    [PENDIENTES].
+
+================================================================
+DOCUMENTO 6. POLÍTICA DE CANCELACIONES, RETRACTO Y DEVOLUCIONES
+================================================================
+
+1.  OBJETIVO Y ESTADO COMERCIAL Este documento establece criterios
+    generales para cancelar cuentas o planes, gestionar solicitudes de
+    reembolso y ejercer derechos de retracto cuando legalmente procedan.
+    Las condiciones comerciales definitivas no podrán publicarse hasta
+    definir si MOVANZA ofrecerá servicios gratuitos, suscripciones,
+    pagos únicos o contratos empresariales negociados. Modalidad
+    comercial: [PENDIENTE].
+
+2.  DISTINCIÓN ENTRE CANCELACIÓN DE CUENTA Y SUSCRIPCIÓN Cerrar una
+    cuenta no es necesariamente lo mismo que cancelar una suscripción.
+    El cierre de una cuenta puede afectar el acceso a tareas e
+    historiales, mientras que la cancelación de un plan pago determina
+    la continuidad de cobros y servicios conforme a lo contratado. Se
+    deberán informar los efectos de cada solicitud antes de confirmarla.
+
+3.  PROCEDIMIENTO DE CANCELACIÓN Cuando se habiliten planes pagos, el
+    cliente deberá contar con un canal claro para solicitar la
+    cancelación y recibir constancia de la solicitud. Se informará si el
+    servicio permanece activo hasta el final del periodo pagado, si hay
+    renovación automática y cómo detenerla, conforme a la ley aplicable.
+    Canal y proceso: [PENDIENTES]. No se crearán obstáculos
+    desproporcionados para ejercer derechos legales.
+
+4.  DERECHO DE RETRACTO En las relaciones de consumo y modalidades de
+    venta a las que resulte aplicable el artículo 47 de la Ley 1480 de
+    2011, el consumidor podrá ejercer el retracto dentro del término
+    legal general de cinco (5) días hábiles, sujeto a las condiciones y
+    excepciones previstas en la norma. Entre las excepciones se
+    encuentran los contratos de prestación de servicios cuya prestación
+    haya comenzado con el acuerdo del consumidor. La aplicabilidad
+    concreta a servicios digitales, a la modalidad de contratación y al
+    momento de inicio del servicio deberá analizarse antes de publicar
+    una regla categórica. Este texto no supone que todos los clientes
+    empresariales sean consumidores ni que toda suscripción admita
+    retracto.
+
+5.  DEVOLUCIONES POR INCUMPLIMIENTO Si un servicio pago no se presta
+    conforme a las condiciones exigibles, se evaluarán los remedios
+    legales y contractuales pertinentes, incluida la devolución cuando
+    corresponda. No se establecerá una política absoluta de ‘sin
+    devoluciones’ que desconozca derechos irrenunciables. La existencia
+    de una falla no implica automáticamente reembolso total; deberá
+    revisarse el caso y el régimen aplicable.
+
+6.  COBROS, RENOVACIONES Y FACTURACIÓN Antes de contratar, el cliente
+    deberá conocer precio total, impuestos aplicables, periodicidad,
+    medios de pago, duración, condiciones de renovación y cancelación.
+    No se habilitarán cobros recurrentes sin información y
+    autorizaciones pertinentes. El tratamiento de datos de pago
+    dependerá del proveedor real y de la arquitectura de cobro
+    [PENDIENTE].
+
+7.  SOLICITUD DE REEMBOLSO Las solicitudes se recibirán por [CANAL
+    PENDIENTE], con identificación del titular del pago, referencia de
+    la transacción, motivo y documentación razonable. Se evaluarán y
+    tramitarán dentro de los términos legales o contractuales
+    aplicables. Los medios y tiempos de devolución deberán comunicarse
+    de forma precisa según el proveedor de pagos y la modalidad de
+    operación.
+
+8.  EFECTOS SOBRE DATOS Y TAREAS La cancelación de un plan no autoriza
+    borrar indiscriminadamente los registros de trabajadores ni los
+    datos de otras empresas. Se establecerá un procedimiento de
+    exportación, conservación y supresión conforme a las obligaciones
+    legales, la política de datos y los contratos con clientes. Los
+    derechos de los titulares se mantendrán vigentes después de la
+    cancelación.
+
+9.  CONTRATOS EMPRESARIALES Las empresas pueden contratar bajo
+    condiciones particulares que definan alcance, precio, duración,
+    soporte y terminación. Estas condiciones no podrán contrariar normas
+    imperativas ni sustituir los derechos de los titulares de datos. En
+    caso de discrepancia, se aplicará el régimen jurídico
+    correspondiente.
+
+10. VIGENCIA Planes, condiciones de cobro, operador, canal y fecha de
+    vigencia: [PENDIENTES].
+
+================================================================ ANEXO
+A. LISTA DE VALIDACIÓN ANTES DE PUBLICAR
+================================================================
+
+[ ] Identificar legalmente al operador y completar domicilio y canales.
+[ ] Determinar responsable y encargado del tratamiento en cada flujo de
+datos. [ ] Verificar autorización informada y conservación de
+evidencias. [ ] Comprobar si se guarda coordenada GPS exacta, precisión,
+resultado o solo evento. [ ] Documentar proveedores reales (incluidos
+autenticación, hosting, mapas y correo). [ ] Definir periodos de
+retención y eliminación, incluidos respaldos. [ ] Comprobar aislamiento
+entre empresas, roles y permisos en backend. [ ] Confirmar
+procedimientos de incidentes, soporte y ejercicio de derechos. [ ]
+Definir si hay menores, datos sensibles, cookies analíticas o
+publicidad. [ ] Definir condiciones de suscripción, facturación,
+retracto y reembolso. [ ] Confirmar autorización de uso de testimonios y
+marcas de clientes. [ ] Revisar términos y documentos con asesoría
+jurídica colombiana. [ ] Publicar versión, fecha, mecanismos de
+aceptación y registro de cambios.
+
+================================================================ ANEXO
+B. FUENTES NORMATIVAS Y OFICIALES CONSULTADAS
+================================================================
+
+-   Constitución Política de Colombia, artículo 15.
+-   Ley 1581 de 2012:
+    https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=49981
+-   Decreto 1074 de 2015:
+    https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=76608
+-   Ley 1480 de 2011:
+    https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=44306
+-   SIC, política de tratamiento de datos (ejemplo oficial):
+    https://sedeelectronica.sic.gov.co/politica-de-tratamiento-de-datos-personales
+-   SIC, contenido mínimo de las políticas:
+    https://sedeelectronica.sic.gov.co/publicaciones/boletin-juridico/concepto/politicas-de-tratamiento-de-datos-personales
+-   SIC, concepto orientador sobre geolocalización:
+    https://sedeelectronica.sic.gov.co/sites/default/files/boletin-juridico/conceptos/22-401941%20.pdf
+
+NOTA FINAL: Este documento no sustituye una auditoría técnica ni
+asesoría jurídica. No publicar afirmaciones sobre medidas de seguridad,
+localización, cobros o soporte que no correspondan a la operación real
+de MOVANZA.

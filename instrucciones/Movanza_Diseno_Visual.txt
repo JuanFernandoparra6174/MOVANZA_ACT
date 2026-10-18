@@ -1,0 +1,67 @@
+MOVANZA
+Guía de identidad visual y diseño de interfaz
+Propuesta de estilo · Versión 1.0 · Octubre de 2026
+1. Propósito de la identidad visual
+MOVANZA es una plataforma web orientada a empresas que asignan trabajos presenciales, coordinan equipos y verifican mediante ubicación GPS el inicio y la finalización de actividades. Su diseño debe facilitar tareas operativas, no distraer a quienes las realizan.
+La identidad visual buscada es tecnológica, moderna, cercana y profesional: una combinación de la estética suave y los degradados de la plantilla HTML5 UP Stellar con la claridad funcional de un software empresarial (SaaS).
+2. Personalidad y principios de diseño
+* Confianza y precisión: información clara sobre tareas, horarios, ubicación y estados.
+* Simplicidad: pantallas limpias, navegación intuitiva y acciones principales fáciles de encontrar.
+* Modernidad sin exceso: degradados en lugares estratégicos; no saturar tablas, formularios ni mapas.
+* Accesibilidad: el color siempre acompañado de texto o iconos; contraste legible y botones claramente distinguibles.
+* Coherencia: mismos colores, componentes, radios, márgenes y nombres visuales en toda la plataforma.
+3. Paleta principal
+Paleta basada en colores presentes en el CSS de HTML5 UP Stellar, adaptados a los usos de MOVANZA:
+Violeta principal
+5F4D93Marca, navegación activa, botones primarios y encabezados destacados.Azul tecnológico
+8CC9F0Ubicación, GPS, mapas, enlaces y elementos geográficos.Lavanda
+A89CC8Tarjetas secundarias, fondos de apoyo y detalles visuales.Rosa pastel
+EFA8B0Acentos y degradados decorativos; evitarlo como color dominante.Gris muy claro
+F7F7F7Fondo de paneles empresariales y separaciones suaves.Gris oscuro
+303044Texto principal propuesto para alta legibilidad.
+Nota: #303044 es un ajuste propuesto para MOVANZA, no uno de los colores base extraídos del tema Stellar. El blanco #FFFFFF y el gris de borde #DDDDDD complementan el sistema.
+4. Degradados y superficies
+* Degradado principal: #E37682 ? #5F4D93. Reservado para portada, hero comercial y piezas de marca.
+* Degradado alternativo para el dashboard: #5F4D93 ? #A89CC8. Preferible para encabezados discretos.
+* Degradado suave de acento: #EFA8B0 ? #A89CC8 ? #8CC9F0. Útil en ilustraciones y separadores; no detrás de texto pequeño.
+* Superficies de trabajo: fondos #F7F7F7 o #FFFFFF; tarjetas blancas, bordes #DDDDDD y sombras suaves.
+5. Sistema de estados de asignaciones
+Estos colores funcionales complementan la paleta de marca para distinguir claramente el flujo definido en el documento funcional de MOVANZA:
+Pendiente
+FFF3D8Texto ámbar oscuro #92620A. Requiere decisión del trabajador.Aceptada
+EDE8FATexto violeta #5F4D93. Lista para iniciar tras verificación de ubicación.En curso
+E0F2FFTexto azul oscuro #216B99. Actividad iniciada y todavía no finalizada.Finalizada
+DFF4E8Texto verde oscuro #24784D. Actividad terminada.Rechazada
+FCE5E7Texto rojo oscuro #AB3547. Conservar motivo y registro.Cancelada
+EAEAEATexto gris #626262. Estado histórico sin ejecución futura.
+En etiquetas de estado, el fondo claro debe combinarse con el texto oscuro indicado. No emplear solo puntos de color sin la palabra del estado.
+6. Estilo de la interfaz
+* Tipografía: sans serif contemporánea y legible (Aptos, Inter o similar); jerarquía clara entre títulos, subtítulos, datos y ayudas.
+* Componentes: tarjetas de esquinas moderadamente redondeadas, espaciado consistente y bordes discretos.
+* Botón principal: violeta #5F4D93 con texto blanco. Botón secundario: superficie blanca con borde violeta.
+* Formularios: etiquetas visibles, instrucciones breves y errores debajo del campo, sin depender únicamente de rojo.
+* Iconografía: simple, lineal y coherente; usar iconos relacionados con mapa, ubicación, reloj, equipo y tareas.
+* Movimiento: transiciones suaves y breves; evitar animaciones innecesarias en procesos críticos.
+7. Aplicación por pantalla
+Sitio de presentación
+Puede utilizar más personalidad visual: hero con degradado principal, mensaje de valor concreto, botón de llamada a la acción y secciones explicando el control de trabajos, la ubicación y las estadísticas.
+Panel de empresa
+Debe priorizar productividad: menú limpio, métricas visibles, lista de trabajos, tareas por estado y mapa. Usar violeta para navegación/acciones, azul para información geográfica y fondos predominantemente neutros.
+Panel del trabajador
+Interfaz especialmente sencilla para móvil: próximas asignaciones, aceptar/rechazar, detalle y botones grandes de iniciar/finalizar. Mostrar de forma inequívoca el resultado de la validación GPS y los motivos de bloqueo.
+Mapa y verificación GPS
+Mantener marcadores legibles sobre diferentes fondos cartográficos, áreas de validación claramente delimitadas y leyendas. El color debe acompañarse de estados, textos y señales de precisión; evitar llenar el mapa de decoraciones.
+Estadísticas
+Gráficos de líneas y barras sobrios, con etiquetas y unidades. Colores consistentes con las categorías; incluir resúmenes textuales para facilitar la interpretación.
+8. Reglas de uso y límites
+* El violeta es el color de identidad, no el fondo de todas las pantallas.
+* El rosa es un acento de marca, no un indicador de error ni de prioridad operativa.
+* Los estados operativos usan un sistema de colores independiente y estable.
+* Los mapas, tablas y formularios deben ser más austeros que la página comercial.
+* Verificar contraste real (incluyendo botones y textos pequeños) antes de publicar.
+* Mantener el diseño adaptable a escritorio y móvil, especialmente para trabajadores en campo.
+9. Criterio visual final
+MOVANZA debe verse como un SaaS empresarial moderno: confiable para quien administra operaciones y directo para quien ejecuta trabajos. La plantilla Stellar sirve como inspiración cromática, pero el producto no debería copiar sus composiciones de landing page en los paneles de trabajo.
+Esta guía define una dirección de diseño inicial. No constituye todavía un manual de marca definitivo ni un prototipo validado con usuarios.
+MOVANZA  ·  Guía visual  ·  Propuesta inicial
+

@@ -1,5 +1,6 @@
 import { supabase } from '../configuracion/supabase.js';
 import { consultarAcceso, crearNavegacion, puedeAbrirModulo } from './acceso.js';
+import { crearCuentaElemento } from './cuenta-interfaz.js';
 
 const principal = document.querySelector('main');
 const modulo = document.body.dataset.modulo;
@@ -29,6 +30,41 @@ try {
     } else {
         const navegacion = crearNavegacion(acceso.perfil.rol, './', modulo);
         principal.querySelector('header').after(navegacion);
+        const estilosCuenta = document.createElement('link');
+        estilosCuenta.rel = 'stylesheet';
+        estilosCuenta.href = '../estilos/cuenta.css';
+        document.head.append(estilosCuenta);
+        const cabecera = principal.querySelector('header');
+        cabecera.classList.add('cabecera-con-cuenta');
+        const cuenta = crearCuentaElemento({ raiz: '../' }, async () => {
+            const boton = cuenta.querySelector('#cerrar-sesion');
+            if (boton.disabled) return;
+            boton.disabled = true;
+            boton.textContent = 'Cerrando sesión…';
+            let estado = cabecera.querySelector('.estado-cuenta');
+            if (!estado) {
+                estado = document.createElement('p');
+                estado.className = 'estado-cuenta';
+                estado.setAttribute('role', 'alert');
+                cabecera.append(estado);
+            }
+            estado.textContent = '';
+            try {
+                const { error } = await supabase.auth.signOut();
+                if (error) throw error;
+                if (!principal.hidden) {
+                    principal.hidden = true;
+                    sessionStorage.removeItem('movanza_empresa_activa');
+                    location.replace('../index.html');
+                }
+            } catch {
+                estado.textContent = 'No se pudo cerrar la sesión. Vuelve a intentarlo.';
+            } finally {
+                boton.disabled = false;
+                boton.textContent = 'Cerrar sesión';
+            }
+        });
+        cabecera.append(cuenta);
 
         // Se carga el código del módulo solo después de comprobar el acceso.
         if (modulo === 'administracion') {

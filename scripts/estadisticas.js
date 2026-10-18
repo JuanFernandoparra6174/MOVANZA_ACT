@@ -1,5 +1,7 @@
 
 import { supabase } from '../configuracion/supabase.js';
+import { ESTADOS, ZONA_INFORME, calcularIndicadores, duracionReal, limitesPeriodo, unicosPorId } from './estadisticas-calculos.js';
+import { vistaEstadisticas } from './estadisticas-vista.js';
 
 // =====================================================
 // ELEMENTOS Y ESTADO
@@ -15,15 +17,10 @@ let perfiles = [];
 let asignaciones = [];
 let resultadosFiltrados = [];
 let cargando = false;
-
-const ESTADOS = [
-    ['pendiente', 'Pendientes', '#d97706'],
-    ['aceptada', 'Aceptadas', '#2563eb'],
-    ['en_curso', 'En curso', '#7c3aed'],
-    ['finalizada', 'Finalizadas', '#16a34a'],
-    ['rechazada', 'Rechazadas', '#dc2626'],
-    ['cancelada', 'Canceladas', '#64748b']
-];
+let datosDisponibles = false;
+let indiceTrabajos = new Map(), indiceEmpresas = new Map(), indicePerfiles = new Map();
+// Solo preselecciona una opción autorizada al entrar desde Home Empresa 2.
+let empresaInicial = new URLSearchParams(window.location.search).get('empresa') || sessionStorage.getItem('movanza_empresa_activa');
 
 const CAMPOS_ASIGNACION = [
     'id',
@@ -63,6 +60,7 @@ function formatoFecha(fecha) {
     if (Number.isNaN(valor.getTime())) return 'Sin fecha';
 
     return valor.toLocaleString('es-CO', {
+        timeZone: ZONA_INFORME,
         dateStyle: 'short',
         timeStyle: 'short'
     });
@@ -74,7 +72,7 @@ function formatoPorcentaje(valor) {
     return valor.toLocaleString('es-CO', {
         minimumFractionDigits: 1,
         maximumFractionDigits: 1
-    }) + '%';
+    }) + ' %';
 }
 
 function formatoDuracion(segundos) {
@@ -91,33 +89,12 @@ function formatoDuracion(segundos) {
     return `${horas} h ${minutos} min ${resto} s`;
 }
 
-function duracionReal(asignacion) {
-    if (
-        asignacion.estado !== 'finalizada' ||
-        !asignacion.inicio_en ||
-        !asignacion.fin_en
-    ) {
-        return null;
-    }
-
-    const inicio = new Date(asignacion.inicio_en).getTime();
-    const fin = new Date(asignacion.fin_en).getTime();
-
-    const diferencia = (fin - inicio) / 1000;
-
-    if (!Number.isFinite(diferencia) || diferencia < 0) {
-        return null;
-    }
-
-    return diferencia;
-}
-
 function buscarTrabajo(id) {
-    return trabajos.find(t => t.id === id);
+    return indiceTrabajos.get(id);
 }
 
 function buscarEmpresa(id) {
-    return empresas.find(e => e.id === id);
+    return indiceEmpresas.get(id);
 }
 
 function nombreEmpresa(id) {
@@ -125,38 +102,12 @@ function nombreEmpresa(id) {
 }
 
 function nombreTrabajador(id) {
-    const p = perfiles.find(item => item.id === id);
+    const p = indicePerfiles.get(id);
 
     if (!p) return `Trabajador #${id}`;
 
     return p.nombre_completo ||
         (p.nombre_usuario ? '@' + p.nombre_usuario : `Trabajador #${id}`);
-}
-
-function fechaLocalDesdeCampo(valor, finDelDia = false) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
-        return null;
-    }
-
-    const [anio, mes, dia] = valor.split('-').map(Number);
-
-    const fecha = new Date(
-        anio,
-        mes - 1,
-        dia,
-        finDelDia ? 23 : 0,
-        finDelDia ? 59 : 0,
-        finDelDia ? 59 : 0,
-        finDelDia ? 999 : 0
-    );
-
-    if (
-        fecha.getFullYear() !== anio ||
-        fecha.getMonth() !== mes - 1 ||
-        fecha.getDate() !== dia
-    ) return null;
-
-    return fecha;
 }
 
 // =====================================================
@@ -193,7 +144,7 @@ async function leerTodas(tabla, columnas, configurar = q => q) {
         desde += tamano;
     }
 
-    return registros;
+    return unicosPorId(registros);
 }
 
 // Dividimos los filtros .in en grupos para que una
@@ -229,6 +180,7 @@ async function cargarDatos() {
     if (cargando) return;
 
     cargando = true;
+    vistaEstadisticas.carga(true);
     $('boton-actualizar-panel').disabled = true;
 
     informar('Consultando registros de Supabase...');
@@ -236,7 +188,7 @@ async function cargarDatos() {
     try {
         // Las empresas propias determinan las opciones
         // del modo propietario.
-        empresasPropias = await leerTodas(
+        const nuevasPropias = await leerTodas(
             'empresas',
             'id, propietario_id, nombre',
             consulta => consulta.eq('propietario_id', perfil.id)
@@ -252,7 +204,7 @@ async function cargarDatos() {
             ...new Set(todasVisibles.map(a => a.trabajo_id))
         ];
 
-        trabajos = await leerPorIds(
+        const nuevosTrabajos = await leerPorIds(
             'trabajos',
             'id, empresa_id, nombre',
             'id',
@@ -261,8 +213,8 @@ async function cargarDatos() {
 
         const idsEmpresas = [
             ...new Set([
-                ...trabajos.map(t => t.empresa_id),
-                ...empresasPropias.map(e => e.id)
+                ...nuevosTrabajos.map(t => t.empresa_id),
+                ...nuevasPropias.map(e => e.id)
             ])
         ];
 
@@ -273,10 +225,10 @@ async function cargarDatos() {
             idsEmpresas
         );
 
-        empresas = [
-            ...empresasPropias,
+        const nuevasEmpresas = [
+            ...nuevasPropias,
             ...empresasVisibles.filter(
-                e => !empresasPropias.some(p => p.id === e.id)
+                e => !nuevasPropias.some(p => p.id === e.id)
             )
         ];
 
@@ -284,7 +236,7 @@ async function cargarDatos() {
             ...new Set(todasVisibles.map(a => a.trabajador_id))
         ];
 
-        perfiles = await leerPorIds(
+        const nuevosPerfiles = await leerPorIds(
             'perfiles',
             'id, nombre_usuario, nombre_completo',
             'id',
@@ -293,16 +245,25 @@ async function cargarDatos() {
 
         // Guardamos únicamente asignaciones de trabajos
         // que se pudieron consultar.
-        asignaciones = todasVisibles.filter(a =>
-            trabajos.some(t => t.id === a.trabajo_id)
-        );
+        const nuevoIndiceTrabajos = new Map(nuevosTrabajos.map(t => [t.id, t]));
+        const nuevasAsignaciones = todasVisibles.filter(a => nuevoIndiceTrabajos.has(a.trabajo_id));
+        empresasPropias = nuevasPropias;
+        empresas = nuevasEmpresas;
+        trabajos = nuevosTrabajos;
+        perfiles = nuevosPerfiles;
+        asignaciones = nuevasAsignaciones;
+        indiceTrabajos = nuevoIndiceTrabajos;
+        indiceEmpresas = new Map(empresas.map(e => [e.id, e]));
+        indicePerfiles = new Map(perfiles.map(p => [p.id, p]));
+        datosDisponibles = true;
 
         prepararSelectores();
-        actualizarPanel();
-
-        informar('Indicadores actualizados.', 'exito');
+        if (actualizarPanel()) informar('Indicadores actualizados.', 'exito');
+        vistaEstadisticas.actualizado();
 
     } catch (error) {
+        datosDisponibles = false;
+        vistaEstadisticas.sinDatos('No se pudieron consultar los datos. Vuelve a intentar con Actualizar indicadores.');
         informar(
             'No se pudieron cargar las estadísticas: ' +
             error.message,
@@ -313,6 +274,7 @@ async function cargarDatos() {
 
     } finally {
         cargando = false;
+        vistaEstadisticas.carga(false);
         $('boton-actualizar-panel').disabled = false;
     }
 }
@@ -330,7 +292,8 @@ function crearOpcion(valor, nombre) {
 
 function prepararSelectores() {
     const selectorEmpresa = $('filtro-empresa');
-    const anterior = selectorEmpresa.value;
+    const anterior = empresaInicial || selectorEmpresa.value;
+    empresaInicial = null;
 
     selectorEmpresa.replaceChildren();
     selectorEmpresa.appendChild(
@@ -349,9 +312,24 @@ function prepararSelectores() {
         )
     ) {
         selectorEmpresa.value = anterior;
+    } else if (anterior && anterior !== 'todas') {
+        selectorEmpresa.prepend(crearOpcion('', 'Selecciona una empresa disponible'));
+        selectorEmpresa.value = '';
     }
 
     actualizarSelectorTrabajadores();
+    actualizarSelectorPuntos();
+}
+
+function actualizarSelectorPuntos() {
+    const selector = $('filtro-punto');
+    if (!selector) return;
+    const anterior = selector.value;
+    selector.replaceChildren(crearOpcion('todos', 'Todos los puntos con asignaciones'));
+    const propias = new Set(empresasPropias.map(e => e.id));
+    trabajos.filter(t => propias.has(t.empresa_id) && ($('filtro-empresa').value === 'todas' || String(t.empresa_id) === $('filtro-empresa').value))
+        .forEach(t => selector.append(crearOpcion(t.id, t.nombre)));
+    if ([...selector.options].some(op => op.value === anterior)) selector.value = anterior;
 }
 
 function actualizarSelectorTrabajadores() {
@@ -428,42 +406,15 @@ function filtrarAsignaciones() {
     const empresaElegida = $('filtro-empresa').value;
     const trabajadorElegido = $('filtro-trabajador').value;
     const periodo = $('filtro-periodo').value;
+    const estadoElegido = $('filtro-estado').value;
+    const puntoElegido = $('filtro-punto').value;
+    if (!empresaElegida) throw new Error('Selecciona una empresa disponible.');
 
     const idsPropios = new Set(
         empresasPropias.map(e => e.id)
     );
 
-    let desde = null;
-    let hasta = null;
-
-    if (periodo === 'personalizado') {
-        const inicio = $('fecha-inicio').value;
-        const fin = $('fecha-fin').value;
-
-        if (!inicio || !fin) {
-            throw new Error(
-                'Selecciona las fechas de inicio y fin.'
-            );
-        }
-
-        desde = fechaLocalDesdeCampo(inicio);
-        hasta = fechaLocalDesdeCampo(fin, true);
-
-        if (!desde || !hasta || desde > hasta) {
-            throw new Error(
-                'El período personalizado no es válido.'
-            );
-        }
-
-    } else if (periodo !== 'todo') {
-        const dias = Number(periodo);
-
-        hasta = new Date();
-        desde = new Date(hasta);
-
-        desde.setDate(desde.getDate() - (dias - 1));
-        desde.setHours(0, 0, 0, 0);
-    }
+    const { desde, hasta } = limitesPeriodo(periodo, $('fecha-inicio').value, $('fecha-fin').value);
 
     return asignaciones.filter(a => {
         const trabajo = buscarTrabajo(a.trabajo_id);
@@ -483,6 +434,8 @@ function filtrarAsignaciones() {
             trabajadorElegido !== 'todos' &&
             String(a.trabajador_id) !== trabajadorElegido
         ) return false;
+        if (estadoElegido !== 'todos' && a.estado !== estadoElegido) return false;
+        if (puntoElegido !== 'todos' && String(a.trabajo_id) !== puntoElegido) return false;
 
         if (desde || hasta) {
             if (!a.programada_para) return false;
@@ -504,56 +457,6 @@ function filtrarAsignaciones() {
 // =====================================================
 // INDICADORES
 // =====================================================
-
-function calcularIndicadores(registros) {
-    const conteos = {};
-
-    ESTADOS.forEach(([estado]) => {
-        conteos[estado] =
-            registros.filter(a => a.estado === estado).length;
-    });
-
-    const finalizadas = registros.filter(
-        a => a.estado === 'finalizada'
-    );
-
-    const duraciones = finalizadas
-        .map(duracionReal)
-        .filter(valor => valor !== null);
-
-    const sumaSegundos = duraciones.reduce(
-        (total, segundos) => total + segundos,
-        0
-    );
-
-    const cumplidas = finalizadas.filter(
-        a => a.objetivo_cumplido === true
-    ).length;
-
-    const incumplidas = finalizadas.filter(
-        a => a.objetivo_cumplido === false
-    ).length;
-
-    const conResultado = cumplidas + incumplidas;
-
-    const cumplimiento = conResultado > 0
-        ? (cumplidas / conResultado) * 100
-        : null;
-
-    return {
-        total: registros.length,
-        conteos,
-        cumplidas,
-        incumplidas,
-        cumplimiento,
-        tiempoTotal: duraciones.length
-            ? sumaSegundos
-            : null,
-        tiempoPromedio: duraciones.length
-            ? sumaSegundos / duraciones.length
-            : null
-    };
-}
 
 function escribirIndicador(id, valor) {
     textoSeguro($(id), valor);
@@ -610,52 +513,6 @@ function mostrarIndicadores(datos) {
 // GRÁFICO DE ESTADOS
 // =====================================================
 
-function mostrarGrafico(datos) {
-    const contenedor = $('grafico-estados');
-    contenedor.replaceChildren();
-
-    if (datos.total === 0) {
-        contenedor.textContent =
-            'No hay asignaciones para este filtro.';
-        return;
-    }
-
-    ESTADOS.forEach(([estado, nombre, color]) => {
-        const cantidad = datos.conteos[estado];
-        const porcentaje = cantidad / datos.total * 100;
-
-        const fila = document.createElement('div');
-        fila.className = 'estadistica-barra-fila';
-
-        const encabezado = document.createElement('div');
-        encabezado.className =
-            'estadistica-barra-encabezado';
-
-        const titulo = document.createElement('span');
-        titulo.textContent = nombre;
-
-        const cifra = document.createElement('span');
-        cifra.textContent =
-            `${cantidad} (${formatoPorcentaje(porcentaje)})`;
-
-        encabezado.append(titulo, cifra);
-
-        const fondo = document.createElement('div');
-        fondo.className = 'estadistica-barra-fondo';
-
-        const relleno = document.createElement('div');
-        relleno.className = 'estadistica-barra-relleno';
-
-        relleno.style.width = `${porcentaje}%`;
-        relleno.style.backgroundColor = color;
-
-        fondo.appendChild(relleno);
-        fila.append(encabezado, fondo);
-
-        contenedor.appendChild(fila);
-    });
-}
-
 // =====================================================
 // TABLAS
 // =====================================================
@@ -663,6 +520,7 @@ function mostrarGrafico(datos) {
 function crearCelda(fila, contenido) {
     const celda = document.createElement('td');
     celda.textContent = String(contenido);
+    celda.dataset.etiqueta = ['Asignación', 'Empresa', 'Trabajador', 'Fecha programada', 'Estado', 'Tiempo real', 'Objetivo'][fila.children.length];
     fila.appendChild(celda);
 }
 
@@ -695,44 +553,13 @@ function mostrarTablaAgrupada(registros) {
         grupos.get(id).push(a);
     });
 
-    if (!grupos.size) {
-        const fila = document.createElement('tr');
-        const celda = document.createElement('td');
-        celda.colSpan = 6;
-        celda.textContent = 'No hay resultados.';
-        fila.appendChild(celda);
-        cuerpo.appendChild(fila);
-        return;
-    }
-
     const ordenados = [...grupos.entries()].sort(
         (a, b) => b[1].length - a[1].length
     );
 
-    ordenados.forEach(([id, elementos]) => {
-        const datos = calcularIndicadores(elementos);
-
-        const fila = document.createElement('tr');
-
-        crearCelda(
-            fila,
-            porTrabajador
-                ? nombreTrabajador(id)
-                : nombreEmpresa(id)
-        );
-
-        crearCelda(fila, datos.total);
-        crearCelda(fila, datos.conteos.finalizada);
-        crearCelda(fila, datos.conteos.rechazada);
-        crearCelda(
-            fila, formatoPorcentaje(datos.cumplimiento)
-        );
-        crearCelda(
-            fila, formatoDuracion(datos.tiempoTotal)
-        );
-
-        cuerpo.appendChild(fila);
-    });
+    const filas = ordenados.map(([id, elementos]) => ({ id, nombre: porTrabajador ? nombreTrabajador(id) : nombreEmpresa(id), datos: calcularIndicadores(elementos) }));
+    vistaEstadisticas.grupos(filas, formatoPorcentaje, formatoDuracion);
+    return filas;
 }
 
 function mostrarTablaDetalle(registros) {
@@ -759,6 +586,7 @@ function mostrarTablaDetalle(registros) {
         const trabajo = buscarTrabajo(a.trabajo_id);
 
         const fila = document.createElement('tr');
+        fila.dataset.estado = a.estado;
 
         crearCelda(fila, a.titulo);
         crearCelda(
@@ -811,6 +639,7 @@ function mostrarTablaDetalle(registros) {
 // =====================================================
 
 function actualizarPanel() {
+    if (!datosDisponibles) return false;
     try {
         resultadosFiltrados = filtrarAsignaciones();
 
@@ -819,18 +648,22 @@ function actualizarPanel() {
         );
 
         mostrarIndicadores(datos);
-        mostrarGrafico(datos);
-        mostrarTablaAgrupada(resultadosFiltrados);
+        const grupos = mostrarTablaAgrupada(resultadosFiltrados);
         mostrarTablaDetalle(resultadosFiltrados);
+        vistaEstadisticas.representar({ datos, registros: resultadosFiltrados, grupos, formatoDuracion });
 
-        $('descripcion-filtros').textContent =
-            `Mostrando ${resultadosFiltrados.length} ` +
-            'asignaciones de las empresas seleccionadas.';
+        const filtros = ['filtro-empresa', 'filtro-trabajador', 'filtro-periodo', 'filtro-estado', 'filtro-punto'].map(id => $(id).selectedOptions[0]?.textContent.trim()).filter(Boolean);
+        if ($('filtro-periodo').value === 'personalizado') filtros.push(`${$('fecha-inicio').value} → ${$('fecha-fin').value}`);
+        $('descripcion-filtros').textContent = `${resultadosFiltrados.length} asignaciones · ${filtros.join(' · ')} · Hora de Colombia`;
+        $('empresa-informe').textContent = $('filtro-empresa').selectedOptions[0]?.textContent.trim() || 'Selecciona una empresa';
 
         informar('');
+        return true;
 
     } catch (error) {
+        vistaEstadisticas.sinDatos('Corrige los filtros para consultar los resultados.', { filtros: true });
         informar(error.message, 'error');
+        return false;
     }
 }
 
@@ -840,6 +673,7 @@ function actualizarPanel() {
 
 $('filtro-empresa').addEventListener('change', () => {
     actualizarSelectorTrabajadores();
+    actualizarSelectorPuntos();
     actualizarPanel();
 });
 
@@ -861,8 +695,10 @@ $('fecha-fin').addEventListener(
 );
 
 $('boton-actualizar-panel').addEventListener(
-    'click', cargarDatos
+    'click', () => perfil ? cargarDatos() : iniciarModulo()
 );
+$('filtro-estado').addEventListener('change', actualizarPanel);
+$('filtro-punto').addEventListener('change', actualizarPanel);
 
 // =====================================================
 // INICIAR MÓDULO
@@ -899,6 +735,8 @@ async function iniciarModulo() {
         await cargarDatos();
 
     } catch (error) {
+        datosDisponibles = false;
+        vistaEstadisticas.sinDatos('No se pudo abrir el informe. Vuelve a intentarlo.');
         informar(
             'Error al abrir el panel: ' + error.message,
             'error'
@@ -907,4 +745,4 @@ async function iniciarModulo() {
     }
 }
 
-iniciarModulo();
+export const estadisticasListas = iniciarModulo();

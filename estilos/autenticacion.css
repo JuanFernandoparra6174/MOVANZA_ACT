@@ -1,0 +1,65 @@
+/* Adaptación del recurso login_singup (Pug/SCSS/jQuery) a HTML/CSS/JS nativos.
+   Conserva la cabecera blanca, las capas plegadas y el desplazamiento de iconos. */
+.pagina-autenticacion { min-height: 100dvh; background: #f7f7f7; isolation: isolate; }
+.auth-fondo { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
+.auth-fondo iframe { width: 100%; height: 100%; border: 0; pointer-events: none; }
+.back { position: fixed; inset: 0; z-index: -1; background: #303044b8; backdrop-filter: blur(7px); }
+.auth-navegacion { max-width: 1200px; margin: 0 auto; padding: 30px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.pagina-autenticacion .auth-navegacion a { color: #fff; font-size: 13px; text-decoration: none; }
+.pagina-autenticacion .auth-navegacion .auth-marca { font-size: 22px; font-weight: 800; letter-spacing: .12em; }
+.auth-principal { padding: clamp(24px, 5vh, 70px) 24px 64px; }
+.registration-form { width: min(420px, 100%); margin: 0 auto; }
+.registration-form header { position: relative; z-index: 5; background: #fff; padding: 28px 34px; border-radius: 15px 15px 0 0; text-align: left; margin: 0; box-shadow: 0 -5px 30px #30304408; }
+.registration-form header h1 { color: #303044; font-size: 23px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.2px; margin: 0; }
+.registration-form header p { color: #59546a; margin: 8px 0 0; font-size: 14px; }
+.registration-form header .auth-antetitulo { margin: 0 0 14px; color: #5f4d93; font-size: 10px; font-weight: 700; letter-spacing: .14em; }
+.registration-form form { position: relative; margin: 0; }
+.pila-campos { position: relative; height: 136px; margin-bottom: 32px; }
+.input-section { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 136px; display: flex; border-radius: 0 0 15px 15px; overflow: hidden; z-index: 3; background: #fff; box-shadow: 0 20px 50px #30304426; transition: width .2s ease-in, margin-top .2s ease-in, opacity .2s ease-in, background .2s ease-in; }
+.input-section.folded { width: calc(100% - var(--nivel) * 5%); margin-top: calc(var(--nivel) * 10px); z-index: calc(3 - var(--nivel)); background: #ede8fa; }
+.input-section.folded:nth-child(2n) { background: #e0f2ff; }
+.input-section.fold-up { margin-top: -136px; opacity: 0; pointer-events: none; z-index: 0; }
+.campo-paso { width: 80%; min-width: 0; padding: 18px 22px; }
+.campo-paso label { display: block; margin: 0 0 8px; color: #5f4d93; font-size: 12px; font-weight: 600; }
+.pagina-autenticacion .campo-paso input, .pagina-autenticacion .campo-paso select { width: 100%; padding: 0; margin: 0; border: 0; border-radius: 0; background: transparent; font: inherit; color: #303044; min-height: 32px; }
+.pagina-autenticacion .campo-paso #rol-registro { padding: 8px 10px; min-height: 46px; border: 1px solid #8b7da9; border-radius: 8px; background: #f7f7f7; }
+.pagina-autenticacion .campo-paso input:focus-visible, .pagina-autenticacion .campo-paso select:focus-visible { outline-offset: 3px; outline-width: 2px; }
+.campo-paso small { display: block; margin-top: 6px; color: #59546a; font-size: 10px; }
+.campo-con-control { display: flex; align-items: center; gap: 8px; padding: 6px 10px; min-height: 46px; border: 1px solid #8b7da9; border-radius: 8px; background: #f7f7f7; transition: border-color .2s, box-shadow .2s; }
+.campo-con-control:focus-within { border-color: #5f4d93; box-shadow: 0 0 0 3px #5f4d9326; }
+.pagina-autenticacion .campo-con-control input:focus-visible { outline: none; }
+.pagina-autenticacion .campo-paso input::placeholder { color: #716b7e; font-size: 13px; opacity: 1; }
+.pagina-autenticacion .mostrar-clave { flex-shrink: 0; width: 30px; height: 32px; margin: 0; padding: 4px; border: 0; background: transparent; color: #5f4d93; }
+.mostrar-clave svg { width: 22px; height: 22px; }
+.mostrar-clave[aria-pressed="true"] { color: #303044; background: #ede8fa; }
+.pagina-autenticacion .animated-button { display: block; flex-shrink: 0; width: 20%; height: 136px; margin: 0; padding: 0; overflow: hidden; border: 0; border-radius: 0; background: #ede8fa; color: #5f4d93; box-shadow: none; }
+.animated-button > span { display: flex; width: 100%; height: 136px; justify-content: center; align-items: center; transition: transform .2s ease-in; }
+.animated-button svg { width: 26px; height: 26px; }
+.input-section.tiene-valor .animated-button > span { transform: translateY(-136px); }
+.pagina-autenticacion .animated-button:hover { background: #e0f2ff; }
+.pagina-autenticacion .animated-button:focus-visible { outline-offset: -5px; }
+.folded .animated-button { background: transparent; }
+.controles-pasos { min-height: 32px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 0 5px; }
+.pagina-autenticacion #paso-anterior { width: auto; margin: 0; padding: 5px; border: 0; background: transparent; color: #fff; font-size: 13px; }
+#estado-paso { color: #fff; font-size: 12px; margin: 0 0 0 auto; }
+.auth-estado { padding: 0 5px; }
+.pagina-autenticacion #mensaje { color: #303044; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 14px 16px; font-size: 14px; text-align: left; margin: 18px 0 0; }
+.pagina-autenticacion #mensaje:empty { display: none; }
+.pagina-autenticacion #mensaje.error { color: #ab3547; background: #fce5e7; }
+.pagina-autenticacion #mensaje.exito { color: #24784d; background: #dff4e8; }
+.pagina-autenticacion .movanza-loader { color: #fff; padding-top: 18px; }
+.auth-alternativa { text-align: center; margin: 24px 0 0; color: #fff; font-size: 14px; }
+.pagina-autenticacion .auth-alternativa a { color: #fff; font-weight: 700; margin-left: 5px; }
+.auth-noscript { max-width: 420px; margin: 24px auto; padding: 20px; background: #fff; border-radius: 8px; }
+.pagina-autenticacion :is(a, button):focus-visible { outline-color: #8cc9f0; }
+.pagina-autenticacion.auth-en-modal { min-height: 0; background: transparent; }
+.auth-en-modal .back, .auth-en-modal .auth-fondo, .auth-en-modal .auth-navegacion { display: none; }
+.auth-en-modal .auth-principal { padding: 20px 24px 28px; }
+@media (max-width: 480px) {
+    .auth-navegacion { padding: 24px 20px; }
+    .auth-principal { padding: 24px 20px 48px; }
+    .registration-form header { padding: 26px; }
+    .campo-paso { padding-inline: 22px; }
+    .auth-en-modal .auth-principal { padding: 16px 14px 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .input-section, .animated-button > span { transition: none; } }

@@ -1,0 +1,48 @@
+/* Columnas, elevación y bordes degradados de recursos/tabla, sin Compass. */
+.seleccion-principal { padding-bottom: 80px; }
+.banner-seleccion { min-height: 270px; background: linear-gradient(110deg, #f7f7f7, #ede8fa); }
+.banner-seleccion .volver-empresa { display: inline-block; margin-top: 24px; font-size: 14px; font-weight: 600; text-decoration: none; }
+.empresas-disponibles { margin-top: 56px; }
+.cabecera-empresas { display: flex; align-items: center; justify-content: space-between; gap: 28px; margin-bottom: 32px; }
+.cabecera-empresas .antetitulo { margin: 0 0 12px; color: #5f4d93; }
+.cabecera-empresas h2 { font-size: clamp(30px, 3vw, 40px); font-weight: 600; margin: 0 0 12px; }
+.cabecera-empresas p:last-child { margin: 0; color: #303044; font-size: 16px; }
+.pagina-seleccion .cabecera-empresas .boton-relleno { flex-shrink: 0; }
+.pagina-seleccion .boton-relleno:is(:hover, :focus-visible) { color: #fff; }
+.tabla-empresas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.tabla-empresas .grid-1-5 {
+    box-sizing: border-box; display: flex; flex-direction: column; align-items: stretch;
+    min-width: 0; min-height: 340px; margin: 0; padding: 36px 28px 28px;
+    position: relative; text-align: left; border: 2px solid #ddd; border-top-color: #a89cc8;
+    border-radius: 10px; background: linear-gradient(160deg, #fff 30%, #ede8fa);
+    color: #303044; box-shadow: 0 8px 28px #30304408;
+    transition: background .2s ease-in-out, color .2s, border-color .2s, box-shadow .2s, transform .2s ease-in-out;
+    overflow-wrap: anywhere;
+}
+.tabla-empresas .grid-1-5 h3 { margin: 0 0 28px; color: #5f4d93; font-size: 25px; font-weight: 600; line-height: 1.25; letter-spacing: -.02em; }
+.tabla-empresas .grid-1-5 p { margin: 0 0 16px; font-size: 14px; color: inherit; }
+.tabla-empresas .grid-1-5:is(:hover, :focus-within) { background: linear-gradient(to bottom, #5f4d93, #303044); color: #fff; border-top-color: #8cc9f0; border-bottom-color: #efa8b0; box-shadow: 0 0 10px #30304466; transform: scale(1.025); z-index: 2; }
+.tabla-empresas .grid-1-5:is(:hover, :focus-within) h3 { color: #fff; }
+.tabla-empresas .grid-1-5:is(:hover, :focus-within)::before, .tabla-empresas .grid-1-5:is(:hover, :focus-within)::after { content: ''; position: absolute; top: -2px; bottom: -2px; width: 2px; background: linear-gradient(#8cc9f0, #efa8b0); pointer-events: none; }
+.tabla-empresas .grid-1-5::before { left: -2px; }
+.tabla-empresas .grid-1-5::after { right: -2px; }
+.tabla-empresas .button { width: 100%; margin: auto 0 0; padding: 14px 12px; font-size: 14px; background: transparent; color: #5f4d93; }
+.tabla-empresas .grid-1-5:is(:hover, :focus-within) .button { color: #fff; border-color: #a89cc8; }
+.tabla-empresas .grid-1-5 .button:is(:hover, :focus-visible) { color: #303044; border-color: #8cc9f0; box-shadow: inset 0 -100px 0 0 #8cc9f0; }
+.tabla-empresas .button:focus-visible { outline: 3px solid #8cc9f0; outline-offset: 4px; }
+.tabla-empresas .empresa-seleccionada { border-color: #5f4d93; box-shadow: 0 0 0 2px #a89cc844; background: #ede8fa; }
+.tabla-empresas .empresa-seleccionada .button[aria-pressed="true"] { background: #5f4d93; color: #fff; }
+.tabla-empresas > p { grid-column: 1 / -1; margin: 0; padding: 40px; background: #f7f7f7; border: 1px solid #ddd; border-radius: 12px; color: #303044; }
+.empresas-disponibles #mensaje { margin: 24px 0 0; font-size: 15px; }
+.empresas-disponibles #mensaje:empty { display: none; }
+.empresas-disponibles #mensaje.error { color: #ab3547; }
+.empresas-disponibles #mensaje.exito { color: #24784d; }
+@media (max-width: 1050px) { .tabla-empresas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+    .tabla-empresas { grid-template-columns: 1fr; gap: 22px; }
+    .cabecera-empresas { display: block; }
+    .cabecera-empresas .boton-relleno { margin-top: 24px; }
+    .tabla-empresas .grid-1-5 { min-height: 300px; padding: 30px 24px 24px; }
+    .empresas-disponibles { margin-top: 36px; }
+}
+@media (prefers-reduced-motion: reduce) { .tabla-empresas .grid-1-5 { transition: none; } }

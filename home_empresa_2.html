@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Administración empresarial | MOVANZA</title>
+    <link rel="stylesheet" href="./estilos/general.css">
+    <link rel="stylesheet" href="./estilos/alertas.css" data-estilo-alertas>
+    <script type="module" src="./scripts/alertas.js"></script>
+    <link rel="stylesheet" href="./estilos/index.css">
+    <link rel="stylesheet" href="./recursos/efecto_fondo/fondo.css">
+    <link rel="stylesheet" href="./estilos/componentes-publicos.css">
+    <link rel="stylesheet" href="./estilos/home-empresa.css">
+    <link rel="stylesheet" href="./estilos/encabezado-empresarial.css">
+    <link rel="stylesheet" href="./estilos/home-empresa-2.css">
+    <link rel="stylesheet" href="./estilos/cuenta.css">
+    <link rel="stylesheet" href="./estilos/mensajeria.css">
+    <script src="./scripts/componentes-publicos.js" defer></script>
+    <script src="./scripts/home-empresa-2-carga.js" defer></script>
+</head>
+<body class="pagina-publica home-empresa-2">
+    <div class="container fondo-exterior" aria-hidden="true" inert><div id="stars"></div><div id="stars2"></div><div id="stars3"></div><div></div></div>
+    <section id="estado-acceso" class="estado-acceso"><p id="mensaje-home" role="status" aria-live="polite">Comprobando tu empresa…</p><a href="./paginas/seleccionar_empresa.html">Seleccionar empresa</a></section>
+    <div class="sitio-publico" id="contenido-empresa" hidden>
+        <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+        <header class="cabecera-empresarial">
+        <div class="identidad-empresarial"><a class="marca" href="./home_empresa_2.html" aria-label="MOVANZA, inicio empresarial"><img src="./Carpeta_Imagenes/Logo/Logotipo%20MOVANZA.png" alt="MOVANZA" width="170" height="54"></a></div>
+        <button class="menu-empresarial" type="button" aria-expanded="false" aria-controls="navegacion-empresarial">Menú <span aria-hidden="true">☰</span></button>
+        <nav id="navegacion-empresarial" aria-label="Administración empresarial"><a href="./home_empresa_2.html" aria-current="page">Inicio</a><a href="./paginas/equipo.html">Equipo</a><a href="./paginas/trabajos.html">Trabajos</a><a href="./paginas/estadisticas.html" data-estadisticas-empresa>Estadísticas</a><a href="./paginas/seleccionar_empresa.html">Cambiar empresa</a></nav>
+        <details class="cuenta-empresarial menu-cuenta"><summary class="boton-relleno boton-cuenta">Cuenta <span aria-hidden="true">⌄</span></summary><div class="opciones-cuenta"><p id="usuario-empresarial"></p><button type="button" data-abrir-perfil aria-haspopup="dialog">Mi perfil</button><button type="button" id="cerrar-sesion">Cerrar sesión</button></div></details>
+    </header>
+        <main id="contenido" class="administracion-principal">
+            <section class="bienvenida-administracion" aria-labelledby="titulo-bienvenida">
+                <p class="antetitulo">ADMINISTRACIÓN EMPRESARIAL</p>
+                <h1 id="titulo-bienvenida">Bienvenido al espacio de tu empresa</h1>
+                <p>Administra tu equipo, organiza los trabajos y consulta la información de tus operaciones desde un solo lugar.</p>
+                <p class="empresa-identificada"><span>Empresa</span><strong id="nombre-empresa-activa"></strong></p>
+            </section>
+            <section class="modulos-empresariales" aria-label="Módulos de tu empresa"><div class="mosaico mosaico-administracion">
+                <article class="card-principal efecto-card">
+                    <span class="efecto-card-borde" aria-hidden="true"></span>
+                    <span class="card-imagen" aria-hidden="true"><img src="./Carpeta_Imagenes/home_empresa_2/team.avif" width="900" height="600" alt=""></span>
+                    <div class="card-contenido"><p class="card-categoria"><span>01</span> MI EMPRESA</p><h2>Equipo</h2><p>Gestiona los integrantes de tu empresa, consulta sus perfiles y organiza tu equipo de trabajo.</p><a class="card-accion" href="./paginas/equipo.html">Abrir equipo<span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="card-principal efecto-card">
+                    <span class="efecto-card-borde" aria-hidden="true"></span>
+                    <span class="card-imagen" aria-hidden="true"><img src="./Carpeta_Imagenes/home_empresa_2/trabajos.avif" width="900" height="600" alt=""></span>
+                    <div class="card-contenido"><p class="card-categoria"><span>02</span> MI EMPRESA</p><h2>Trabajos</h2><p>Organiza, asigna y consulta los trabajos de tu empresa para mantener el control de tus operaciones.</p><a class="card-accion" href="./paginas/trabajos.html">Abrir trabajos<span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="card-principal efecto-card">
+                    <span class="efecto-card-borde" aria-hidden="true"></span>
+                    <span class="card-imagen" aria-hidden="true"><img src="./Carpeta_Imagenes/home_empresa_2/estadisticas.avif" width="900" height="600" alt=""></span>
+                    <div class="card-contenido"><p class="card-categoria"><span>03</span> MI EMPRESA</p><h2>Estadísticas</h2><p>Consulta información sobre las actividades, los tiempos de ejecución y el desempeño operativo de tu empresa.</p><a class="card-accion" href="./paginas/estadisticas.html" data-estadisticas-empresa>Abrir estadísticas<span aria-hidden="true">↗</span></a></div>
+                </article>
+            </div></section>
+        </main>
+        <footer class="pie-publico">
+                <div class="pie-columnas">
+                    <div>
+                        <a href="./index.html#inicio" class="marca-pie">MOVANZA<span aria-hidden="true">↗</span></a>
+                        <p>Gestión de trabajos presenciales.</p>
+                        <p>Manizales, Caldas, Colombia.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Manizales%2C%20Caldas%2C%20Colombia" target="_blank" rel="noopener noreferrer">Ver ubicación en el mapa ↗</a>
+                    </div>
+                    <div>
+                        <h2>Explora MOVANZA</h2>
+                        <nav aria-label="Mapa de navegación">
+                            <a href="./index.html#inicio">Inicio</a>
+                            <a href="./index.html#nosotros">Nosotros</a>
+                            <a href="./index.html#servicios">Servicios</a>
+                            <a href="./index.html#preguntas">Preguntas frecuentes</a>
+                            <a href="./index.html#experiencias">Experiencia</a>
+                            <a href="./index.html#contacto">Contacto</a>
+                            <a href="./index.html#politicas">Políticas</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <h2>Horarios de atención</h2>
+                        <dl class="horarios">
+                            <dt>Lunes a viernes</dt>
+                            <dd>8:00 a. m. – 6:00 p. m.</dd>
+                            <dt>Sábados</dt>
+                            <dd>9:00 a. m. – 1:00 p. m.</dd>
+                            <dt>Domingos y festivos</dt>
+                            <dd>No disponible.</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="pie-final">
+                    <p>© 2026 MOVANZA. Todos los derechos reservados.</p>
+                    <a href="./index.html#inicio">Volver al inicio ↑</a>
+                </div>
+            </footer>
+    </div>
+    <noscript><p class="aviso-noscript">Activa JavaScript para verificar tu sesión y acceder a tu empresa.</p></noscript>
+</body>
+</html>

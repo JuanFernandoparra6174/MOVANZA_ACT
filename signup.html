@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#5f4d93">
+    <title>Crear cuenta | MOVANZA</title>
+    <link rel="stylesheet" href="./estilos/general.css">
+    <link rel="stylesheet" href="./estilos/alertas.css" data-estilo-alertas>
+    <script type="module" src="./scripts/alertas.js"></script>
+    <link rel="stylesheet" href="./estilos/index.css">
+    <link rel="stylesheet" href="./estilos/componentes-publicos.css">
+    <link rel="stylesheet" href="./estilos/autenticacion.css">
+    <script src="./scripts/componentes-publicos.js" defer></script>
+    <script src="./scripts/auth-interfaz.js" defer></script>
+</head>
+<body class="pagina-publica pagina-autenticacion" data-autenticacion="signup">
+    <div class="auth-fondo" aria-hidden="true" inert><iframe src="./index.html" title="" tabindex="-1" sandbox></iframe></div>
+    <nav class="auth-navegacion" aria-label="Navegación"><a class="auth-marca" href="./index.html">MOVANZA</a><a href="./index.html">← Volver al inicio</a></nav>
+    <main class="auth-principal">
+        <section id="seccion-registro" class="registration-form" aria-labelledby="titulo-auth">
+            <header><p class="auth-antetitulo">ÚNETE A MOVANZA</p><h1 id="titulo-auth">Crear cuenta</h1><p>Crea tu cuenta de empresa o trabajador.</p></header>
+            <form id="formulario-registro" novalidate>
+                <div class="pila-campos">
+<div class="input-section" data-paso="0"  style="--nivel: 0">
+                    <div class="campo-paso"><label for="rol-registro">Tipo de cuenta</label><select id="rol-registro" name="rol" required><option value="">Selecciona tu tipo de cuenta</option><option value="empresa">Empresa</option><option value="trabajador">Trabajador</option></select></div>
+                    <button type="button" class="animated-button siguiente-paso" aria-label="Continuar al siguiente paso" disabled><span class="icono-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-3a8 8 0 0 1 16 0v3"/></svg></span><span class="next-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></span></button>
+                </div>
+<div class="input-section folded" data-paso="1" inert aria-hidden="true" style="--nivel: 1">
+                    <div class="campo-paso"><label for="correo-registro">Correo electrónico</label><div class="campo-con-control"><input id="correo-registro" name="correo-registro" type="email" placeholder="tu@correo.com" autocomplete="email"  required></div></div>
+                    <button type="button" class="animated-button siguiente-paso" aria-label="Continuar al siguiente paso" disabled><span class="icono-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg></span><span class="next-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></span></button>
+                </div>
+<div class="input-section folded" data-paso="2" inert aria-hidden="true" style="--nivel: 2">
+                    <div class="campo-paso"><label for="clave-registro">Contraseña</label><div class="campo-con-control"><input id="clave-registro" name="clave-registro" type="password" autocomplete="new-password" placeholder="Escribe tu contraseña" minlength="8" required><button type="button" class="mostrar-clave" data-clave="clave-registro" aria-label="Mostrar contraseña" aria-pressed="false" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div><small>Utiliza al menos 8 caracteres.</small></div>
+                    <button type="button" class="animated-button siguiente-paso" aria-label="Continuar al siguiente paso" disabled><span class="icono-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/></svg></span><span class="next-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></span></button>
+                </div>
+<div class="input-section folded" data-paso="3" inert aria-hidden="true" style="--nivel: 3">
+                    <div class="campo-paso"><label for="confirmar-clave">Confirmar contraseña</label><div class="campo-con-control"><input id="confirmar-clave" name="confirmar-clave" type="password" autocomplete="new-password" placeholder="Escribe tu contraseña" minlength="8" required><button type="button" class="mostrar-clave" data-clave="confirmar-clave" aria-label="Mostrar confirmar contraseña" aria-pressed="false" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+                    <button type="submit" class="animated-button enviar-formulario" aria-label="Crear cuenta" disabled><span class="icono-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/></svg></span><span class="next-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 3 18 9-18 9 4-9-4-9Zm4 9h14"/></svg></span></button>
+                </div>
+                </div>
+                <div class="controles-pasos"><button type="button" id="paso-anterior" hidden>← Anterior</button><p id="estado-paso">Paso 1 de 4</p></div>
+            </form>
+            <div class="auth-estado"><p id="mensaje" role="status" aria-live="polite">Cargando acceso a MOVANZA…</p></div>
+            <p class="auth-alternativa">¿Ya tienes cuenta? <a href="./login.html">Iniciar sesión</a></p>
+        </section>
+    </main>
+    <noscript><p class="auth-noscript">Activa JavaScript para crear tu cuenta.</p></noscript>
+</body>
+</html>

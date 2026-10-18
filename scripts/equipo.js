@@ -1,3 +1,4 @@
+import { confirmarAccion } from './alertas.js';
 
 import { supabase } from '../configuracion/supabase.js';
 
@@ -28,7 +29,7 @@ function crearBoton(texto, accion, clase = '') {
     const boton = document.createElement('button');
     boton.type = 'button';
     boton.textContent = texto;
-    if (clase) boton.className = clase;
+    boton.className = 'button boton-relleno' + (clase ? ' ' + clase : '');
     boton.addEventListener('click', accion);
     return boton;
 }
@@ -105,6 +106,7 @@ async function iniciarModulo() {
         await cargarPendientes();
         await cargarIntegrantes();
 
+        return empresa;
     } catch (error) {
         informar(error.message, 'error');
         formularioBusqueda.querySelector('button').disabled = true;
@@ -147,7 +149,7 @@ formularioBusqueda.addEventListener('submit', async (evento) => {
         }
 
         const tarjeta = document.createElement('div');
-        tarjeta.className = 'elemento-empresa';
+        tarjeta.className = 'elemento-empresa grid-1-5';
 
         tarjeta.appendChild(
             textoElemento('h3', '@' + trabajador.nombre_usuario)
@@ -222,7 +224,7 @@ async function cargarPendientes() {
 
     pendientes.forEach(invitacion => {
         const tarjeta = document.createElement('div');
-        tarjeta.className = 'elemento-empresa';
+        tarjeta.className = 'elemento-empresa grid-1-5';
 
         tarjeta.appendChild(
             textoElemento('h3', '@' + invitacion.nombre_usuario)
@@ -285,7 +287,7 @@ async function cargarIntegrantes() {
         );
 
         const tarjeta = document.createElement('div');
-        tarjeta.className = 'elemento-empresa';
+        tarjeta.className = 'elemento-empresa grid-1-5';
 
         tarjeta.appendChild(
             textoElemento(
@@ -365,10 +367,8 @@ async function guardarAlias(trabajadorId, alias) {
 
 // RETIRAR TRABAJADOR
 async function retirarIntegrante(trabajadorId) {
-    const confirmar = window.confirm(
-        '¿Deseas retirar a este trabajador? ' +
-        'Perderá su membresía activa, pero se conservará el historial.'
-    );
+    const confirmar = await confirmarAccion({ titulo: 'Retirar integrante', mensaje: '¿Deseas retirar a este trabajador? ' +
+        'Perderá su membresía activa, pero se conservará el historial.', textoConfirmar: 'Retirar integrante', destructiva: true });
 
     if (!confirmar) return;
 
@@ -386,4 +386,4 @@ async function retirarIntegrante(trabajadorId) {
     }, 'Trabajador retirado del equipo.');
 }
 
-iniciarModulo();
+export const equipoListo = iniciarModulo();

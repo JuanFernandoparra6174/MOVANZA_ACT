@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOVANZA | Administración</title>
     <link rel="stylesheet" href="../estilos/general.css">
+    <link rel="stylesheet" href="../estilos/alertas.css" data-estilo-alertas>
+    <script type="module" src="../scripts/alertas.js"></script>
 </head>
 <body data-modulo="administracion">
     <main class="contenedor contenedor-amplio" hidden>
@@ -12,7 +14,7 @@
             <h1>MOVANZA</h1>
             <p>Panel administrativo</p>
         </header>
-        <nav><a href="../index.html">← Volver a mi perfil</a></nav>
+        <nav><button type="button" data-abrir-perfil aria-haspopup="dialog">Mi perfil</button></nav>
         <section class="tarjeta bloque">
             <h2>Administración</h2>
             <p>Sesión de administrador: <span id="usuario-actual"></span></p>

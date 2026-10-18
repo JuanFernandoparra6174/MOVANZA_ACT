@@ -1,5 +1,7 @@
+import { confirmarAccion } from './alertas.js';
 
 import { supabase } from '../configuracion/supabase.js';
+import { vistaAsignaciones } from './asignaciones-vista.js';
 
 // =====================================================
 // ELEMENTOS Y VARIABLES
@@ -21,14 +23,19 @@ let asignacionParaRechazar = null;
 let asignacionParaFinalizar = null;
 
 let ocupado = false;
+let contextoVigente = () => true;
+const vigente = () => contextoVigente() && vistaAsignaciones.vigente();
 
 // =====================================================
 // FUNCIONES GENERALES
 // =====================================================
 
 function informar(texto, tipo = '') {
+    if (!vigente()) return;
+    if (tipo === 'error' && /Fuera del radio autorizado/i.test(texto)) texto = 'No puedes realizar esta acción porque te encuentras fuera del área autorizada. Acércate al trabajo e inténtalo de nuevo.';
     mensaje.textContent = texto;
     mensaje.className = tipo;
+    mensaje.setAttribute('role', tipo === 'error' ? 'alert' : 'status');
 }
 
 function crearElemento(etiqueta, texto = '') {
@@ -112,6 +119,7 @@ function calcularDuracion(inicio, fin) {
 // EVITAR ACCIONES SIMULTÁNEAS
 function bloquearAcciones(bloquear) {
     ocupado = bloquear;
+    if (vigente()) vistaAsignaciones.ocupado(bloquear);
 
     document.querySelectorAll(
         '#lista-asignaciones button, ' +
@@ -124,12 +132,13 @@ function bloquearAcciones(bloquear) {
 }
 
 async function ejecutarAccion(accion, mensajeExito) {
-    if (ocupado) return;
+    if (ocupado || !vigente()) return;
 
     bloquearAcciones(true);
 
     try {
         await accion();
+        if (!vigente()) return;
 
         // Leer los estados actualizados desde Supabase
         await cargarAsignaciones();
@@ -161,7 +170,7 @@ function errorUbicacion(error) {
         case 1:
             return new Error(
                 'Permiso de ubicación denegado. ' +
-                'Debes permitir el acceso a tu ubicación.'
+                'Habilita Ubicación en los permisos de este sitio desde la barra de direcciones y vuelve a intentarlo.'
             );
 
         case 2:
@@ -206,16 +215,13 @@ function obtenerUbicacion() {
 
         navigator.geolocation.getCurrentPosition(
             posicion => {
+                if (!vigente()) { rechazar(new Error('La sesión ya no está disponible.')); return; }
                 const coordenadas = posicion.coords;
 
                 const latitud = coordenadas.latitude;
                 const longitud = coordenadas.longitude;
                 const precision = coordenadas.accuracy;
                 
-                console.log('=== DIAGNÓSTICO GPS ===');
-                console.log('Latitud:', latitud);
-                console.log('Longitud:', longitud);
-                console.log('Precisión (metros):', precision);
 
 
                 if (
@@ -233,6 +239,7 @@ function obtenerUbicacion() {
                 estadoGps.textContent =
                     `Ubicación obtenida. ` +
                     `Precisión estimada: ${precision.toFixed(1)} metros.`;
+                vistaAsignaciones.ubicacion({ latitud, longitud, precision_metros: precision });
 
                 resolver({
                     latitud,
@@ -242,6 +249,7 @@ function obtenerUbicacion() {
             },
 
             error => {
+                if (!vigente()) { rechazar(errorUbicacion(error)); return; }
                 estadoGps.textContent =
                     'No se pudo obtener la ubicación.';
 
@@ -262,6 +270,7 @@ function obtenerUbicacion() {
 // =====================================================
 
 async function cargarAsignaciones() {
+    if (!vigente()) return;
     const { data, error } = await supabase
         .from('asignaciones')
         .select(
@@ -274,8 +283,9 @@ async function cargarAsignaciones() {
         .order('programada_para', { ascending: false });
 
     if (error) throw error;
+    if (!vigente()) return;
 
-    asignaciones = data || [];
+    asignaciones = (data || []).filter(a => a.trabajador_id === perfil.id);
     trabajos = [];
     empresas = [];
 
@@ -293,6 +303,7 @@ async function cargarAsignaciones() {
             .in('id', idsTrabajos);
 
         if (resultado.error) throw resultado.error;
+        if (!vigente()) return;
 
         trabajos = resultado.data || [];
     }
@@ -308,6 +319,7 @@ async function cargarAsignaciones() {
             .in('id', idsEmpresas);
 
         if (resultado.error) throw resultado.error;
+        if (!vigente()) return;
 
         empresas = resultado.data || [];
     }
@@ -331,21 +343,27 @@ function actualizarResumen() {
 // =====================================================
 
 function mostrarAsignaciones() {
+    if (!vigente()) return;
     lista.replaceChildren();
+    vistaAsignaciones.iniciarListado();
 
     const filtro = filtroEstado.value;
 
-    const visibles = asignaciones.filter(a =>
-        filtro === 'todas' || a.estado === filtro
-    );
+    const busqueda = $('buscar-asignaciones').value.trim().toLocaleLowerCase('es');
+    const visibles = asignaciones.filter(a => {
+        const trabajo = obtenerTrabajo(a.trabajo_id);
+        const empresa = trabajo && obtenerEmpresa(trabajo.empresa_id);
+        return (filtro === 'todas' || a.estado === filtro) && [a.titulo, a.objetivo, trabajo?.nombre, empresa?.nombre].filter(Boolean).join(' ').toLocaleLowerCase('es').includes(busqueda);
+    });
 
     if (visibles.length === 0) {
         lista.appendChild(
             crearElemento(
                 'p',
-                'No tienes asignaciones en esta categoría.'
+                asignaciones.length ? 'No hay asignaciones que coincidan con estos filtros.' : 'Aún no tienes asignaciones. Cuando recibas una actividad, aparecerá aquí.'
             )
         );
+        vistaAsignaciones.finalizarListado();
         return;
     }
 
@@ -384,7 +402,7 @@ function mostrarAsignaciones() {
             crearElemento(
                 'p',
                 'Trabajo: ' +
-                (trabajo?.nombre || `#${asignacion.trabajo_id}`)
+                (trabajo?.nombre || 'No disponible')
             )
         );
 
@@ -537,8 +555,9 @@ function mostrarAsignaciones() {
         }
 
         tarjeta.appendChild(acciones);
-        lista.appendChild(tarjeta);
+        vistaAsignaciones.registrar({ asignacion, trabajo, empresa, detalle: tarjeta, estado: nombreEstado(asignacion.estado), fecha: fechaVisible(asignacion.programada_para) });
     });
+    vistaAsignaciones.finalizarListado();
 
     if (ocupado) {
         lista.querySelectorAll('button').forEach(boton => {
@@ -561,9 +580,7 @@ async function aceptarAsignacion(id) {
         return;
     }
 
-    if (!window.confirm(
-        `¿Aceptar la tarea "${asignacion.titulo}"?`
-    )) return;
+    if (!await confirmarAccion({ titulo: 'Aceptar asignación', mensaje: `¿Aceptar la tarea "${asignacion.titulo}"?`, textoConfirmar: 'Aceptar asignación', destructiva: false })) return;
 
     await ejecutarAccion(async () => {
         const { error } = await supabase.rpc(
@@ -601,26 +618,26 @@ function abrirRechazo(id) {
 
     $('seccion-rechazo').classList.remove('oculto');
 
-    $('seccion-rechazo').scrollIntoView({
-        behavior: 'smooth'
-    });
+    vistaAsignaciones.formulario('rechazo');
 }
 
 function cerrarRechazo() {
     asignacionParaRechazar = null;
     $('formulario-rechazo').reset();
     $('seccion-rechazo').classList.add('oculto');
+    vistaAsignaciones.cerrarFormulario();
 }
 
 $('boton-cancelar-rechazo').addEventListener(
     'click',
-    cerrarRechazo
+    async () => { if (await vistaAsignaciones.confirmarDescarte() && vigente()) cerrarRechazo(); }
 );
 
 $('formulario-rechazo').addEventListener(
     'submit',
     async evento => {
         evento.preventDefault();
+        if (ocupado || !vigente()) return;
 
         const id = asignacionParaRechazar;
         const motivo = $('motivo-rechazo').value.trim();
@@ -675,14 +692,13 @@ async function iniciarAsignacion(id) {
         return;
     }
 
-    if (!window.confirm(
-        `¿Verificar tu ubicación para iniciar "${asignacion.titulo}"?`
-    )) return;
+    if (!await confirmarAccion({ titulo: 'Iniciar asignación', mensaje: `¿Verificar tu ubicación para iniciar "${asignacion.titulo}"?`, textoConfirmar: 'Verificar GPS e iniciar', destructiva: false })) return;
 
     await ejecutarAccion(async () => {
         informar('Obteniendo ubicación para iniciar...');
 
         const gps = await obtenerUbicacion();
+        if (!vigente()) return;
 
         informar('Validando ubicación en el servidor...');
 
@@ -738,10 +754,8 @@ function seccionFinalizacionVisible(visible) {
     );
 
     if (visible) {
-        $('seccion-finalizacion').scrollIntoView({
-            behavior: 'smooth'
-        });
-    }
+        vistaAsignaciones.formulario('finalizacion');
+    } else vistaAsignaciones.cerrarFormulario();
 }
 
 function cerrarFinalizacion() {
@@ -752,7 +766,7 @@ function cerrarFinalizacion() {
 
 $('boton-cancelar-finalizacion').addEventListener(
     'click',
-    cerrarFinalizacion
+    async () => { if (await vistaAsignaciones.confirmarDescarte() && vigente()) cerrarFinalizacion(); }
 );
 
 // =====================================================
@@ -799,15 +813,14 @@ $('formulario-finalizacion').addEventListener(
             return;
         }
 
-        if (!window.confirm(
-            '¿Confirmas que deseas finalizar la tarea? ' +
-            'No podrás volver a iniciarla ni modificar su resultado libremente.'
-        )) return;
+        if (!await confirmarAccion({ titulo: 'Finalizar asignación', mensaje: '¿Confirmas que deseas finalizar la tarea? ' +
+            'No podrás volver a iniciarla ni modificar su resultado libremente.', textoConfirmar: 'Verificar GPS y finalizar', destructiva: false })) return;
 
         await ejecutarAccion(async () => {
             informar('Obteniendo ubicación de finalización...');
 
             const gps = await obtenerUbicacion();
+            if (!vigente()) return;
 
             informar('Validando GPS y finalización...');
 
@@ -859,52 +872,22 @@ $('boton-actualizar').addEventListener(
 // INICIALIZAR
 // =====================================================
 
-async function iniciarModulo() {
+export async function iniciarAsignaciones(perfilVerificado, contexto = () => true) {
+    perfil = perfilVerificado;
+    contextoVigente = contexto;
+    vistaAsignaciones.conectar({ ubicar: async () => {
+        if (ocupado || !vigente()) return;
+        bloquearAcciones(true);
+        try {
+            const gps = await obtenerUbicacion();
+            if (vigente()) { vistaAsignaciones.ubicacion(gps, true); informar('Tu ubicación se muestra solo en este mapa.'); }
+        } catch (error) { informar(error.message, 'error'); }
+        finally { bloquearAcciones(false); }
+    } });
+    bloquearAcciones(true);
     informar('Cargando asignaciones...');
-
-    try {
-        const {
-            data: datosUsuario,
-            error: errorUsuario
-        } = await supabase.auth.getUser();
-
-        if (errorUsuario) throw errorUsuario;
-
-        if (!datosUsuario.user) {
-            window.location.replace('../index.html');
-            return;
-        }
-
-        const {
-            data: datosPerfil,
-            error: errorPerfil
-        } = await supabase
-            .from('perfiles')
-            .select('id, nombre_usuario')
-            .eq('usuario_auth_id', datosUsuario.user.id)
-            .single();
-
-        if (errorPerfil) throw errorPerfil;
-
-        perfil = datosPerfil;
-
-        $('nombre-usuario-actual').textContent =
-            '@' + perfil.nombre_usuario;
-
-        await cargarAsignaciones();
-
-        informar('');
-
-    } catch (error) {
-        informar(
-            'Error al cargar las asignaciones: ' +
-            error.message,
-            'error'
-        );
-
-        console.error(error);
-    }
+    try { await cargarAsignaciones(); informar(''); }
+    catch (error) { lista.textContent = 'No se pudieron consultar tus actividades. Usa Actualizar para volver a intentarlo.'; informar('No se pudieron cargar las asignaciones. Reintenta con Actualizar. ' + error.message, 'error'); }
+    finally { bloquearAcciones(false); }
 }
-
-iniciarModulo();
-
+$('buscar-asignaciones').addEventListener('input', mostrarAsignaciones);

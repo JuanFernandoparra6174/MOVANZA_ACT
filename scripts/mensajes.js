@@ -5,7 +5,19 @@ import { supabase } from '../configuracion/supabase.js';
 // ELEMENTOS Y VARIABLES
 // =====================================================
 
-const $ = id => document.getElementById(id);
+// Una sola implementación para la página existente y para paneles integrados.
+export function crearMensajeria({ raiz = document, empresaId = null, perfilInicial = null,
+    vista = null, contextoVigente = () => true } = {}) {
+const $ = id => raiz.querySelector('#' + id);
+const listeners = [];
+function escuchar(elemento, evento, accion) {
+    elemento.addEventListener(evento, accion);
+    listeners.push(() => elemento.removeEventListener(evento, accion));
+}
+let destruido = false, versionHistorial = 0, cargandoHistorial = false;
+let lecturaConversaciones = null, lecturaHistorial = null;
+const borradores = new Map();
+const vigente = () => !destruido && contextoVigente();
 
 const mensaje = $('mensaje');
 const lista = $('lista-conversaciones');
@@ -27,6 +39,7 @@ let ocupado = false;
 // =====================================================
 
 function informar(texto, tipo = '') {
+    if (!vigente()) return;
     mensaje.textContent = texto;
     mensaje.className = tipo;
 }
@@ -85,44 +98,60 @@ function mostrarEstado(estado) {
 function bloquearControles(bloquear) {
     ocupado = bloquear;
 
-    document.querySelectorAll(
+    actualizarControles();
+}
+function actualizarControles() {
+    if (!vigente()) return;
+    raiz.querySelectorAll(
         '#formulario-mensaje button, ' +
         '#boton-actualizar-mensajes, ' +
         '#boton-actualizar-conversaciones, ' +
         '#lista-conversaciones button'
     ).forEach(boton => {
-        boton.disabled = bloquear;
+        boton.disabled = ocupado;
     });
+    $('boton-enviar-mensaje').disabled = ocupado || cargandoHistorial || asignacionSeleccionada === null;
+    $('contenido-mensaje').readOnly = ocupado;
+    vista?.carga({ ocupado, historial: cargandoHistorial });
 }
 
 // =====================================================
 // CARGAR CONVERSACIONES VISIBLES
 // =====================================================
 
-async function cargarConversaciones() {
+function cargarConversaciones() {
+    if (lecturaConversaciones) return lecturaConversaciones;
+    lecturaConversaciones = leerConversaciones().finally(() => { lecturaConversaciones = null; });
+    return lecturaConversaciones;
+}
+async function leerConversaciones() {
 
     // RLS determina qué asignaciones puede leer.
     // Un usuario puede ser propietario o trabajador.
-    const { data, error } = await supabase
+    let consultaAsignaciones = supabase
         .from('asignaciones')
         .select(
             'id, trabajo_id, trabajador_id, ' +
             'titulo, estado, programada_para'
-        )
+        );
+    // Ámbito del panel trabajador; RLS sigue autorizando cada lectura.
+    if (perfil.rol === 'trabajador') consultaAsignaciones = consultaAsignaciones.eq('trabajador_id', perfil.id);
+    const { data, error } = await consultaAsignaciones
         .order('creado_en', { ascending: false })
         .limit(500);
 
     if (error) throw error;
 
-    asignaciones = data || [];
-    trabajos = [];
-    empresas = [];
+    if (!vigente()) return;
+    let nuevasAsignaciones = data || [];
+    if (perfil.rol === 'trabajador') nuevasAsignaciones = nuevasAsignaciones.filter(a => a.trabajador_id === perfil.id);
+    let nuevosTrabajos = [], nuevasEmpresas = [];
 
-    if (asignaciones.length > 0) {
+    if (nuevasAsignaciones.length > 0) {
 
         const idsTrabajos = [
             ...new Set(
-                asignaciones.map(a => a.trabajo_id)
+                nuevasAsignaciones.map(a => a.trabajo_id)
             )
         ];
 
@@ -135,14 +164,15 @@ async function cargarConversaciones() {
             throw resultadoTrabajos.error;
         }
 
-        trabajos = resultadoTrabajos.data || [];
+        if (!vigente()) return;
+        nuevosTrabajos = resultadoTrabajos.data || [];
     }
 
-    if (trabajos.length > 0) {
+    if (nuevosTrabajos.length > 0) {
 
         const idsEmpresas = [
             ...new Set(
-                trabajos.map(t => t.empresa_id)
+                nuevosTrabajos.map(t => t.empresa_id)
             )
         ];
 
@@ -155,8 +185,22 @@ async function cargarConversaciones() {
             throw resultadoEmpresas.error;
         }
 
-        empresas = resultadoEmpresas.data || [];
+        if (!vigente()) return;
+        nuevasEmpresas = resultadoEmpresas.data || [];
     }
+
+    // El panel empresarial usa solamente la empresa ya verificada por su anfitrión.
+    // RLS y la RPC siguen siendo la autoridad sobre lectura y envío.
+    if (empresaId !== null) {
+        nuevasEmpresas = nuevasEmpresas.filter(e => String(e.id) === String(empresaId) && e.propietario_id === perfil.id);
+        nuevosTrabajos = nuevosTrabajos.filter(t => nuevasEmpresas.some(e => e.id === t.empresa_id));
+        nuevasAsignaciones = nuevasAsignaciones.filter(a => nuevosTrabajos.some(t => t.id === a.trabajo_id));
+    }
+    if (perfil.rol === 'trabajador') {
+        // El trabajo debe ser legible; los datos de empresa son opcionales.
+        nuevasAsignaciones = nuevasAsignaciones.filter(a => nuevosTrabajos.some(t => t.id === a.trabajo_id));
+    }
+    asignaciones = nuevasAsignaciones; trabajos = nuevosTrabajos; empresas = nuevasEmpresas;
 
     mostrarConversaciones();
 
@@ -168,7 +212,7 @@ async function cargarConversaciones() {
         );
 
         if (sigueVisible) {
-            await abrirConversacion(asignacionSeleccionada);
+            await abrirConversacion(asignacionSeleccionada, { restaurar: true });
         } else {
             cerrarConversacion();
         }
@@ -180,6 +224,7 @@ async function cargarConversaciones() {
 // =====================================================
 
 function mostrarConversaciones() {
+    if (!vigente()) return;
 
     lista.replaceChildren();
 
@@ -205,6 +250,12 @@ function mostrarConversaciones() {
 
         return texto.includes(busqueda);
     });
+
+    if (vista) {
+        vista.conversaciones({ asignaciones: visibles, trabajos, seleccionada: asignacionSeleccionada,
+            abrir: abrirConversacion, estado: mostrarEstado, ocupado });
+        return;
+    }
 
     if (visibles.length === 0) {
         lista.appendChild(
@@ -282,7 +333,8 @@ function mostrarConversaciones() {
 // ABRIR UNA CONVERSACIÓN
 // =====================================================
 
-async function abrirConversacion(id) {
+async function abrirConversacion(id, { restaurar = false } = {}) {
+    if (!vigente() || (ocupado && !restaurar)) return;
     const asignacion = buscarAsignacion(id);
 
     if (!asignacion) {
@@ -290,7 +342,11 @@ async function abrirConversacion(id) {
         return;
     }
 
+    guardarBorrador();
+    const cambio = asignacionSeleccionada !== id;
     asignacionSeleccionada = id;
+    $('contenido-mensaje').value = borradores.get(id) || '';
+    if (cambio) historial.replaceChildren();
 
     const trabajo = buscarTrabajo(
         asignacion.trabajo_id
@@ -315,11 +371,14 @@ async function abrirConversacion(id) {
     $('id-conversacion').textContent = id;
 
     seccionConversacion.classList.remove('oculto');
+    vista?.seleccion({ asignacion, trabajo, empresa, restaurar });
+    mostrarConversaciones();
+    informar('');
 
     try {
         await cargarMensajes();
 
-        seccionConversacion.scrollIntoView({
+        if (!vista && vigente()) seccionConversacion.scrollIntoView({
             behavior: 'smooth'
         });
 
@@ -331,26 +390,50 @@ async function abrirConversacion(id) {
         );
 
         console.error(error);
+        if (restaurar) throw error;
     }
 }
 
 function cerrarConversacion() {
+    guardarBorrador(); versionHistorial++;
     asignacionSeleccionada = null;
     seccionConversacion.classList.add('oculto');
     historial.replaceChildren();
     formularioMensaje.reset();
+    cargandoHistorial = false;
+    lecturaHistorial = null;
+    vista?.cerrarConversacion();
+    actualizarControles();
+}
+function guardarBorrador() {
+    if (asignacionSeleccionada !== null) borradores.set(asignacionSeleccionada, $('contenido-mensaje').value);
 }
 
 // =====================================================
 // CONSULTAR HISTORIAL
 // =====================================================
 
-async function cargarMensajes() {
+function cargarMensajes() {
+    if (asignacionSeleccionada === null || !vigente()) return Promise.resolve();
+    if (lecturaHistorial?.id === asignacionSeleccionada) return lecturaHistorial.promesa;
+    const lectura = { id: asignacionSeleccionada };
+    lectura.promesa = leerMensajes().finally(() => { if (lecturaHistorial === lectura) lecturaHistorial = null; });
+    lecturaHistorial = lectura;
+    return lectura.promesa;
+}
+async function leerMensajes() {
 
     if (asignacionSeleccionada === null) return;
 
     const idConsultado = asignacionSeleccionada;
+    const version = ++versionHistorial;
+    const cercaDelFinal = historial.scrollHeight - historial.scrollTop - historial.clientHeight < 80;
+    const posicion = historial.scrollTop;
+    const teniaMensajes = historial.querySelector('.burbuja-mensaje') !== null;
+    cargandoHistorial = true; actualizarControles();
+    historial.setAttribute('aria-busy', 'true');
 
+    try {
     const { data, error } = await supabase
         .from('mensajes')
         .select(
@@ -361,6 +444,7 @@ async function cargarMensajes() {
         .order('id', { ascending: true })
         .limit(500);
 
+    if (!vigente() || version !== versionHistorial) return;
     if (error) throw error;
 
     // Evitar mostrar el historial de otra conversación
@@ -422,20 +506,26 @@ async function cargarMensajes() {
         historial.appendChild(tarjeta);
     });
 
-    historial.scrollTop = historial.scrollHeight;
+    if (!teniaMensajes || cercaDelFinal) historial.scrollTop = historial.scrollHeight;
+    else historial.scrollTop = posicion;
+    } finally {
+        if (vigente() && version === versionHistorial) {
+            cargandoHistorial = false; historial.setAttribute('aria-busy', 'false'); actualizarControles();
+        }
+    }
 }
 
 // =====================================================
 // ENVIAR MENSAJE
 // =====================================================
 
-formularioMensaje.addEventListener(
+escuchar(formularioMensaje,
     'submit',
     async evento => {
 
         evento.preventDefault();
 
-        if (ocupado) return;
+        if (ocupado || cargandoHistorial || !vigente()) return;
 
         if (asignacionSeleccionada === null) {
             informar(
@@ -465,6 +555,7 @@ formularioMensaje.addEventListener(
         }
 
         const idAsignacion = asignacionSeleccionada;
+        let envioConfirmado = false;
 
         bloquearControles(true);
         informar('Enviando mensaje...');
@@ -481,7 +572,10 @@ formularioMensaje.addEventListener(
             );
 
             if (error) throw error;
+            if (!vigente()) return;
+            envioConfirmado = true;
 
+            borradores.delete(idAsignacion);
             formularioMensaje.reset();
 
             await cargarMensajes();
@@ -493,7 +587,9 @@ formularioMensaje.addEventListener(
 
         } catch (error) {
             informar(
-                'No se pudo enviar: ' + error.message,
+                envioConfirmado
+                    ? 'Mensaje enviado. No se pudo actualizar el historial: ' + error.message
+                    : 'No se pudo enviar: ' + error.message,
                 'error'
             );
 
@@ -509,15 +605,15 @@ formularioMensaje.addEventListener(
 // ACTUALIZACIONES MANUALES
 // =====================================================
 
-$('filtro-conversaciones').addEventListener(
+escuchar($('filtro-conversaciones'),
     'input',
     mostrarConversaciones
 );
 
-$('boton-actualizar-conversaciones').addEventListener(
+escuchar($('boton-actualizar-conversaciones'),
     'click',
     async () => {
-        if (ocupado) return;
+        if (ocupado || !vigente()) return;
 
         bloquearControles(true);
 
@@ -539,10 +635,10 @@ $('boton-actualizar-conversaciones').addEventListener(
     }
 );
 
-$('boton-actualizar-mensajes').addEventListener(
+escuchar($('boton-actualizar-mensajes'),
     'click',
     async () => {
-        if (ocupado) return;
+        if (ocupado || !vigente()) return;
 
         bloquearControles(true);
 
@@ -568,8 +664,12 @@ $('boton-actualizar-mensajes').addEventListener(
 async function iniciarModulo() {
 
     informar('Cargando conversaciones...');
+    bloquearControles(true);
 
     try {
+        if (perfilInicial) {
+            perfil = perfilInicial;
+        } else {
         const {
             data: datosUsuario,
             error: errorUsuario
@@ -594,6 +694,8 @@ async function iniciarModulo() {
         if (errorPerfil) throw errorPerfil;
 
         perfil = datosPerfil;
+        }
+        if (!vigente()) return;
 
         $('usuario-actual').textContent =
             '@' + perfil.nombre_usuario;
@@ -610,7 +712,13 @@ async function iniciarModulo() {
         );
 
         console.error(error);
+    } finally {
+        bloquearControles(false);
     }
 }
 
-iniciarModulo();
+return { iniciar: iniciarModulo, abrir: abrirConversacion, cerrar: cerrarConversacion,
+    ocupado: () => ocupado, destruir() { destruido = true; versionHistorial++; borradores.clear(); listeners.forEach(quitar => quitar()); } };
+}
+
+if (document.body.dataset.modulo === 'mensajes') crearMensajeria().iniciar();

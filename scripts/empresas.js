@@ -55,8 +55,8 @@ async function cargarUsuario() {
 
     perfil = datosPerfil;
 
-    usuarioActual.textContent = perfil.nombre_usuario;
-    perfilActual.textContent = perfil.id;
+    if (usuarioActual) usuarioActual.textContent = perfil.nombre_usuario;
+    if (perfilActual) perfilActual.textContent = perfil.id;
 
     return true;
 }
@@ -93,7 +93,7 @@ function mostrarEmpresas() {
     empresas.forEach(empresa => {
 
         const tarjeta = document.createElement('div');
-        tarjeta.className = 'elemento-empresa';
+        tarjeta.className = listaEmpresas.classList.contains('tabla-empresas') ? 'elemento-empresa grid-1-5' : 'elemento-empresa';
 
         const nombre = document.createElement('h3');
         nombre.textContent = empresa.nombre;
@@ -107,10 +107,19 @@ function mostrarEmpresas() {
 
         const boton = document.createElement('button');
         boton.type = 'button';
+        boton.className = 'button';
+        if (listaEmpresas.classList.contains('tabla-empresas')) {
+            boton.classList.add('boton-relleno');
+            boton.setAttribute('aria-pressed', 'false');
+            tarjeta.dataset.empresaId = String(empresa.id);
+        }
         boton.textContent = 'Seleccionar empresa';
 
         boton.addEventListener('click', () => {
             seleccionarEmpresa(empresa.id);
+            if (document.body.classList.contains('pagina-seleccion')) {
+                location.assign('../home_empresa_2.html');
+            }
         });
 
         tarjeta.append(nombre, identificador, fecha, boton);
@@ -137,10 +146,17 @@ function seleccionarEmpresa(id) {
         String(empresa.id)
     );
 
-    empresaActivaNombre.textContent = empresa.nombre;
-    empresaActivaId.textContent = empresa.id;
+    if (empresaActivaNombre) empresaActivaNombre.textContent = empresa.nombre;
+    if (empresaActivaId) empresaActivaId.textContent = empresa.id;
 
-    seccionActiva.classList.remove('oculto');
+    seccionActiva?.classList.remove('oculto');
+    listaEmpresas.querySelectorAll('[data-empresa-id]').forEach(tarjeta => {
+        const activa = tarjeta.dataset.empresaId === String(empresa.id);
+        tarjeta.classList.toggle('empresa-seleccionada', activa);
+        const boton = tarjeta.querySelector('button');
+        boton.setAttribute('aria-pressed', String(activa));
+        boton.textContent = activa ? 'Empresa seleccionada ✓' : 'Seleccionar empresa';
+    });
 
     mostrarMensaje(
         `Empresa "${empresa.nombre}" seleccionada correctamente.`,
@@ -156,7 +172,7 @@ function recuperarEmpresaSeleccionada() {
     );
 
     if (!idGuardado) {
-        seccionActiva.classList.add('oculto');
+        seccionActiva?.classList.add('oculto');
         return;
     }
 
@@ -168,14 +184,15 @@ function recuperarEmpresaSeleccionada() {
         seleccionarEmpresa(empresa.id);
     } else {
         sessionStorage.removeItem('movanza_empresa_activa');
-        seccionActiva.classList.add('oculto');
+        seccionActiva?.classList.add('oculto');
     }
 }
 
 // CREAR EMPRESA
-formulario.addEventListener('submit', async (evento) => {
+formulario?.addEventListener('submit', async (evento) => {
 
     evento.preventDefault();
+    if (document.getElementById('boton-crear').disabled || !perfil) return;
 
     const nombre = nombreEmpresa.value.trim();
 
@@ -190,6 +207,8 @@ formulario.addEventListener('submit', async (evento) => {
     const boton = document.getElementById('boton-crear');
 
     boton.disabled = true;
+    formulario.setAttribute('aria-busy', 'true');
+    formulario.dispatchEvent(new window.Event('empresa-procesando'));
     mostrarMensaje('Creando empresa...');
 
     try {
@@ -225,11 +244,21 @@ formulario.addEventListener('submit', async (evento) => {
 
     } finally {
         boton.disabled = false;
+        formulario.setAttribute('aria-busy', 'false');
+        formulario.dispatchEvent(new window.Event('empresa-finalizada'));
     }
 });
 
 // INICIAR MÓDULO
-async function iniciarModulo() {
+export async function iniciarModulo() {
+    listaEmpresas.setAttribute('aria-busy', 'true');
+    let indicador = document.getElementById('carga-empresas');
+    if (!indicador && window.MovanzaUI && listaEmpresas.classList.contains('tabla-empresas')) {
+        indicador = window.MovanzaUI.crearLoader('Cargando empresas…');
+        indicador.id = 'carga-empresas';
+        listaEmpresas.before(indicador);
+    }
+    if (indicador) indicador.hidden = false;
 
     try {
 
@@ -238,6 +267,7 @@ async function iniciarModulo() {
         if (!autenticado) return;
 
         await cargarEmpresas();
+        return true;
 
     } catch (error) {
 
@@ -247,7 +277,13 @@ async function iniciarModulo() {
         );
 
         console.error(error);
+        listaEmpresas.textContent = 'No se pudieron cargar las empresas.';
+        return false;
+    } finally {
+        listaEmpresas.setAttribute('aria-busy', 'false');
+        const indicador = document.getElementById('carga-empresas');
+        if (indicador) indicador.hidden = true;
     }
 }
 
-iniciarModulo();
+if (!document.body.classList.contains('home-empresa')) iniciarModulo();

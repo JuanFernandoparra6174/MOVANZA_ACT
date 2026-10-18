@@ -141,6 +141,7 @@ try {
         await denegado(() => rpc('cancelar_asignacion', [asignacionA]), 'Trabajador no ejecuta acciones de empresa');
         await rpc('responder_asignacion', [asignacionA, true, null]);
         await denegado(() => rpc('iniciar_asignacion', [asignacionA, 5, -74, 5]), 'Conserva el control del radio GPS');
+        await denegado(() => rpc('iniciar_asignacion', [asignacionA, 4, -74, 51]), 'Servidor rechaza inicio con precisión insuficiente');
         await rpc('iniciar_asignacion', [asignacionA, 4, -74, 5]);
     });
     await como('empresaA', async () => {
@@ -149,6 +150,12 @@ try {
     });
     await como('trabajadorA', async () => {
         await rpc('enviar_mensaje', [asignacionA, 'Mensaje del trabajador']);
+        const inicioAntes = await valor('select inicio_en from public.asignaciones');
+        await denegado(() => rpc('finalizar_asignacion', [asignacionA, 5, -74, 5, true, null]), 'Servidor impide finalizar fuera del radio aunque ya esté iniciada');
+        await denegado(() => rpc('finalizar_asignacion', [asignacionA, 4, -74, 51, true, null]), 'Servidor impide finalizar con GPS impreciso');
+        igual(await valor('select estado from public.asignaciones'), 'en_curso', 'Rechazos GPS conservan la asignación en curso');
+        igual(await valor('select inicio_en from public.asignaciones'), inicioAntes, 'Rechazos GPS no alteran el inicio del servidor');
+        igual(await valor('select fin_en from public.asignaciones'), null, 'Rechazos GPS no registran finalización');
         await rpc('finalizar_asignacion', [asignacionA, 4, -74, 5, true, null]);
         igual(await valor('select estado from public.asignaciones'), 'finalizada', 'Conserva el flujo completo de ejecución');
     });

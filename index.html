@@ -1,357 +1,413 @@
-
 <!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>MOVANZA | Acceso</title>
-
-    <link rel="stylesheet" href="./estilos/general.css">
-</head>
-
-<body>
-
-    <main class="contenedor">
-
-        <!-- ENCABEZADO -->
-        <header>
-            <h1>MOVANZA</h1>
-            <p>Gestión de trabajos presenciales</p>
-        </header>
-
-        <!-- INICIO DE SESIÓN -->
-        <section id="seccion-acceso" class="tarjeta">
-
-            <h2>Iniciar sesión</h2>
-
-            <form id="formulario-acceso">
-
-                <label for="correo-acceso">
-                    Correo electrónico
-                </label>
-
-                <input
-                    id="correo-acceso"
-                    type="email"
-                    placeholder="Ej: usuario@correo.com"
-                    autocomplete="email"
-                    required
-                >
-
-                <label for="clave-acceso">
-                    Contraseña
-                </label>
-
-                <input
-                    id="clave-acceso"
-                    type="password"
-                    autocomplete="current-password"
-                    required
-                >
-
-                <button type="submit">
-                    Iniciar sesión
-                </button>
-
-            </form>
-
-            <p>
-                ¿No tienes cuenta?
-
-                <button
-                    type="button"
-                    class="enlace"
-                    id="mostrar-registro"
-                >
-                    Registrarse
-                </button>
-            </p>
-
-        </section>
-
-        <!-- REGISTRO DE USUARIOS -->
-        <section id="seccion-registro" class="tarjeta oculto">
-
-            <h2>Crear cuenta</h2>
-
-            <form id="formulario-registro">
-
-                <label for="rol-registro">Tipo de cuenta</label>
-                <select id="rol-registro" required>
-                    <option value="">Selecciona tu tipo de cuenta</option>
-                    <option value="empresa">Empresa</option>
-                    <option value="trabajador">Trabajador</option>
-                </select>
-
-                <label for="correo-registro">
-                    Correo electrónico
-                </label>
-
-                <input
-                    id="correo-registro"
-                    type="email"
-                    placeholder="Ej: usuario@correo.com"
-                    autocomplete="email"
-                    required
-                >
-
-                <label for="clave-registro">
-                    Contraseña
-                </label>
-
-                <input
-                    id="clave-registro"
-                    type="password"
-                    autocomplete="new-password"
-                    minlength="8"
-                    required
-                >
-
-                <label for="confirmar-clave">
-                    Confirmar contraseña
-                </label>
-
-                <input
-                    id="confirmar-clave"
-                    type="password"
-                    autocomplete="new-password"
-                    minlength="8"
-                    required
-                >
-
-                <button type="submit">
-                    Crear cuenta
-                </button>
-
-            </form>
-
-            <p>
-                ¿Ya tienes cuenta?
-
-                <button
-                    type="button"
-                    class="enlace"
-                    id="mostrar-acceso"
-                >
-                    Iniciar sesión
-                </button>
-            </p>
-
-        </section>
-
-        <!-- PERFIL DEL USUARIO -->
-        <section id="seccion-perfil" class="tarjeta oculto">
-
-            <h2>Mi perfil</h2>
-
-            <p>Sesión iniciada correctamente.</p>
-
-            <p><strong>Tipo de cuenta:</strong> <span id="perfil-rol"></span></p>
-
-            <p>
-                <strong>ID:</strong>
-                <span id="perfil-id"></span>
-            </p>
-
-            <p>
-                <strong>Correo electrónico:</strong>
-                <span id="perfil-correo"></span>
-            </p>
-
-            <!-- EDITAR PERFIL -->
-            <form id="formulario-perfil">
-
-                <!-- NOMBRE COMPLETO -->
-                <label for="nombre-completo">
-                    Nombre completo
-                </label>
-
-                <input
-                    id="nombre-completo"
-                    type="text"
-                    maxlength="150"
-                    placeholder="Ej: Juan Fernando Parra"
-                >
-
-                <small class="texto-ayuda">
-                    Escribe tu nombre y apellidos.
-                    Así podrán identificarte las empresas
-                    a las que pertenezcas.
-                </small>
-
-                <!-- NOMBRE DE USUARIO -->
-                <label for="nombre-usuario">
-                    Nombre de usuario (único)
-                </label>
-
-                <input
-                    id="nombre-usuario"
-                    type="text"
-                    minlength="3"
-                    maxlength="30"
-                    pattern="[a-z0-9_]{3,30}"
-                    placeholder="Ej: juan_parra21"
-                    autocomplete="username"
-                    required
-                >
-
-                <small class="texto-ayuda">
-                    Es tu identificador público en MOVANZA.
-                    Las empresas lo utilizarán para buscarte
-                    y enviarte invitaciones.
-                    No puede repetirse.
-
-                    Utiliza entre 3 y 30 caracteres:
-                    letras minúsculas, números o
-                    guion bajo (_).
-                </small>
-
-                <button type="submit">
-                    Guardar perfil
-                </button>
-
-            </form>
-
-            <div id="modulos-cuenta"></div>
-
-            <!-- ESPACIO COMO PROPIETARIO -->
-            <div class="bloque oculto" data-roles="empresa">
-
-                <h3>Mis empresas</h3>
-
-                <p>
-                    Crea una empresa o administra
-                    las que ya tienes registradas.
-                </p>
-
-                <p>
-                    Desde allí podrás gestionar trabajadores,
-                    invitaciones, mapas, trabajos y asignaciones.
-                </p>
-
-                <a href="./paginas/empresas.html">
-                    Ir a mis empresas →
+<html lang="es"><head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="MOVANZA: gestión de trabajos presenciales, coordinación de equipos y verificación de actividades mediante ubicación GPS.">
+        <meta name="theme-color" content="#5F4D93">
+        <title>MOVANZA | Gestión de trabajos presenciales</title>
+        <link rel="stylesheet" href="./estilos/general.css">
+    <link rel="stylesheet" href="./estilos/alertas.css" data-estilo-alertas>
+    <script type="module" src="./scripts/alertas.js"></script>
+        <link rel="stylesheet" href="./estilos/index.css">
+        <script src="./scripts/componentes-publicos.js" defer=""></script>
+        <script src="./scripts/auth-modal.js" defer></script>
+        <script src="./scripts/index-publico.js" defer=""></script>
+        <link rel="stylesheet" href="./estilos/auth-modal.css">
+        <link rel="stylesheet" href="./recursos/efecto_fondo/fondo.css">
+        <link rel="stylesheet" href="./estilos/componentes-publicos.css">
+        <link rel="stylesheet" href="./estilos/cuenta.css">
+    </head>
+    <body class="pagina-publica" data-autenticacion="perfil">
+        <div class="container fondo-exterior" aria-hidden="true" inert="">
+            <div id="stars"></div>
+            <div id="stars2"></div>
+            <div id="stars3"></div>
+            <div></div>
+        </div>
+        <div class="sitio-publico">
+            <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+            <header class="cabecera-publica" id="inicio">
+                <a class="marca" href="#inicio" aria-label="MOVANZA, inicio">
+                    <img src="./Carpeta_Imagenes/Logo/Logotipo%20MOVANZA.png" alt="MOVANZA" width="170" height="54">
                 </a>
-
-            </div>
-
-            <!-- ESPACIO COMO TRABAJADOR -->
-            <div class="bloque oculto" data-roles="trabajador">
-
-                <h3>Mi espacio como trabajador</h3>
-
-                <p>
-                    Consulta las invitaciones que has recibido,
-                    las empresas a las que perteneces
-                    y las tareas que te han asignado.
-                </p>
-
-                <!-- INVITACIONES -->
-                <div class="bloque">
-
-                    <h4>Invitaciones y empresas</h4>
-
-                    <p>
-                        Acepta o rechaza invitaciones
-                        de empresas y consulta los equipos
-                        a los que perteneces.
-                    </p>
-
-                    <a href="./paginas/mis_invitaciones.html">
-                        Ver mis invitaciones y empresas →
-                    </a>
-
+                <button class="menu-boton" type="button" aria-expanded="false" aria-controls="navegacion-principal">Menú <span aria-hidden="true">☰</span></button>
+                <nav id="navegacion-principal" aria-label="Navegación principal">
+                    <a href="#inicio">Inicio</a>
+                    <a href="#nosotros">Nosotros</a>
+                    <a href="#servicios">Servicios</a>
+                    <a href="#preguntas">Preguntas frecuentes</a>
+                    <a href="#experiencias">Experiencia</a>
+                    <a href="#contacto">Contacto</a>
+                </nav>
+                <a class="boton boton-acceso" href="./login.html">Iniciar sesión <span aria-hidden="true">↗</span></a>
+            </header>
+            <main id="contenido">
+                <div class="portada">
+                    <div class="portada-texto">
+                        <p class="antetitulo">PERSONAS · EQUIPOS · OPERACIONES</p>
+                        <h1>Tu operación de campo, más clara y organizada.</h1>
+                        <p>MOVANZA ayuda a las empresas a gestionar las actividades de sus trabajadores de campo, verificar ubicaciones y registrar tiempos de ejecución desde una sola plataforma.</p>
+                        <p class="lema-inicio">Menos seguimiento manual. Más claridad sobre tu operación.</p>
+                        <div class="portada-acciones">
+                            <a class="boton" href="#nosotros">Conoce MOVANZA <span aria-hidden="true">↗</span></a>
+                            <a class="enlace-portada" href="#contacto">Contáctanos <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </div>
+                    <div class="grafica-operacion" aria-hidden="true">
+                        <div class="orbita orbita-uno"></div>
+                        <div class="orbita orbita-dos"></div>
+                        <span class="punto punto-uno"></span>
+                        <span class="punto punto-dos"></span>
+                        <span class="punto punto-tres"></span>
+                        <div class="grafica-centro">
+                            <svg viewBox="0 0 48 48" fill="none"><path d="M24 43s15-15 15-26a15 15 0 0 0-30 0c0 11 15 26 15 26Z" stroke="currentColor" stroke-width="2"></path><circle cx="24" cy="17" r="5" stroke="currentColor" stroke-width="2"></circle></svg>
+                        </div>
+                        <span class="grafica-etiqueta etiqueta-equipo">Personas conectadas</span>
+                        <span class="grafica-etiqueta etiqueta-ubicacion">Actividades en su lugar</span>
+                    </div>
                 </div>
-
-                <!-- MIS ASIGNACIONES -->
-                <div class="bloque">
-
-                    <h4>Mis asignaciones</h4>
-
-                    <p>
-                        Consulta tus tareas pendientes,
-                        revisa sus objetivos y fechas,
-                        y decide si aceptarlas o rechazarlas.
-                    </p>
-
-                    <a href="./paginas/mis_asignaciones.html">
-                        Consultar mis asignaciones →
-                    </a>
-
+                <section class="explorar" id="explorar" aria-labelledby="titulo-explorar">
+                    <div class="encabezado-seccion">
+                        <div>
+                            <p class="antetitulo">DESCUBRE LA PLATAFORMA</p>
+                            <h2 id="titulo-explorar">Todo comienza aquí.</h2>
+                        </div>
+                        <p>Un lugar para conectar con MOVANZA.</p>
+                    </div>
+                    <div class="mosaico">
+                        <article class="card-principal card-cuenta efecto-card">
+                            <span class="efecto-card-borde" aria-hidden="true"></span>
+                            <span class="card-imagen" aria-hidden="true">
+                                <img src="./Carpeta_Imagenes/home_princpial_index/login_singup/photo-1608496601160-f86d19a44f9f.avif" alt="" width="900" height="600">
+                            </span>
+                            <div class="card-contenido">
+                                <p class="card-categoria"><span>01</span> Inicio de sesión y registro</p>
+                                <h3>Bienvenido a MOVANZA</h3>
+                                <p>Gestiona tus actividades laborales, optimiza tus tiempos y mantén el control de tus operaciones desde un solo lugar.</p>
+                                <a href="./login.html" class="card-accion">Acceder a MOVANZA<span aria-hidden="true">↗</span></a>
+                                <a class="registro-card" href="./signup.html">Crear cuenta</a>
+                            </div>
+                        </article>
+                        <article class="card-principal card-nosotros efecto-card">
+                            <span class="efecto-card-borde" aria-hidden="true"></span>
+                            <span class="card-imagen" aria-hidden="true">
+                                <img src="./Carpeta_Imagenes/home_princpial_index/nosotros/photo-1582213782179-e0d53f98f2ca.avif" alt="" width="900" height="600">
+                            </span>
+                            <div class="card-contenido">
+                                <p class="card-categoria"><span>02</span> Nosotros</p>
+                                <h3>Tecnología para entender mejor tu operación.</h3>
+                                <p>Nacimos con el propósito de facilitar la gestión de las operaciones de campo mediante herramientas digitales prácticas, accesibles y confiables.</p>
+                                <a href="#nosotros" class="card-accion">Conoce nuestro propósito<span aria-hidden="true">↗</span></a>
+                            </div>
+                        </article>
+                        <article class="card-principal card-politicas efecto-card">
+                            <span class="efecto-card-borde" aria-hidden="true"></span>
+                            <span class="card-imagen" aria-hidden="true">
+                                <img src="./Carpeta_Imagenes/home_princpial_index/Politicas/photo-1771758249853-415175dc29b9.avif" alt="" width="900" height="600" loading="lazy">
+                            </span>
+                            <div class="card-contenido">
+                                <p class="card-categoria"><span>03</span> Políticas</p>
+                                <h3>Transparencia en cada proceso.</h3>
+                                <p>En MOVANZA promovemos el uso responsable de la información, la seguridad de los datos y la claridad en las condiciones de nuestros servicios.</p>
+                                <a href="#politicas" class="card-accion">Consultar políticas<span aria-hidden="true">↗</span></a>
+                            </div>
+                        </article>
+                        <article class="card-principal card-contacto efecto-card">
+                            <span class="efecto-card-borde" aria-hidden="true"></span>
+                            <span class="card-imagen" aria-hidden="true">
+                                <img src="./Carpeta_Imagenes/home_princpial_index/contacto/photo-1512428559087-560fa5ceab42.avif" alt="" width="900" height="600" loading="lazy">
+                            </span>
+                            <div class="card-contenido">
+                                <p class="card-categoria"><span>04</span> Contacto</p>
+                                <h3>Hablemos de tu empresa.</h3>
+                                <p>¿Quieres conocer MOVANZA o descubrir cómo puede ayudarte a organizar tus operaciones de campo?</p>
+                                <a href="#contacto" class="card-accion">Ir a contacto<span aria-hidden="true">↗</span></a>
+                            </div>
+                        </article>
+                        <article class="card-principal card-servicios efecto-card">
+                            <span class="efecto-card-borde" aria-hidden="true"></span>
+                            <span class="card-imagen" aria-hidden="true">
+                                <img src="./Carpeta_Imagenes/home_princpial_index/serviciosyproductos/photo-1619243142206-381c5aeda31c.avif" alt="" width="900" height="600" loading="lazy">
+                            </span>
+                            <div class="card-contenido">
+                                <p class="card-categoria"><span>05</span> Servicios y productos</p>
+                                <h3>Una plataforma. Más claridad sobre tu operación.</h3>
+                                <p>MOVANZA centraliza la gestión de actividades de campo y transforma los registros operativos en información útil para tu empresa.</p>
+                                <a href="#servicios" class="card-accion">Explorar soluciones<span aria-hidden="true">↗</span></a>
+                            </div>
+                        </article>
+                        <article class="card-principal card-preguntas efecto-card">
+                            <span class="efecto-card-borde" aria-hidden="true"></span>
+                            <span class="card-imagen" aria-hidden="true">
+                                <img src="./Carpeta_Imagenes/home_princpial_index/preguntas_frecuentes/photo-1550418290-a8d86ad674a6.avif" alt="" width="900" height="600" loading="lazy">
+                            </span>
+                            <div class="card-contenido">
+                                <p class="card-categoria"><span>06</span> Preguntas frecuentes</p>
+                                <h3>Resolvemos tus dudas.</h3>
+                                <p>Es una plataforma que ayuda a las empresas a organizar, verificar y consultar las actividades de sus trabajadores de campo.</p>
+                                <a href="#preguntas" class="card-accion">Consultar respuestas<span aria-hidden="true">↗</span></a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+                <section class="experiencias" id="experiencias" aria-labelledby="titulo-experiencias">
+                    <div class="encabezado-seccion">
+                        <div>
+                            <p class="antetitulo">EXPERIENCIAS Y TESTIMONIOS</p>
+                            <h2 id="titulo-experiencias">Experiencias que respaldan MOVANZA</h2>
+                        </div>
+                        <p>Conoce cómo diferentes negocios utilizan MOVANZA para mejorar el seguimiento de sus actividades laborales.</p>
+                    </div>
+                    <div class="testimonios">
+                        <figure>
+                            <span class="comilla" aria-hidden="true">“</span>
+                            <blockquote>“MOVANZA nos ayuda a conocer mejor la actividad de nuestros vendedores y el tiempo que toman durante sus recorridos.”</blockquote>
+                            <figcaption>Lizzia Clothing</figcaption>
+                        </figure>
+                        <figure>
+                            <span class="comilla" aria-hidden="true">“</span>
+                            <blockquote>“Nos permite tener una referencia más clara del tiempo que nuestros contratistas destinan a cada actividad.”</blockquote>
+                            <figcaption>Lovicon Brand</figcaption>
+                        </figure>
+                        <figure>
+                            <span class="comilla" aria-hidden="true">“</span>
+                            <blockquote>“Nos ayuda a verificar las actividades comerciales realizadas por nuestros socios y sus tiempos de operación.”</blockquote>
+                            <figcaption>Rolos Fast Food</figcaption>
+                        </figure>
+                    </div>
+                </section>
+            </main>
+            <footer class="pie-publico">
+                <div class="pie-columnas">
+                    <div>
+                        <a href="#inicio" class="marca-pie">MOVANZA<span aria-hidden="true">↗</span></a>
+                        <p>Gestión de trabajos presenciales.</p>
+                        <p>Manizales, Caldas, Colombia.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Manizales%2C%20Caldas%2C%20Colombia" target="_blank" rel="noopener noreferrer">Ver ubicación en el mapa ↗</a>
+                    </div>
+                    <div>
+                        <h2>Explora MOVANZA</h2>
+                        <nav aria-label="Mapa de navegación">
+                            <a href="#inicio">Inicio</a>
+                            <a href="#nosotros">Nosotros</a>
+                            <a href="#servicios">Servicios</a>
+                            <a href="#preguntas">Preguntas frecuentes</a>
+                            <a href="#experiencias">Experiencia</a>
+                            <a href="#contacto">Contacto</a>
+                            <a href="#politicas">Políticas</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <h2>Horarios de atención</h2>
+                        <dl class="horarios">
+                            <dt>Lunes a viernes</dt>
+                            <dd>8:00 a. m. – 6:00 p. m.</dd>
+                            <dt>Sábados</dt>
+                            <dd>9:00 a. m. – 1:00 p. m.</dd>
+                            <dt>Domingos y festivos</dt>
+                            <dd>No disponible.</dd>
+                        </dl>
+                    </div>
                 </div>
+                <div class="pie-final">
+                    <p>© 2026 MOVANZA. Todos los derechos reservados.</p>
+                    <a href="#inicio">Volver al inicio ↑</a>
+                </div>
+            </footer>
+            <dialog class="dialogo-publico" id="cuenta" aria-labelledby="titulo-cuenta">
+                <div class="dialogo-cabecera">
+                    <p class="antetitulo">Inicio de sesión y registro</p>
+                    <button type="button" class="cerrar-dialogo" aria-label="Cerrar Inicio de sesión y registro">Cerrar <span aria-hidden="true">×</span></button>
+                </div>
+                <h2 id="titulo-cuenta">Bienvenido a MOVANZA</h2>
+                <div class="cuenta-existente">
+                    <!-- ENCABEZADO -->
+                    <!-- INICIO DE SESIÓN -->
+                    <section id="seccion-acceso" class="tarjeta"><p>Inicia sesión para acceder a tu cuenta.</p><a class="boton" href="./login.html">Iniciar sesión</a><p>¿No tienes cuenta? <a href="./signup.html">Crear cuenta</a></p></section>
+                    <!-- REGISTRO DE USUARIOS -->
 
-            </div>
+                    <!-- PERFIL DEL USUARIO -->
+                    <section id="seccion-perfil" class="tarjeta oculto" hidden>
+                        <button id="boton-salir" type="button">Cerrar sesión</button>
+                    </section>
+                    <!-- MENSAJES DEL SISTEMA -->
+                    <p id="mensaje" role="status" aria-live="polite"></p>
+                </div>
+            </dialog>
+            <dialog class="dialogo-publico" id="nosotros" aria-labelledby="titulo-nosotros">
+                <div class="dialogo-cabecera">
+                    <p class="antetitulo">Nosotros</p>
+                    <button type="button" class="cerrar-dialogo" aria-label="Cerrar Nosotros">Cerrar <span aria-hidden="true">×</span></button>
+                </div>
+                <h2 id="titulo-nosotros">Tecnología para entender mejor tu operación.</h2>
+                <h3>¿Quiénes somos?</h3>
+                <p>MOVANZA es un proyecto tecnológico fundado por Juan Fernando Parra y Nicolás Barbosa, estudiantes de Ingeniería de Sistemas y Telecomunicaciones de la Universidad de Manizales.</p>
+                <p>Nacimos con el propósito de facilitar la gestión de las operaciones de campo mediante herramientas digitales prácticas, accesibles y confiables.</p>
+                <h3>Misión</h3>
+                <p>Ayudar a las empresas a gestionar sus operaciones de campo mediante soluciones tecnológicas que proporcionen información clara, útil y responsable.</p>
+                <h3>Visión</h3>
+                <p>Para 2031, consolidar MOVANZA como una plataforma tecnológica de referencia para pequeñas y medianas empresas que buscan optimizar la gestión de sus operaciones de campo.</p>
+            </dialog>
+            <dialog class="dialogo-publico" id="politicas" aria-labelledby="titulo-politicas">
+                <div class="dialogo-cabecera">
+                    <p class="antetitulo">Políticas</p>
+                    <button type="button" class="cerrar-dialogo" aria-label="Cerrar Políticas">Cerrar <span aria-hidden="true">×</span></button>
+                </div>
+                <h2 id="titulo-politicas">Transparencia en cada proceso.</h2>
+                <p>En MOVANZA promovemos el uso responsable de la información, la seguridad de los datos y la claridad en las condiciones de nuestros servicios.</p>
+                <p>Consulta nuestros documentos:</p>
+                <div class="lista-politicas">
+                    <section class="resumen-politica">
+                        <h3>Privacidad y protección de datos</h3>
+                        <p>Conoce cómo recopilamos, utilizamos y protegemos tu información personal.</p>
+                        <a href="./politicas/privacidad.html" aria-label="Leer política completa: Privacidad y protección de datos">Leer política completa</a>
+                    </section>
+                    <section class="resumen-politica">
+                        <h3>Seguridad de la información</h3>
+                        <p>Descubre nuestros compromisos y medidas para proteger los datos de la plataforma.</p>
+                        <a href="./politicas/seguridad.html" aria-label="Leer política completa: Seguridad de la información">Leer política completa</a>
+                    </section>
+                    <section class="resumen-politica">
+                        <h3>Términos y condiciones</h3>
+                        <p>Consulta las reglas, responsabilidades y condiciones de uso de MOVANZA.</p>
+                        <a href="./politicas/terminos.html" aria-label="Leer política completa: Términos y condiciones">Leer política completa</a>
+                    </section>
+                    <section class="resumen-politica">
+                        <h3>Prestación del servicio</h3>
+                        <p>Conoce el alcance, funcionamiento y limitaciones de nuestros servicios.</p>
+                        <a href="./politicas/servicio.html" aria-label="Leer política completa: Prestación del servicio">Leer política completa</a>
+                    </section>
+                    <section class="resumen-politica">
+                        <h3>Garantías</h3>
+                        <p>Infórmate sobre la atención de inconvenientes y las garantías aplicables.</p>
+                        <a href="./politicas/garantias.html" aria-label="Leer política completa: Garantías">Leer política completa</a>
+                    </section>
+                    <section class="resumen-politica">
+                        <h3>Cancelaciones y devoluciones</h3>
+                        <p>Consulta las condiciones aplicables a cancelaciones, retractos y devoluciones.</p>
+                        <a href="./politicas/cancelaciones.html" aria-label="Leer política completa: Cancelaciones y devoluciones">Leer política completa</a>
+                    </section>
+                </div>
+            </dialog>
+            <dialog class="dialogo-publico" id="contacto" aria-labelledby="titulo-contacto">
+                <div class="dialogo-cabecera">
+                    <p class="antetitulo">Contacto</p>
+                    <button type="button" class="cerrar-dialogo" aria-label="Cerrar Contacto">Cerrar <span aria-hidden="true">×</span></button>
+                </div>
+                <h2 id="titulo-contacto">Hablemos de tu empresa.</h2>
+                <p>¿Quieres conocer MOVANZA o descubrir cómo puede ayudarte a organizar tus operaciones de campo?</p>
+                <p>Estamos disponibles para resolver tus inquietudes.</p>
+                <dl class="canales-contacto">
+                    <div>
+                        <dt>Teléfono</dt>
+                        <dd>
+                            <a href="tel:+576068631514">606 863 1514</a>
+                        </dd>
+                    </div>
+                    <div>
+                        <dt>WhatsApp</dt>
+                        <dd>
+                            <a href="https://wa.me/573005623545" target="_blank" rel="noopener noreferrer">+57 300 562 3545</a>
+                        </dd>
+                    </div>
+                    <div>
+                        <dt>Correo electrónico</dt>
+                        <dd>
+                            <a href="mailto:juanfer27y@gmail.com">juanfer27y@gmail.com</a>
+                        </dd>
+                    </div>
+                    <div>
+                        <dt>Chat</dt>
+                        <dd>Disponible desde la plataforma. <span class="movanza-tooltip"><a href="./login.html" aria-describedby="ayuda-chat">Abrir chat desde mi cuenta</a><span class="movanza-tooltip-texto" id="ayuda-chat" role="tooltip">Inicia sesión y abre el módulo Mensajes de tu cuenta.</span></span></dd>
+                    </div>
+                </dl>
+                <a class="boton" href="mailto:juanfer27y@gmail.com">Contáctanos <span aria-hidden="true">↗</span></a>
+                <h3>Formulario de contacto</h3>
+                <form id="formulario-contacto">
+                    <label for="contacto-nombre">Nombre</label>
+                    <input id="contacto-nombre" name="nombre" autocomplete="name" maxlength="150" required="" class="movanza-input">
+                    <label for="contacto-correo">Correo electrónico</label>
+                    <input id="contacto-correo" name="correo" type="email" autocomplete="email" maxlength="254" required="" class="movanza-input">
+                    <label for="contacto-mensaje">Mensaje</label>
+                    <textarea id="contacto-mensaje" name="mensaje" rows="5" maxlength="4000" required="" aria-describedby="contacto-aviso" class="movanza-input"></textarea>
+                    <p id="contacto-aviso" class="texto-ayuda">Puedes revisar tu mensaje aquí. Para enviarlo, utiliza el correo electrónico o WhatsApp de contacto.</p>
+                    <button type="submit" class="boton">Revisar mensaje</button>
+                    <p id="contacto-estado" role="status" aria-live="polite"></p>
+                </form>
+            </dialog>
+            <dialog class="dialogo-publico" id="servicios" aria-labelledby="titulo-servicios">
+                <div class="dialogo-cabecera">
+                    <p class="antetitulo">Servicios y productos</p>
+                    <button type="button" class="cerrar-dialogo" aria-label="Cerrar Servicios y productos">Cerrar <span aria-hidden="true">×</span></button>
+                </div>
+                <h2 id="titulo-servicios">Una plataforma. Más claridad sobre tu operación.</h2>
+                <p>MOVANZA centraliza la gestión de actividades de campo y transforma los registros operativos en información útil para tu empresa.</p>
+                <dl class="lista-servicios">
+                    <div>
+                        <dt>Gestión de equipos</dt>
+                        <dd>Organiza tus trabajadores y administra sus actividades desde un mismo lugar.</dd>
+                    </div>
+                    <div>
+                        <dt>Asignación de tareas</dt>
+                        <dd>Crea actividades, establece ubicaciones y asigna responsabilidades.</dd>
+                    </div>
+                    <div>
+                        <dt>Verificación de ubicación</dt>
+                        <dd>Comprueba la ubicación de los trabajadores al iniciar y finalizar sus actividades.</dd>
+                    </div>
+                    <div>
+                        <dt>Registro de tiempos</dt>
+                        <dd>Consulta los tiempos de ejecución registrados durante las actividades.</dd>
+                    </div>
+                    <div>
+                        <dt>Historial de actividades</dt>
+                        <dd>Accede a los registros de tareas y operaciones realizadas.</dd>
+                    </div>
+                    <div>
+                        <dt>Información operativa</dt>
+                        <dd>Consulta los datos disponibles para comprender mejor el desarrollo de las actividades.</dd>
+                    </div>
+                </dl>
+                <h3>¿Para quién es MOVANZA?</h3>
+                <p>Pensado para empresas de mantenimiento, instalaciones, telecomunicaciones, soporte técnico, servicios domiciliarios y otras operaciones con personal de campo.</p>
+            </dialog>
+            <dialog class="dialogo-publico" id="preguntas" aria-labelledby="titulo-preguntas">
+                <div class="dialogo-cabecera">
+                    <p class="antetitulo">Preguntas frecuentes</p>
+                    <button type="button" class="cerrar-dialogo" aria-label="Cerrar Preguntas frecuentes">Cerrar <span aria-hidden="true">×</span></button>
+                </div>
+                <h2 id="titulo-preguntas">Resolvemos tus dudas.</h2>
+                <div class="acordeones">
+                    <details>
+                        <summary>¿Qué es MOVANZA?</summary>
+                        <p>Es una plataforma que ayuda a las empresas a organizar, verificar y consultar las actividades de sus trabajadores de campo.</p>
+                    </details>
+                    <details>
+                        <summary>¿MOVANZA rastrea permanentemente a los trabajadores?</summary>
+                        <p>No. MOVANZA está orientada a verificar la ubicación en momentos específicos de las actividades, como su inicio y finalización.</p>
+                    </details>
+                    <details>
+                        <summary>¿Cómo funciona la verificación de ubicación?</summary>
+                        <p>La plataforma comprueba si el trabajador se encuentra dentro del área definida para realizar una actividad.</p>
+                    </details>
+                    <details>
+                        <summary>¿Qué información registra MOVANZA?</summary>
+                        <p>Puede registrar tareas, estados, ubicaciones verificadas, tiempos de ejecución e historial de actividades.</p>
+                    </details>
+                    <details>
+                        <summary>¿Quién puede consultar la información?</summary>
+                        <p>Únicamente los usuarios autorizados, según su empresa y los permisos correspondientes.</p>
+                    </details>
+                    <details>
+                        <summary>¿Qué empresas pueden utilizar MOVANZA?</summary>
+                        <p>Empresas que necesitan coordinar y supervisar actividades realizadas fuera de sus instalaciones.</p>
+                    </details>
+                </div>
+            </dialog>
+            <noscript>
+                <p class="aviso-noscript">Activa JavaScript para abrir las secciones, iniciar sesión o registrarte en MOVANZA.</p>
+            </noscript>
+        </div>
 
-            <!-- MENSAJERÍA -->
-            <div class="bloque oculto" data-roles="empresa trabajador">
 
-                <h3>Mensajes</h3>
-
-                <p>
-                    Consulta las conversaciones de tus asignaciones.
-                    Comunícate con las empresas o con los trabajadores
-                    de los que eres responsable.
-                </p>
-
-                <a href="./paginas/mensajes.html">
-                    Abrir mis conversaciones →
-                </a>
-
-            </div>
-
-
-            <!-- PANEL Y ESTADÍSTICAS -->
-            <div class="bloque oculto" data-roles="empresa">
-                <h3>Panel y estadísticas</h3>
-
-                <p>
-                    Consulta el estado de tus asignaciones,
-                    tiempos reales, cumplimiento de objetivos
-                    y resultados por empresa o trabajador.
-                </p>
-
-                <a href="./paginas/estadisticas.html">
-                    Ver panel de estadísticas →
-                </a>
-            </div>
-
-
-
-            <div class="bloque oculto" data-roles="administrador">
-                <h3>Administración</h3>
-                <p>Accede al panel administrativo de MOVANZA.</p>
-                <a href="./paginas/administracion.html">Abrir panel administrativo →</a>
-            </div>
-
-            <!-- CERRAR SESIÓN -->
-            <button
-                id="boton-salir"
-                type="button"
-                class="boton-secundario"
-            >
-                Cerrar sesión
-            </button>
-
-        </section>
-
-        <!-- MENSAJES DEL SISTEMA -->
-        <p
-            id="mensaje"
-            role="status"
-            aria-live="polite"
-        ></p>
-
-    </main>
-
-    <!-- JAVASCRIPT -->
-    <script
-        type="module"
-        src="./scripts/autenticacion.js"
-    ></script>
-
-</body>
-</html>
-
-
+</body></html>

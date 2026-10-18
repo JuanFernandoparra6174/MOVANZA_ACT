@@ -1,75 +1,51 @@
-
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOVANZA | Trabajos y mapa</title>
-
+<html lang="es"><head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex">
+    <title>Trabajos y mapa | MOVANZA</title>
     <link rel="stylesheet" href="../estilos/general.css">
-
-    <!-- Leaflet -->
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-</head>
-<body data-modulo="trabajos">
-
-<main class="contenedor contenedor-amplio" hidden>
-
-    <header>
-        <h1>MOVANZA</h1>
-        <p>Gestión de trabajos y asignaciones</p>
+    <link rel="stylesheet" href="../estilos/alertas.css" data-estilo-alertas>
+    <script type="module" src="../scripts/alertas.js"></script><link rel="stylesheet" href="../estilos/index.css">
+    <link rel="stylesheet" href="../recursos/efecto_fondo/fondo.css"><link rel="stylesheet" href="../estilos/componentes-publicos.css">
+    <link rel="stylesheet" href="../estilos/home-empresa.css"><link rel="stylesheet" href="../estilos/home-empresa-2.css">
+    <link rel="stylesheet" href="../estilos/encabezado-empresarial.css"><link rel="stylesheet" href="../estilos/cuenta.css">
+    <link rel="stylesheet" href="../estilos/seleccionar-empresa.css"><link rel="stylesheet" href="../estilos/trabajos.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+    <script src="../scripts/componentes-publicos.js" defer></script><script src="../scripts/trabajos-carga.js" defer></script>
+</head><body class="pagina-publica pagina-trabajos" data-modulo="trabajos">
+    <div class="container fondo-exterior" aria-hidden="true" inert><div id="stars"></div><div id="stars2"></div><div id="stars3"></div><div></div></div>
+    <section id="estado-acceso" class="estado-acceso"><p id="mensaje-acceso" role="status" aria-live="polite">Comprobando el acceso a tus trabajos…</p><a href="./seleccionar_empresa.html">Seleccionar empresa</a></section>
+    <div id="sitio-trabajos" class="sitio-publico" hidden>
+        <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+        <header class="cabecera-empresarial">
+        <div class="identidad-empresarial"><a class="marca" href="../home_empresa_2.html" aria-label="MOVANZA, inicio empresarial"><img src="../Carpeta_Imagenes/Logo/Logotipo%20MOVANZA.png" alt="MOVANZA" width="170" height="54"></a></div>
+        <button class="menu-empresarial" type="button" aria-expanded="false" aria-controls="navegacion-empresarial">Menú <span aria-hidden="true">☰</span></button>
+        <nav id="navegacion-empresarial" aria-label="Administración empresarial"><a href="../home_empresa_2.html">Inicio</a><a href="../paginas/equipo.html">Equipo</a><a href="../paginas/trabajos.html" aria-current="page">Trabajos</a><a href="../paginas/estadisticas.html" data-estadisticas-empresa>Estadísticas</a><a href="../paginas/seleccionar_empresa.html">Cambiar empresa</a></nav>
+        <details class="cuenta-empresarial menu-cuenta"><summary class="boton-relleno boton-cuenta">Cuenta <span aria-hidden="true">⌄</span></summary><div class="opciones-cuenta"><p id="usuario-empresarial"></p><button type="button" data-abrir-perfil aria-haspopup="dialog">Mi perfil</button><button type="button" id="cerrar-sesion">Cerrar sesión</button></div></details>
     </header>
-
-    <nav>
-        <a href="./empresas.html">← Volver a mis empresas</a>
-    </nav>
-
-    <!-- EMPRESA ACTUAL -->
-    <section class="tarjeta bloque">
-        <h2 id="nombre-empresa">Cargando empresa...</h2>
-        <p>
-            Los trabajos de cada empresa se administran
-            de manera independiente.
-        </p>
-    </section>
-
-    <!-- MAPA -->
-    <section class="tarjeta bloque">
-        <h2>Mapa de trabajos</h2>
-
-        <p>
-            Haz clic en el mapa para seleccionar la
-            ubicación de un trabajo. El círculo azul
-            muestra el radio permitido.
-        </p>
-
-        <div id="mapa-trabajos"></div>
-
-        <p>
-            <strong>Latitud:</strong>
-            <span id="latitud-seleccionada">Sin seleccionar</span>
-        </p>
-
-        <p>
-            <strong>Longitud:</strong>
-            <span id="longitud-seleccionada">Sin seleccionar</span>
-        </p>
-
-        <button
-            type="button"
-            id="boton-centrar"
-            class="boton-secundario"
-        >
-            Mostrar todos los trabajos
-        </button>
-    </section>
-
-    <!-- CREAR TRABAJO -->
-    <section class="tarjeta bloque" id="seccion-crear">
+        <main id="contenido" class="administracion-principal trabajos-principal" hidden>
+            <section class="bienvenida-administracion banner-trabajos" aria-labelledby="titulo-trabajos">
+                <div><p class="antetitulo">TRABAJOS Y OPERACIONES</p><h1 id="titulo-trabajos">Organiza y gestiona tus trabajos</h1><p>Administra los puntos de trabajo, organiza las actividades de tu empresa y mantén el control de tus operaciones desde un solo lugar.</p></div>
+                <p class="empresa-identificada"><span>Empresa</span><strong id="nombre-empresa">Cargando empresa…</strong></p>
+            </section>
+            <div id="mensajes-trabajos"><div id="estado-operacion"><p id="mensaje" role="status" aria-live="polite"></p></div></div>
+            <section class="herramientas-trabajos" aria-label="Herramientas de trabajos">
+                <div><h2>Puntos de trabajo <span id="cantidad-trabajos"></span></h2><p>Ubica tus operaciones y abre un punto para gestionarlo.</p></div>
+                <button type="button" id="nuevo-punto" class="boton-relleno boton-principal" disabled><span aria-hidden="true">＋</span> Nuevo punto</button>
+            </section>
+            <div class="espacio-trabajos">
+                <section class="explorador-trabajos" aria-label="Explorador de puntos">
+                    <div class="barra-explorador"><div role="tablist" aria-label="Vista de puntos"><button type="button" id="tab-mapa" role="tab" aria-selected="true" aria-controls="vista-mapa">Mapa</button><button type="button" id="tab-lista" role="tab" aria-selected="false" aria-controls="vista-lista" tabindex="-1">Lista</button></div><button type="button" id="boton-centrar" class="boton-relleno" disabled>Mostrar todos los trabajos</button></div>
+                    <div id="vista-mapa" role="tabpanel" aria-labelledby="tab-mapa"><div id="mapa-trabajos" tabindex="0" aria-label="Mapa de puntos de trabajo. También puedes seleccionar los puntos desde la vista Lista."></div><div class="pie-mapa"><p id="instruccion-mapa">Selecciona un punto existente o pulsa en el mapa para ubicar uno nuevo.</p><button type="button" id="usar-centro" class="boton-relleno" disabled>Usar centro del mapa</button><button type="button" id="volver-card" class="boton-relleno" hidden>Volver a la card</button><p><span>Latitud <strong id="latitud-seleccionada">Sin seleccionar</strong></span><span>Longitud <strong id="longitud-seleccionada">Sin seleccionar</strong></span></p></div></div>
+                    <div id="vista-lista" role="tabpanel" aria-labelledby="tab-lista" hidden><div id="lista-trabajos" class="tabla-empresas catalogo-puntos"><p>Cargando trabajos…</p></div></div>
+                </section>
+                <div id="anclaje-panel"><aside id="panel-trabajo" class="efecto-card panel-trabajo" aria-labelledby="titulo-panel"><span class="efecto-card-borde" aria-hidden="true"></span><div class="interior-panel">
+                    <div class="cabecera-panel"><div><p class="antetitulo">GESTIÓN DEL PUNTO</p><h2 id="titulo-panel" tabindex="-1">Tu espacio de gestión</h2></div><button type="button" id="cerrar-panel" class="boton-icono" aria-label="Cerrar panel de trabajo" hidden>×</button></div>
+                    <div id="mensajes-panel"></div>
+                    <div id="panel-inicial" class="panel-inicial"><span class="icono-punto" aria-hidden="true">◎</span><h3>Cada operación, en su lugar</h3><p>Abre un punto desde el mapa o la lista para consultar sus asignaciones y acciones.</p></div>
+                    <div id="panel-detalle" class="oculto"><div id="detalle-contenido"></div></div>
+                    <button type="button" id="elegir-ubicacion" class="boton-relleno" hidden>Elegir ubicación en el mapa ↗</button>
+                    <section class="tarjeta bloque oculto" id="seccion-crear">
 
         <h2 id="titulo-formulario">
             Crear trabajo
@@ -192,23 +168,7 @@
 
         </form>
     </section>
-
-    <!-- TRABAJOS EXISTENTES -->
-    <section class="tarjeta bloque">
-        <h2>Trabajos registrados</h2>
-
-        <p>
-            Aquí encontrarás los trabajos y las
-            asignaciones de la empresa seleccionada.
-        </p>
-
-        <div id="lista-trabajos">
-            Cargando trabajos...
-        </div>
-    </section>
-
-    <!-- EDITAR TRABAJO -->
-    <section
+<section
         id="seccion-editar-trabajo"
         class="tarjeta bloque oculto"
     >
@@ -265,9 +225,7 @@
             Cerrar edición
         </button>
     </section>
-
-    <!-- EDITAR ASIGNACIÓN -->
-    <section
+<section
         id="seccion-editar-asignacion"
         class="tarjeta bloque oculto"
     >
@@ -339,13 +297,48 @@
             Cerrar edición
         </button>
     </section>
-
-    <!-- MENSAJES -->
-    <p id="mensaje" role="status" aria-live="polite"></p>
-
-</main>
-
-<script type="module" src="../scripts/modulo.js"></script>
-
-</body>
-</html>
+                    <button type="button" id="cancelar-panel" class="boton-relleno" hidden>Cerrar</button>
+                </div></aside></div>
+            </div>
+        </main>
+        <footer class="pie-publico">
+                <div class="pie-columnas">
+                    <div>
+                        <a href="../index.html#inicio" class="marca-pie">MOVANZA<span aria-hidden="true">↗</span></a>
+                        <p>Gestión de trabajos presenciales.</p>
+                        <p>Manizales, Caldas, Colombia.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Manizales%2C%20Caldas%2C%20Colombia" target="_blank" rel="noopener noreferrer">Ver ubicación en el mapa ↗</a>
+                    </div>
+                    <div>
+                        <h2>Explora MOVANZA</h2>
+                        <nav aria-label="Mapa de navegación">
+                            <a href="../index.html#inicio">Inicio</a>
+                            <a href="../index.html#nosotros">Nosotros</a>
+                            <a href="../index.html#servicios">Servicios</a>
+                            <a href="../index.html#preguntas">Preguntas frecuentes</a>
+                            <a href="../index.html#experiencias">Experiencia</a>
+                            <a href="../index.html#contacto">Contacto</a>
+                            <a href="../index.html#politicas">Políticas</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <h2>Horarios de atención</h2>
+                        <dl class="horarios">
+                            <dt>Lunes a viernes</dt>
+                            <dd>8:00 a. m. – 6:00 p. m.</dd>
+                            <dt>Sábados</dt>
+                            <dd>9:00 a. m. – 1:00 p. m.</dd>
+                            <dt>Domingos y festivos</dt>
+                            <dd>No disponible.</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="pie-final">
+                    <p>© 2026 MOVANZA. Todos los derechos reservados.</p>
+                    <a href="../index.html#inicio">Volver al inicio ↑</a>
+                </div>
+            </footer>
+    </div>
+    <dialog id="panel-movil" aria-labelledby="titulo-panel"></dialog>
+    <noscript><p class="aviso-noscript">Activa JavaScript para verificar tu sesión y gestionar los trabajos de tu empresa.</p></noscript>
+</body></html>

@@ -1,83 +1,99 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOVANZA | Equipo de trabajo</title>
+    <meta name="robots" content="noindex">
+    <title>Equipo de trabajo | MOVANZA</title>
     <link rel="stylesheet" href="../estilos/general.css">
+    <link rel="stylesheet" href="../estilos/alertas.css" data-estilo-alertas>
+    <script type="module" src="../scripts/alertas.js"></script>
+    <link rel="stylesheet" href="../estilos/index.css">
+    <link rel="stylesheet" href="../recursos/efecto_fondo/fondo.css">
+    <link rel="stylesheet" href="../estilos/componentes-publicos.css">
+    <link rel="stylesheet" href="../estilos/home-empresa.css">
+    <link rel="stylesheet" href="../estilos/home-empresa-2.css">
+    <link rel="stylesheet" href="../estilos/encabezado-empresarial.css">
+    <link rel="stylesheet" href="../estilos/cuenta.css">
+    <link rel="stylesheet" href="../estilos/seleccionar-empresa.css">
+    <link rel="stylesheet" href="../estilos/equipo.css">
+    <script src="../scripts/componentes-publicos.js" defer></script>
+    <script src="../scripts/equipo-carga.js" defer></script>
 </head>
-<body data-modulo="equipo">
-    <main class="contenedor contenedor-amplio" hidden>
-        <header>
-            <h1>MOVANZA</h1>
-            <p>Equipo de trabajo</p>
-        </header>
-
-        <nav>
-            <a href="./empresas.html">← Mis empresas</a>
-        </nav>
-
-        <section class="tarjeta bloque">
-            <h2 id="titulo-empresa">Cargando empresa...</h2>
-            <p>
-                Administra las invitaciones y los
-                integrantes de esta empresa.
-            </p>
-        </section>
-
-        <section class="tarjeta bloque">
-            <h2>Invitar trabajador</h2>
-
-            <form id="formulario-busqueda">
-                <label for="nombre-buscado">
-                    Nombre de usuario
-                </label>
-
-                <input
-                    id="nombre-buscado"
-                    type="text"
-                    placeholder="Ej: juan_parra21"
-                    minlength="3"
-                    maxlength="30"
-                    required
-                >
-
-                <small class="texto-ayuda">
-                    Escribe el nombre de usuario exacto
-                    de la persona que deseas invitar.
-                </small>
-
-                <button type="submit">
-                    Buscar usuario
-                </button>
-            </form>
-
-            <div id="resultado-busqueda" class="bloque"></div>
-        </section>
-
-        <section class="tarjeta bloque">
-            <h2>Invitaciones pendientes</h2>
-            <div id="lista-pendientes">
-                Cargando...
-            </div>
-        </section>
-
-        <section class="tarjeta bloque">
-            <h2>Integrantes del equipo</h2>
-            <p>
-                Los alias son nombres internos que puedes
-                utilizar para identificar a tus trabajadores.
-            </p>
-
-            <div id="lista-integrantes">
-                Cargando...
-            </div>
-        </section>
-
-        <p id="mensaje" role="status" aria-live="polite"></p>
-    </main>
-
-    <script type="module" src="../scripts/modulo.js"></script>
+<body class="pagina-publica pagina-equipo" data-modulo="equipo">
+    <div class="container fondo-exterior" aria-hidden="true" inert><div id="stars"></div><div id="stars2"></div><div id="stars3"></div><div></div></div>
+    <section id="estado-acceso" class="estado-acceso"><p id="mensaje-acceso" role="status" aria-live="polite">Comprobando el acceso a tu equipo…</p><a href="./seleccionar_empresa.html">Seleccionar empresa</a></section>
+    <div id="sitio-equipo" class="sitio-publico" hidden>
+        <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+        <header class="cabecera-empresarial">
+        <div class="identidad-empresarial"><a class="marca" href="../home_empresa_2.html" aria-label="MOVANZA, inicio empresarial"><img src="../Carpeta_Imagenes/Logo/Logotipo%20MOVANZA.png" alt="MOVANZA" width="170" height="54"></a></div>
+        <button class="menu-empresarial" type="button" aria-expanded="false" aria-controls="navegacion-empresarial">Menú <span aria-hidden="true">☰</span></button>
+        <nav id="navegacion-empresarial" aria-label="Administración empresarial"><a href="../home_empresa_2.html">Inicio</a><a href="../paginas/equipo.html" aria-current="page">Equipo</a><a href="../paginas/trabajos.html">Trabajos</a><a href="../paginas/estadisticas.html" data-estadisticas-empresa>Estadísticas</a><a href="../paginas/seleccionar_empresa.html">Cambiar empresa</a></nav>
+        <details class="cuenta-empresarial menu-cuenta"><summary class="boton-relleno boton-cuenta">Cuenta <span aria-hidden="true">⌄</span></summary><div class="opciones-cuenta"><p id="usuario-empresarial"></p><button type="button" data-abrir-perfil aria-haspopup="dialog">Mi perfil</button><button type="button" id="cerrar-sesion">Cerrar sesión</button></div></details>
+    </header>
+        <main id="contenido" class="administracion-principal equipo-principal" hidden>
+            <section class="bienvenida-administracion" aria-labelledby="titulo-equipo">
+                <p class="antetitulo">EQUIPO DE TRABAJO</p>
+                <h1 id="titulo-equipo">Gestiona tu equipo de trabajo</h1>
+                <p>Administra los integrantes de tu empresa, consulta su información y mantén organizado tu equipo desde un solo lugar.</p>
+                <p class="empresa-identificada"><span>Empresa</span><strong id="titulo-empresa">Cargando empresa…</strong></p>
+            </section>
+            <div class="equipo-estado"><p id="mensaje" role="status" aria-live="polite"></p></div>
+            <section class="panel-invitacion" aria-labelledby="titulo-invitar">
+                <div><p class="antetitulo">CONECTA CON TU EQUIPO</p><h2 id="titulo-invitar">Invitar trabajador</h2></div>
+                <form id="formulario-busqueda">
+                    <div class="campo-busqueda"><label for="nombre-buscado">Nombre de usuario</label><input id="nombre-buscado" class="movanza-input" type="text" placeholder="Ej: juan_parra21" minlength="3" maxlength="30" required aria-describedby="ayuda-busqueda"><small id="ayuda-busqueda" class="texto-ayuda">Escribe el nombre de usuario exacto de la persona que deseas invitar.</small></div>
+                    <button type="submit" class="boton-relleno">Buscar usuario <span aria-hidden="true">↗</span></button>
+                </form>
+                <div id="resultado-busqueda" class="tabla-empresas tabla-equipo tabla-resultados" aria-label="Resultado de la búsqueda"></div>
+            </section>
+            <section class="seccion-equipo" aria-labelledby="titulo-integrantes">
+                <div class="cabecera-listado"><p class="antetitulo">PERSONAS DE TU EMPRESA</p><h2 id="titulo-integrantes">Integrantes del equipo</h2><p>Los alias son nombres internos que puedes utilizar para identificar a tus trabajadores.</p></div>
+                <div id="lista-integrantes" class="tabla-empresas tabla-equipo"><p>Cargando integrantes…</p></div>
+            </section>
+            <section class="seccion-equipo" aria-labelledby="titulo-pendientes">
+                <div class="cabecera-listado"><p class="antetitulo">VINCULACIONES EN PROCESO</p><h2 id="titulo-pendientes">Invitaciones pendientes</h2></div>
+                <div id="lista-pendientes" class="tabla-empresas tabla-equipo tabla-pendientes"><p>Cargando invitaciones…</p></div>
+            </section>
+        </main>
+        <footer class="pie-publico">
+                <div class="pie-columnas">
+                    <div>
+                        <a href="../index.html#inicio" class="marca-pie">MOVANZA<span aria-hidden="true">↗</span></a>
+                        <p>Gestión de trabajos presenciales.</p>
+                        <p>Manizales, Caldas, Colombia.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Manizales%2C%20Caldas%2C%20Colombia" target="_blank" rel="noopener noreferrer">Ver ubicación en el mapa ↗</a>
+                    </div>
+                    <div>
+                        <h2>Explora MOVANZA</h2>
+                        <nav aria-label="Mapa de navegación">
+                            <a href="../index.html#inicio">Inicio</a>
+                            <a href="../index.html#nosotros">Nosotros</a>
+                            <a href="../index.html#servicios">Servicios</a>
+                            <a href="../index.html#preguntas">Preguntas frecuentes</a>
+                            <a href="../index.html#experiencias">Experiencia</a>
+                            <a href="../index.html#contacto">Contacto</a>
+                            <a href="../index.html#politicas">Políticas</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <h2>Horarios de atención</h2>
+                        <dl class="horarios">
+                            <dt>Lunes a viernes</dt>
+                            <dd>8:00 a. m. – 6:00 p. m.</dd>
+                            <dt>Sábados</dt>
+                            <dd>9:00 a. m. – 1:00 p. m.</dd>
+                            <dt>Domingos y festivos</dt>
+                            <dd>No disponible.</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="pie-final">
+                    <p>© 2026 MOVANZA. Todos los derechos reservados.</p>
+                    <a href="../index.html#inicio">Volver al inicio ↑</a>
+                </div>
+            </footer>
+    </div>
+    <noscript><p class="aviso-noscript">Activa JavaScript para verificar tu sesión y acceder al equipo de tu empresa.</p></noscript>
 </body>
 </html>

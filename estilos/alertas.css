@@ -1,0 +1,49 @@
+/* Card / bg / blob del recurso dylanharriscameron, adaptados a MOVANZA. */
+/* El ID protege los controles de los estilos de botones de cada página. */
+html:has(#movanza-alerta[open]) { overflow: hidden; }
+dialog#movanza-alerta { --alerta-acento: #5f4d93; box-sizing: border-box; width: min(460px, calc(100% - 24px)); max-width: none; max-height: calc(100dvh - 24px); margin: auto; padding: 0; border: 0; border-radius: 18px; background: transparent; color: #303044; overflow: auto; box-shadow: 20px 20px 60px #30304430, -10px -10px 40px #ffffff15; font: 15px/1.65 Aptos, Inter, 'Segoe UI', sans-serif; text-align: left; }
+#movanza-alerta::backdrop { background: #30304480; backdrop-filter: blur(6px); }
+#movanza-alerta[open] { animation: alerta-entrada .2s ease-out; }
+#movanza-alerta.alerta-saliendo::backdrop { background: #30304400; backdrop-filter: blur(0); transition: background .15s, backdrop-filter .15s; }
+#movanza-alerta *, #movanza-alerta *::before, #movanza-alerta *::after { box-sizing: border-box; }
+#movanza-alerta [hidden] { display: none !important; }
+#movanza-alerta .alerta-card { position: relative; isolation: isolate; overflow: hidden; border-radius: 18px; padding: 5px; min-height: 250px; background: #ddd; }
+#movanza-alerta .alerta-bg { position: absolute; inset: 5px; z-index: 2; background: #ffffffF2; backdrop-filter: blur(24px); border-radius: 13px; outline: 2px solid white; pointer-events: none; }
+#movanza-alerta .alerta-blob { position: absolute; z-index: 1; top: 0; left: 0; width: 180px; height: 180px; border-radius: 50%; background: var(--alerta-acento); filter: blur(12px); transform: translate(-50%, -50%); animation: alerta-blob-bounce 5s infinite ease; pointer-events: none; }
+#movanza-alerta .alerta-contenido { position: relative; z-index: 3; padding: 30px; }
+#movanza-alerta .alerta-marca { margin: 0 35px 24px 0; color: #625b71; font-size: 9px; font-weight: 700; letter-spacing: .1em; }
+#movanza-alerta .alerta-icono { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 18px; border-radius: 16px; background: #ede8fa; color: #5f4d93; font-size: 28px; font-weight: 650; }
+#movanza-alerta h2 { margin: 0 0 12px; color: #303044; font-size: 25px; font-weight: 650; line-height: 1.25; letter-spacing: -.025em; overflow-wrap: anywhere; }
+#movanza-alerta #movanza-alerta-mensaje { margin: 0; color: #514b60; font-size: 14px; white-space: pre-line; overflow-wrap: anywhere; }
+#movanza-alerta form { margin: 0; }
+#movanza-alerta .alerta-acciones { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-top: 26px; padding-top: 20px; border-top: 1px solid #e5e0ed; }
+#movanza-alerta button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; height: auto; width: auto; margin: 0; padding: 10px 18px; border: 1px solid #d8d1e6; border-radius: 10px; background: #fff; color: #5f4d93; box-shadow: inset 0 0 0 0 #5f4d93; font: inherit; font-size: 14px; font-weight: 600; line-height: 1.5; letter-spacing: 0; text-transform: none; cursor: pointer; transition: color .2s, box-shadow .3s, transform .15s; }
+#movanza-alerta button:hover { color: #fff; box-shadow: inset 0 -100px 0 #5f4d93; }
+#movanza-alerta button:active { transform: scale(.98); }
+#movanza-alerta .alerta-confirmar { border-color: #5f4d93; background: #5f4d93; color: #fff; }
+#movanza-alerta .alerta-confirmar:hover { box-shadow: inset 0 -100px 0 #303044; }
+#movanza-alerta .alerta-cerrar { position: absolute; top: 17px; right: 17px; min-height: 36px; width: 36px; padding: 0; border: 0; background: transparent; color: #625b71; font-size: 24px; }
+#movanza-alerta :is(button, input):focus-visible { outline: 3px solid #5f4d93; outline-offset: 3px; }
+#movanza-alerta button:disabled { opacity: .6; cursor: wait; }
+#movanza-alerta .alerta-campo { margin-top: 20px; }
+#movanza-alerta label { display: block; margin: 0 0 8px; color: #303044; font-size: 13px; font-weight: 600; }
+#movanza-alerta input { display: block; width: 100%; min-height: 46px; margin: 0; padding: 10px 12px; border: 1px solid #a89cc8; border-radius: 9px; background: #f7f7f7; color: #303044; font: inherit; font-size: 16px; }
+#movanza-alerta #movanza-alerta-validacion { margin: 8px 0 0; color: #91273a; font-size: 12px; }
+#movanza-alerta[aria-busy="true"] .alerta-confirmar::before { content: ''; width: 14px; height: 14px; margin-right: 9px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: alerta-girar .8s linear infinite; }
+#movanza-alerta[data-tipo="exito"] { --alerta-acento: #24784d; }#movanza-alerta[data-tipo="exito"] .alerta-icono { background: #dff4e8; color: #24784d; }
+#movanza-alerta[data-tipo="error"] { --alerta-acento: #ab3547; }#movanza-alerta[data-tipo="error"] .alerta-icono { background: #fce5e7; color: #ab3547; }
+#movanza-alerta[data-tipo="advertencia"] { --alerta-acento: #a89cc8; }#movanza-alerta[data-tipo="advertencia"] .alerta-icono { background: #fff3d8; color: #92620a; }
+#movanza-alerta[data-tipo="informacion"] { --alerta-acento: #8cc9f0; }#movanza-alerta[data-tipo="informacion"] .alerta-icono { background: #e0f2ff; color: #216b99; }
+#movanza-alerta[data-destructiva="true"] .alerta-confirmar { border-color: #ab3547; background: #ab3547; }#movanza-alerta[data-destructiva="true"] .alerta-confirmar:hover { box-shadow: inset 0 -100px 0 #812737; }
+@keyframes alerta-entrada { from { opacity: 0; transform: translateY(10px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes alerta-girar { to { transform: rotate(360deg); } }
+/* El círculo difuminado recorre las cuatro esquinas de la card real,
+   incluso cuando el mensaje cambia su altura; no queda atrapado en el centro. */
+@keyframes alerta-blob-bounce {
+    0%, 100% { left: 0; top: 0; }
+    25% { left: 100%; top: 0; }
+    50% { left: 100%; top: 100%; }
+    75% { left: 0; top: 100%; }
+}
+@media(max-width: 480px) { #movanza-alerta .alerta-contenido { padding: 26px 22px; }#movanza-alerta .alerta-acciones button { flex: 1; }#movanza-alerta h2 { font-size: 23px; } }
+@media(prefers-reduced-motion: reduce) { #movanza-alerta[open], #movanza-alerta *, #movanza-alerta *::before, #movanza-alerta::backdrop { animation: none !important; transition: none !important; } }

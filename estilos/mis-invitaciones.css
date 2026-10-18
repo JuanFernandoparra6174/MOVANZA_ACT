@@ -1,0 +1,65 @@
+.invitaciones-principal { padding: 20px clamp(20px, 3.5vw, 48px) 52px; }
+.pagina-invitaciones .estado-acceso { max-width: 560px; margin: 48px auto; padding: 28px; border: 1px solid #ddd; border-radius: 14px; background: #fff; }
+.banner-invitaciones { display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: 30px 34px; border: 1px solid #dfd8ec; border-radius: 18px; background: linear-gradient(115deg, #f5f2fb, #f7f7f7); }
+.banner-invitaciones .antetitulo { margin: 0 0 12px; color: #5f4d93; }
+.banner-invitaciones h1 { max-width: 700px; margin: 0 0 14px; font-size: clamp(28px, 3.2vw, 39px); font-weight: 650; }
+.banner-invitaciones p:last-child { max-width: 700px; margin: 0; font-size: 15px; color: #514b60; }
+.simbolo-invitaciones { display: grid; place-items: center; flex: 0 0 96px; height: 96px; border-radius: 28px; background: #fff; border: 1px solid #d8d1e6; color: #5f4d93; transform: rotate(-5deg); }
+.simbolo-invitaciones svg { width: 60px; height: 60px; }
+#estado-invitaciones { margin: 20px 0; }
+#estado-invitaciones #mensaje { margin: 0; font-size: 14px; overflow-wrap: anywhere; }
+#estado-invitaciones #mensaje:not(:empty) { padding: 13px 16px; border-radius: 10px; border: 1px solid #d8d1e6; background: #ede8fa; color: #4b3b78; }
+#estado-invitaciones #mensaje.error:not(:empty) { background: #fce5e7; border-color: #efc3ca; color: #91273a; }
+#estado-invitaciones #mensaje.exito:not(:empty) { background: #dff4e8; border-color: #b8ddc8; color: #24784d; }
+.espacio-invitaciones { display: grid; grid-template-columns: minmax(0, 2.25fr) minmax(250px, 1fr); gap: 26px; align-items: start; }
+.bandeja-invitaciones, .mis-equipos { min-width: 0; }
+.cabecera-bandeja { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+.cabecera-bandeja .antetitulo { margin: 0 0 8px; color: #5f4d93; font-size: 10px; }
+.cabecera-bandeja h2 { margin: 0; font-size: 25px; font-weight: 650; }
+.cabecera-bandeja #cantidad-invitaciones { margin: 8px 0 0; font-size: 12px; color: #625b71; }
+.invitaciones-principal .boton-relleno { min-height: 44px; margin: 0; padding: 10px 13px; font-size: 12px; line-height: 1.5; letter-spacing: 0; border-width: 1px; background: #fff; color: #5f4d93; }
+.invitaciones-principal .boton-relleno:is(:hover, :focus-visible) { color: #fff; }
+.invitaciones-principal .boton-relleno:active { transform: scale(.98); }
+.pagina-invitaciones button:disabled { opacity: .65; cursor: wait; }
+.filtros-invitaciones { display: flex; flex-wrap: wrap; gap: 5px; padding: 5px; margin-bottom: 20px; border: 1px solid #e3deeb; border-radius: 12px; background: #f7f7f7; }
+.pagina-invitaciones .filtros-invitaciones button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1 1 auto; min-height: 40px; margin: 0; padding: 8px 9px; border: 0; border-radius: 8px; background: transparent; color: #625b71; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: background .18s, color .18s; }
+.pagina-invitaciones .filtros-invitaciones button:hover { background: #ede8fa; color: #5f4d93; }
+.pagina-invitaciones .filtros-invitaciones button[aria-pressed="true"] { background: #5f4d93; color: #fff; }
+.filtros-invitaciones button span { font-size: 10px; padding: 1px 5px; background: #ffffff30; border-radius: 8px; }
+.lista-invitaciones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.invitacion-card { --efecto-card-base: #fff; --efecto-card-inset: 3px; background: #e3deeb; border-radius: 16px; box-shadow: 0 3px 14px #30304408; transition: box-shadow .2s; min-width: 0; }
+.invitacion-card:hover, .invitacion-card:focus-within { box-shadow: 0 8px 24px #5f4d9317; }
+.invitacion-card .efecto-card-borde::before { animation-play-state: paused; opacity: .35; }
+.invitacion-card[data-estado="pendiente"]:is(:hover, :focus-within) .efecto-card-borde::before { animation-play-state: running; opacity: 1; }
+.interior-invitacion { display: flex; flex-direction: column; height: calc(100% - 6px); position: relative; margin: 3px; padding: 22px; border-radius: 13px; background: #fff; animation: invitacion-entrada .2s ease-out; }
+.identidad-invitacion { display: flex; align-items: center; gap: 12px; min-width: 0; margin-bottom: 18px; }
+.avatar-empresa { display: grid; place-items: center; flex: 0 0 46px; height: 46px; border: 1px solid #dfd8ec; border-radius: 14px; background: #f2eef9; color: #5f4d93; font-size: 16px; font-weight: 700; }
+.nombre-invitacion { min-width: 0; }
+.nombre-invitacion .etiqueta-origen { margin: 0 0 6px; font-size: 8px; font-weight: 700; letter-spacing: .09em; color: #625b71; }
+.nombre-invitacion h3 { margin: 0; font-size: 19px; font-weight: 650; overflow-wrap: anywhere; }
+.estado-invitacion { display: inline-block; width: fit-content; padding: 4px 9px; border-radius: 20px; font-size: 11px; font-weight: 650; }
+.estado-pendiente { background: #fff3d8; color: #92620a; }.estado-aceptada { background: #ede8fa; color: #5f4d93; }.estado-rechazada { background: #fce5e7; color: #ab3547; }.estado-cancelada { background: #eaeaea; color: #626262; }
+.fecha-invitacion { margin: 14px 0 0; color: #625b71; font-size: 12px; }
+.descripcion-invitacion { margin: 14px 0 22px; font-size: 13px; color: #514b60; }
+.acciones-invitacion { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: auto; padding-top: 16px; border-top: 1px solid #eee; }
+.pagina-invitaciones .aceptar-invitacion { background: #5f4d93; border-color: #5f4d93; color: #fff; }
+.pagina-invitaciones .aceptar-invitacion:is(:hover, :focus-visible) { border-color: #303044; box-shadow: inset 0 -100px 0 #303044; }
+.pagina-invitaciones .rechazar-invitacion { border-color: #ddd; color: #625b71; }
+.pagina-invitaciones .rechazar-invitacion:is(:hover, :focus-visible) { color: #91273a; border-color: #efc3ca; box-shadow: inset 0 -100px 0 #fce5e7; }
+.acciones-invitacion button[aria-busy="true"]::before { content: ''; display: inline-block; width: 13px; height: 13px; margin-right: 6px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: invitacion-girar .8s linear infinite; }
+.invitaciones-vacio { grid-column: 1 / -1; display: grid; justify-items: center; align-content: center; min-height: 290px; padding: 28px; text-align: center; border: 1px dashed #d8d1e6; border-radius: 16px; background: #faf9fc; }
+.icono-vacio { color: #5f4d93; font-size: 40px; }.invitaciones-vacio h3 { margin: 14px 0 10px; font-size: 23px; font-weight: 600; }.invitaciones-vacio p { max-width: 390px; margin: 0; color: #625b71; font-size: 14px; }
+.mis-equipos { padding: 22px; border: 1px solid #ddd; border-radius: 16px; background: #f7f7f7; }
+.titulo-equipos > span { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 16px; background: #e0f2ff; border-radius: 12px; color: #216b99; font-size: 25px; }
+.titulo-equipos .antetitulo { margin: 0 0 8px; font-size: 9px; color: #5f4d93; }.titulo-equipos h2 { margin: 0; font-size: 22px; font-weight: 650; }.titulo-equipos > p:last-child { margin: 12px 0 20px; color: #625b71; font-size: 12px; }.titulo-equipos strong { color: #303044; margin-left: 6px; }
+.equipo-card { display: flex; align-items: flex-start; gap: 10px; padding: 16px 0; border-top: 1px solid #ddd; }
+.avatar-equipo { flex: 0 0 34px; display: grid; place-items: center; height: 34px; border: 1px solid #ddd; border-radius: 10px; background: #fff; color: #5f4d93; font-size: 11px; font-weight: 700; }
+.datos-equipo { min-width: 0; }.datos-equipo h3 { margin: 0 0 6px; font-size: 15px; font-weight: 650; overflow-wrap: anywhere; }.datos-equipo p { margin: 8px 0 0; font-size: 12px; color: #625b71; overflow-wrap: anywhere; }.miembro-activo { font-size: 11px; color: #24784d; }.miembro-activo::before { content: '✓ '; }
+.equipos-vacio, .ayuda-equipos { color: #625b71; font-size: 12px; line-height: 1.7; }.ayuda-equipos { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid #ddd; }
+@keyframes invitacion-entrada { from { opacity: .4; } to { opacity: 1; } }
+@keyframes invitacion-girar { to { transform: rotate(360deg); } }
+@media(min-width: 1500px) { .acciones-invitacion { grid-template-columns: 1fr 1fr; } }
+@media(max-width: 1100px) { .espacio-invitaciones { grid-template-columns: minmax(0, 1fr) 260px; gap: 20px; }.lista-invitaciones { grid-template-columns: 1fr; }.acciones-invitacion { grid-template-columns: 1fr 1fr; } }
+@media(max-width: 760px) { .espacio-invitaciones { grid-template-columns: 1fr; }.invitaciones-principal { padding: 14px 18px 32px; }.banner-invitaciones { padding: 25px; }.simbolo-invitaciones { display: none; }.filtros-invitaciones button { flex-basis: calc(33.333% - 5px); }.mis-equipos { margin-top: 6px; }.invitaciones-vacio { min-height: 230px; } }
+@media(max-width: 380px) { .acciones-invitacion { grid-template-columns: 1fr; }.cabecera-bandeja { align-items: stretch; }.cabecera-bandeja > button { width: 100%; }.interior-invitacion { padding: 18px; } }
+@media(prefers-reduced-motion: reduce) { .pagina-invitaciones *, .pagina-invitaciones *::before, .pagina-invitaciones *::after { animation: none !important; transition: none !important; } }

@@ -1,0 +1,139 @@
+MOVANZA — CONTENIDO DEL SITIO WEB
+Secciones 0 a 5
+
+0. INICIO
+
+Tu operación de campo, más clara y organizada.
+
+MOVANZA ayuda a las empresas a gestionar las actividades de sus trabajadores de campo, verificar ubicaciones y registrar tiempos de ejecución desde una sola plataforma.
+
+Menos seguimiento manual. Más claridad sobre tu operación.
+
+Botones:
+- Conoce MOVANZA
+- Contáctanos
+
+--------------------------------------------------
+
+1. NOSOTROS
+
+Tecnología para entender mejor tu operación.
+
+¿Quiénes somos?
+
+MOVANZA es un proyecto tecnológico fundado por Juan Fernando Parra y Nicolás Barbosa, estudiantes de Ingeniería de Sistemas y Telecomunicaciones de la Universidad de Manizales.
+
+Nacimos con el propósito de facilitar la gestión de las operaciones de campo mediante herramientas digitales prácticas, accesibles y confiables.
+
+Misión
+
+Ayudar a las empresas a gestionar sus operaciones de campo mediante soluciones tecnológicas que proporcionen información clara, útil y responsable.
+
+Visión
+
+Para 2031, consolidar MOVANZA como una plataforma tecnológica de referencia para pequeñas y medianas empresas que buscan optimizar la gestión de sus operaciones de campo.
+
+--------------------------------------------------
+
+2. POLÍTICAS
+
+Transparencia en cada proceso.
+
+En MOVANZA promovemos el uso responsable de la información, la seguridad de los datos y la claridad en las condiciones de nuestros servicios.
+
+Consulta nuestros documentos:
+
+Privacidad y protección de datos
+Conoce cómo recopilamos, utilizamos y protegemos tu información personal.
+Enlace: Leer política completa.
+
+Seguridad de la información
+Descubre nuestros compromisos y medidas para proteger los datos de la plataforma.
+Enlace: Leer política completa.
+
+Términos y condiciones
+Consulta las reglas, responsabilidades y condiciones de uso de MOVANZA.
+Enlace: Leer política completa.
+
+Prestación del servicio
+Conoce el alcance, funcionamiento y limitaciones de nuestros servicios.
+Enlace: Leer política completa.
+
+Garantías
+Infórmate sobre la atención de inconvenientes y las garantías aplicables.
+Enlace: Leer política completa.
+
+Cancelaciones y devoluciones
+Consulta las condiciones aplicables a cancelaciones, retractos y devoluciones.
+Enlace: Leer política completa.
+
+--------------------------------------------------
+
+3. CONTACTO
+
+Hablemos de tu empresa.
+
+¿Quieres conocer MOVANZA o descubrir cómo puede ayudarte a organizar tus operaciones de campo?
+
+Estamos disponibles para resolver tus inquietudes.
+
+Teléfono: 606 863 1514
+WhatsApp: +57 300 562 3545
+Correo electrónico: juanfer27y@gmail.com
+Chat: Disponible desde la plataforma.
+
+Botón: Contáctanos
+
+--------------------------------------------------
+
+4. SERVICIOS Y PRODUCTOS
+
+Una plataforma. Más claridad sobre tu operación.
+
+MOVANZA centraliza la gestión de actividades de campo y transforma los registros operativos en información útil para tu empresa.
+
+Gestión de equipos
+Organiza tus trabajadores y administra sus actividades desde un mismo lugar.
+
+Asignación de tareas
+Crea actividades, establece ubicaciones y asigna responsabilidades.
+
+Verificación de ubicación
+Comprueba la ubicación de los trabajadores al iniciar y finalizar sus actividades.
+
+Registro de tiempos
+Consulta los tiempos de ejecución registrados durante las actividades.
+
+Historial de actividades
+Accede a los registros de tareas y operaciones realizadas.
+
+Información operativa
+Consulta los datos disponibles para comprender mejor el desarrollo de las actividades.
+
+¿Para quién es MOVANZA?
+
+Pensado para empresas de mantenimiento, instalaciones, telecomunicaciones, soporte técnico, servicios domiciliarios y otras operaciones con personal de campo.
+
+--------------------------------------------------
+
+5. PREGUNTAS FRECUENTES
+
+Resolvemos tus dudas.
+
+¿Qué es MOVANZA?
+Es una plataforma que ayuda a las empresas a organizar, verificar y consultar las actividades de sus trabajadores de campo.
+
+¿MOVANZA rastrea permanentemente a los trabajadores?
+No. MOVANZA está orientada a verificar la ubicación en momentos específicos de las actividades, como su inicio y finalización.
+
+¿Cómo funciona la verificación de ubicación?
+La plataforma comprueba si el trabajador se encuentra dentro del área definida para realizar una actividad.
+
+¿Qué información registra MOVANZA?
+Puede registrar tareas, estados, ubicaciones verificadas, tiempos de ejecución e historial de actividades.
+
+¿Quién puede consultar la información?
+Únicamente los usuarios autorizados, según su empresa y los permisos correspondientes.
+
+¿Qué empresas pueden utilizar MOVANZA?
+Empresas que necesitan coordinar y supervisar actividades realizadas fuera de sus instalaciones.

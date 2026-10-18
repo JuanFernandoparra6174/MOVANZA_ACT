@@ -1,55 +1,72 @@
-
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOVANZA | Mis invitaciones</title>
+<html lang="es"><head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex">
+    <title>Mis invitaciones | MOVANZA</title>
     <link rel="stylesheet" href="../estilos/general.css">
-</head>
-<body data-modulo="mis_invitaciones">
-    <main class="contenedor contenedor-amplio" hidden>
-        <header>
-            <h1>MOVANZA</h1>
-            <p>Mis invitaciones y empresas</p>
+    <link rel="stylesheet" href="../estilos/alertas.css" data-estilo-alertas>
+    <script type="module" src="../scripts/alertas.js"></script><link rel="stylesheet" href="../estilos/index.css">
+    <link rel="stylesheet" href="../recursos/efecto_fondo/fondo.css"><link rel="stylesheet" href="../estilos/componentes-publicos.css">
+    <link rel="stylesheet" href="../estilos/cuenta.css"><link rel="stylesheet" href="../estilos/home-trabajador.css"><link rel="stylesheet" href="../estilos/mis-invitaciones.css">
+    <script src="../scripts/componentes-publicos.js" defer></script><script src="../scripts/invitaciones-carga.js" defer></script>
+</head><body class="pagina-publica pagina-invitaciones" data-modulo="mis_invitaciones">
+    <div class="container fondo-exterior" aria-hidden="true" inert><div id="stars"></div><div id="stars2"></div><div id="stars3"></div><div></div></div>
+    <section id="estado-acceso" class="estado-acceso"><p id="mensaje-acceso" role="status">Comprobando tu cuenta…</p><a href="../login.html">Iniciar sesión</a></section>
+    <div class="sitio-publico" id="sitio-invitaciones" hidden>
+        <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+        <header class="cabecera-publica cabecera-trabajador" id="inicio">
+            <a class="marca" href="../home_trabajador.html" aria-label="MOVANZA, inicio del trabajador"><img src="../Carpeta_Imagenes/Logo/Logotipo%20MOVANZA.png" alt="MOVANZA" width="170" height="54"></a>
+            <button class="menu-boton" type="button" aria-expanded="false" aria-controls="navegacion-trabajador">Menú <span aria-hidden="true">☰</span></button>
+            <nav id="navegacion-trabajador" aria-label="Espacio del trabajador"><a href="../home_trabajador.html">Inicio</a><a href="../paginas/mis_asignaciones.html">Mis asignaciones</a><a href="../paginas/mis_invitaciones.html" aria-current="page">Mis invitaciones</a></nav>
+            <details class="cuenta-empresarial menu-cuenta"><summary class="boton-relleno boton-cuenta">Cuenta <span aria-hidden="true">⌄</span></summary><div class="opciones-cuenta"><button type="button" data-abrir-perfil aria-haspopup="dialog">Mi perfil</button><button type="button" id="cerrar-sesion">Cerrar sesión</button></div></details>
         </header>
-
-        <nav>
-            <a href="../index.html">← Volver a mi perfil</a>
-        </nav>
-
-        <section class="tarjeta bloque">
-            <h2>Invitaciones recibidas</h2>
-
-            <p>
-                Las empresas pueden invitarte utilizando
-                tu nombre de usuario de MOVANZA.
-            </p>
-
-            <div id="lista-invitaciones">
-                Cargando invitaciones...
+        <main id="contenido" class="invitaciones-principal" hidden>
+            <section class="banner-invitaciones" aria-labelledby="titulo-invitaciones"><div><p class="antetitulo">TU PRÓXIMO EQUIPO EMPIEZA AQUÍ</p><h1 id="titulo-invitaciones">Conecta con nuevas oportunidades</h1><p>Consulta las invitaciones que recibes de las empresas y decide de cuáles equipos de trabajo quieres formar parte.</p></div><span class="simbolo-invitaciones" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="17" width="48" height="34" rx="6"/><path d="m10 20 22 17 22-17M24 9h16M28 5h8"/></svg></span></section>
+            <div id="estado-invitaciones"><p id="mensaje" role="status" aria-live="polite"></p></div>
+            <div class="espacio-invitaciones" id="contenido-invitaciones" aria-busy="true">
+                <section class="bandeja-invitaciones" aria-labelledby="titulo-invitaciones-recibidas"><div class="cabecera-bandeja"><div><p class="antetitulo">TÚ ELIGES DÓNDE CRECER</p><h2 id="titulo-invitaciones-recibidas" tabindex="-1">Invitaciones recibidas</h2><p id="cantidad-invitaciones" aria-live="polite">Consulta tus invitaciones</p></div><button id="actualizar-invitaciones" class="boton-relleno" type="button">↻ Actualizar</button></div>
+                    <div class="filtros-invitaciones" role="group" aria-label="Filtrar invitaciones por estado"><button type="button" data-filtro-invitaciones="todas" aria-pressed="false">Todas <span aria-hidden="true">—</span></button><button type="button" data-filtro-invitaciones="pendiente" aria-pressed="true">Pendientes <span aria-hidden="true">—</span></button><button type="button" data-filtro-invitaciones="aceptada" aria-pressed="false">Aceptadas <span aria-hidden="true">—</span></button><button type="button" data-filtro-invitaciones="rechazada" aria-pressed="false">Rechazadas <span aria-hidden="true">—</span></button><button type="button" data-filtro-invitaciones="cancelada" aria-pressed="false">Canceladas <span aria-hidden="true">—</span></button></div>
+                    <div id="lista-invitaciones" class="lista-invitaciones"><p class="invitaciones-vacio">Consultando tus invitaciones…</p></div>
+                </section>
+                <aside class="mis-equipos" aria-labelledby="titulo-equipos"><div class="titulo-equipos"><span aria-hidden="true">↗</span><p class="antetitulo">CONEXIONES ACTIVAS</p><h2 id="titulo-equipos">Empresas donde trabajo</h2><p>Tus equipos actuales <strong id="cantidad-equipos">—</strong></p></div><div id="lista-membresias"><p class="equipos-vacio">Consultando tus equipos…</p></div><p class="ayuda-equipos">Las empresas pueden invitarte utilizando tu nombre de usuario de MOVANZA.</p></aside>
             </div>
-        </section>
-
-        <section class="tarjeta bloque">
-            <h2>Empresas donde trabajo</h2>
-
-            <p>
-                Aquí aparecen las empresas a las que
-                perteneces actualmente como trabajador.
-            </p>
-
-            <div id="lista-membresias">
-                Cargando empresas...
-            </div>
-        </section>
-
-        <p id="mensaje" role="status" aria-live="polite"></p>
-    </main>
-
-    <script
-        type="module"
-        src="../scripts/modulo.js">
-    </script>
-</body>
-</html>
+        </main>
+        <footer class="pie-publico">
+                <div class="pie-columnas">
+                    <div>
+                        <a href="../index.html#inicio" class="marca-pie">MOVANZA<span aria-hidden="true">↗</span></a>
+                        <p>Gestión de trabajos presenciales.</p>
+                        <p>Manizales, Caldas, Colombia.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Manizales%2C%20Caldas%2C%20Colombia" target="_blank" rel="noopener noreferrer">Ver ubicación en el mapa ↗</a>
+                    </div>
+                    <div>
+                        <h2>Explora MOVANZA</h2>
+                        <nav aria-label="Mapa de navegación">
+                            <a href="../index.html#inicio">Inicio</a>
+                            <a href="../index.html#nosotros">Nosotros</a>
+                            <a href="../index.html#servicios">Servicios</a>
+                            <a href="../index.html#preguntas">Preguntas frecuentes</a>
+                            <a href="../index.html#experiencias">Experiencia</a>
+                            <a href="../index.html#contacto">Contacto</a>
+                            <a href="../index.html#politicas">Políticas</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <h2>Horarios de atención</h2>
+                        <dl class="horarios">
+                            <dt>Lunes a viernes</dt>
+                            <dd>8:00 a. m. – 6:00 p. m.</dd>
+                            <dt>Sábados</dt>
+                            <dd>9:00 a. m. – 1:00 p. m.</dd>
+                            <dt>Domingos y festivos</dt>
+                            <dd>No disponible.</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="pie-final">
+                    <p>© 2026 MOVANZA. Todos los derechos reservados.</p>
+                    <a href="../index.html#inicio">Volver al inicio ↑</a>
+                </div>
+            </footer>
+    </div>
+    <noscript><p class="aviso-noscript">Activa JavaScript para consultar tus invitaciones.</p></noscript>
+</body></html>

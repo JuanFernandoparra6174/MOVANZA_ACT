@@ -1,0 +1,106 @@
+<section
+        id="seccion-rechazo"
+        class="tarjeta bloque oculto"
+    >
+        <h2>Rechazar asignación</h2>
+
+        <p>
+            Tarea:
+            <strong id="titulo-rechazo"></strong>
+        </p>
+
+        <form id="formulario-rechazo">
+
+            <label for="motivo-rechazo">
+                Motivo del rechazo
+            </label>
+
+            <textarea
+                id="motivo-rechazo"
+                rows="4"
+                maxlength="2000"
+                placeholder="Explica por qué no puedes realizarla"
+                required
+            ></textarea>
+
+            <button
+                type="submit"
+                id="boton-confirmar-rechazo"
+                class="boton-peligro"
+            >
+                Confirmar rechazo
+            </button>
+
+            <button
+                type="button"
+                id="boton-cancelar-rechazo"
+                class="boton-secundario"
+            >
+                Volver sin rechazar
+            </button>
+        </form>
+    </section>
+<section
+        id="seccion-finalizacion"
+        class="tarjeta bloque oculto"
+    >
+        <h2>Finalizar tarea</h2>
+
+        <p>
+            Tarea:
+            <strong id="titulo-finalizacion"></strong>
+        </p>
+
+        <form id="formulario-finalizacion">
+
+            <label for="objetivo-cumplido">
+                ¿Se cumplió el objetivo?
+            </label>
+
+            <select id="objetivo-cumplido" required>
+                <option value="">
+                    Selecciona una respuesta
+                </option>
+                <option value="si">
+                    Sí, se cumplió
+                </option>
+                <option value="no">
+                    No se cumplió
+                </option>
+            </select>
+
+            <label for="nota-finalizacion">
+                Observaciones finales
+            </label>
+
+            <textarea
+                id="nota-finalizacion"
+                rows="4"
+                maxlength="2000"
+                placeholder="Describe el resultado de la tarea"
+            ></textarea>
+
+            <small class="texto-ayuda">
+                Si el objetivo no se cumplió,
+                debes explicar el motivo.
+                También se verificará nuevamente
+                tu ubicación mediante GPS.
+            </small>
+
+            <button
+                id="boton-confirmar-finalizacion"
+                type="submit"
+            >
+                Verificar GPS y finalizar
+            </button>
+
+            <button
+                id="boton-cancelar-finalizacion"
+                type="button"
+                class="boton-secundario"
+            >
+                Volver sin finalizar
+            </button>
+
+        </form>
+    </section>

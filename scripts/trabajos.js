@@ -1,5 +1,7 @@
+import { confirmarAccion } from './alertas.js';
 
 import { supabase } from '../configuracion/supabase.js';
+import { vistaTrabajos } from './trabajos-panel.js';
 
 // ==================================================
 // ELEMENTOS Y VARIABLES
@@ -52,7 +54,7 @@ function crearBoton(texto, accion, clase = '') {
     boton.type = 'button';
     boton.textContent = texto;
 
-    if (clase) boton.className = clase;
+    boton.className = 'boton-relleno' + (clase ? ' ' + clase : '');
 
     boton.addEventListener('click', accion);
 
@@ -103,6 +105,7 @@ async function ejecutarAccion(accion, mensajeExito) {
     if (ocupado) return;
 
     ocupado = true;
+    vistaTrabajos.ocupado(true);
     informar('Procesando solicitud...');
 
     try {
@@ -114,6 +117,7 @@ async function ejecutarAccion(accion, mensajeExito) {
         console.error(error);
     } finally {
         ocupado = false;
+        vistaTrabajos.ocupado(false);
     }
 }
 
@@ -142,10 +146,12 @@ function iniciarMapa() {
     capaTrabajos = L.featureGroup().addTo(mapa);
 
     mapa.on('click', evento => {
+        if (vistaTrabajos.estaOcupado()) return;
         seleccionarUbicacion(
             evento.latlng.lat,
             evento.latlng.lng
         );
+        vistaTrabajos.desdeMapa();
     });
 }
 
@@ -177,8 +183,8 @@ function seleccionarUbicacion(latitud, longitud) {
         [latitud, longitud],
         {
             radius: radioSeleccionado(),
-            color: '#185abc',
-            fillColor: '#185abc',
+            color: '#216b99',
+            fillColor: '#8cc9f0',
             fillOpacity: 0.15
         }
     ).addTo(mapa);
@@ -262,11 +268,13 @@ function pintarTrabajos() {
         );
 
         marcador.bindPopup(contenido);
+        marcador.on('click', () => vistaTrabajos.seleccionarTrabajo(trabajo.id));
         marcador.addTo(capaTrabajos);
+        vistaTrabajos.registrarMarcador(trabajo.id, marcador);
 
         L.circle(centro, {
             radius: trabajo.radio_metros,
-            color: '#0b9d83',
+            color: '#5f4d93',
             fillOpacity: 0.10
         }).addTo(capaTrabajos);
     });
@@ -297,21 +305,11 @@ function verTrabajoEnMapa(id) {
         16
     );
 
-    $('mapa-trabajos').scrollIntoView({
-        behavior: 'smooth'
-    });
+    vistaTrabajos.verMapa();
 }
 
 function verTrabajoEnLista(id) {
-    const tarjeta = document.getElementById(
-        `trabajo-${id}`
-    );
-
-    if (tarjeta) {
-        tarjeta.scrollIntoView({
-            behavior: 'smooth'
-        });
-    }
+    vistaTrabajos.seleccionarTrabajo(id);
 }
 
 // ==================================================
@@ -440,6 +438,8 @@ function mostrarTrabajos() {
     const contenedor = $('lista-trabajos');
     contenedor.replaceChildren();
 
+    vistaTrabajos.iniciarListado(trabajos.length);
+
     if (trabajos.length === 0) {
         contenedor.appendChild(
             crearElemento(
@@ -447,6 +447,7 @@ function mostrarTrabajos() {
                 'Aún no se han creado trabajos.'
             )
         );
+        vistaTrabajos.finalizarListado();
         return;
     }
 
@@ -547,8 +548,9 @@ function mostrarTrabajos() {
             );
         });
 
-        contenedor.appendChild(tarjeta);
+        contenedor.appendChild(vistaTrabajos.registrarTrabajo(trabajo, tarjeta, tareas.length));
     });
+    vistaTrabajos.finalizarListado();
 }
 
 function construirTarjetaAsignacion(tarea) {
@@ -575,6 +577,7 @@ function construirTarjetaAsignacion(tarea) {
         `Estado: ${tarea.estado}`
     );
     estado.className = 'etiqueta-estado';
+    estado.dataset.estado = tarea.estado;
     tarjeta.appendChild(estado);
 
     tarjeta.appendChild(
@@ -658,9 +661,7 @@ function prepararAgregar(id) {
         trabajo.longitud
     );
 
-    $('seccion-crear').scrollIntoView({
-        behavior: 'smooth'
-    });
+    vistaTrabajos.mostrarFormulario('agregar');
 }
 
 function restaurarCreacion() {
@@ -683,11 +684,12 @@ function restaurarCreacion() {
     $('boton-cancelar-agregar').classList.add('oculto');
 
     limpiarSeleccionMapa();
+    vistaTrabajos.creacionRestaurada();
 }
 
 $('boton-cancelar-agregar').addEventListener(
     'click',
-    restaurarCreacion
+    () => vistaTrabajos.nuevoPunto()
 );
 
 formulario.addEventListener('submit', async evento => {
@@ -743,6 +745,7 @@ formulario.addEventListener('submit', async evento => {
     }
 
     ocupado = true;
+    vistaTrabajos.ocupado(true);
     $('boton-guardar-trabajo').disabled = true;
 
     let idTrabajo = trabajoExistenteId;
@@ -788,6 +791,7 @@ formulario.addEventListener('submit', async evento => {
 
         restaurarCreacion();
         await cargarDatos();
+        vistaTrabajos.seleccionarTrabajo(idTrabajo, { forzar: true });
 
         informar(
             `Trabajo #${idTrabajo}: ${creadas} asignación(es) guardadas correctamente.`,
@@ -813,6 +817,7 @@ formulario.addEventListener('submit', async evento => {
 
     } finally {
         ocupado = false;
+        vistaTrabajos.ocupado(false);
         $('boton-guardar-trabajo').disabled = false;
     }
 });
@@ -844,9 +849,7 @@ function abrirEdicionTrabajo(id) {
 
     $('seccion-editar-trabajo').classList.remove('oculto');
 
-    $('seccion-editar-trabajo').scrollIntoView({
-        behavior: 'smooth'
-    });
+    vistaTrabajos.mostrarFormulario('editar-trabajo');
 }
 
 function cerrarEdicionTrabajo() {
@@ -854,11 +857,12 @@ function cerrarEdicionTrabajo() {
     $('seccion-editar-trabajo').classList.add('oculto');
 
     if (mapa) limpiarSeleccionMapa();
+    vistaTrabajos.edicionCerrada('editar-trabajo');
 }
 
 $('cerrar-edicion-trabajo').addEventListener(
     'click',
-    cerrarEdicionTrabajo
+    () => vistaTrabajos.cerrar()
 );
 
 $('formulario-editar-trabajo').addEventListener(
@@ -911,19 +915,18 @@ function abrirEdicionAsignacion(id) {
 
     $('seccion-editar-asignacion').classList.remove('oculto');
 
-    $('seccion-editar-asignacion').scrollIntoView({
-        behavior: 'smooth'
-    });
+    vistaTrabajos.mostrarFormulario('editar-asignacion');
 }
 
 function cerrarEdicionAsignacion() {
     asignacionEnEdicion = null;
     $('seccion-editar-asignacion').classList.add('oculto');
+    vistaTrabajos.edicionCerrada('editar-asignacion');
 }
 
 $('cerrar-edicion-asignacion').addEventListener(
     'click',
-    cerrarEdicionAsignacion
+    () => vistaTrabajos.cerrar()
 );
 
 $('formulario-editar-asignacion').addEventListener(
@@ -968,10 +971,8 @@ $('formulario-editar-asignacion').addEventListener(
 // ==================================================
 
 async function cancelarAsignacion(id) {
-    const confirmar = window.confirm(
-        '¿Deseas cancelar esta asignación? ' +
-        'El registro histórico se conservará.'
-    );
+    const confirmar = await confirmarAccion({ titulo: 'Cancelar asignación', mensaje: `¿Deseas cancelar la asignación #${id}? ` +
+        'El registro histórico se conservará.', textoConfirmar: 'Cancelar asignación', destructiva: true });
 
     if (!confirmar) return;
 
@@ -988,11 +989,9 @@ async function cancelarAsignacion(id) {
 }
 
 async function cancelarTrabajo(id) {
-    const confirmar = window.confirm(
-        'Se cancelarán las asignaciones pendientes ' +
+    const confirmar = await confirmarAccion({ titulo: 'Cancelar trabajo', mensaje: `Trabajo #${id}: se cancelarán las asignaciones pendientes ` +
         'o aceptadas de este trabajo. ' +
-        'No se borrará el historial. ¿Continuar?'
-    );
+        'No se borrará el historial. ¿Continuar?', textoConfirmar: 'Cancelar asignaciones', destructiva: true });
 
     if (!confirmar) return;
 
@@ -1065,6 +1064,7 @@ async function iniciarModulo() {
         await cargarDatos();
 
         centrarMapa();
+        return empresa;
 
     } catch (error) {
         informar(error.message, 'error');
@@ -1074,4 +1074,12 @@ async function iniciarModulo() {
     }
 }
 
-iniciarModulo();
+vistaTrabajos.conectar({ restaurarCreacion, cerrarEdicionTrabajo, cerrarEdicionAsignacion,
+    ajustarMapa: () => mapa?.invalidateSize({ pan: false }),
+    seleccionarCentro: () => {
+        const centro = mapa.getCenter();
+        seleccionarUbicacion(centro.lat, centro.lng);
+        vistaTrabajos.desdeMapa();
+    },
+    centrarMapa });
+export const trabajosListos = iniciarModulo();

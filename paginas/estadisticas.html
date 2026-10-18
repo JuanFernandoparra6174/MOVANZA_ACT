@@ -1,250 +1,96 @@
-
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>MOVANZA | Panel y estadísticas</title>
+<html lang="es"><head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex">
+    <title>Estadísticas de tu operación | MOVANZA</title>
     <link rel="stylesheet" href="../estilos/general.css">
-</head>
-<body data-modulo="estadisticas">
-<main class="contenedor contenedor-amplio" hidden>
-
-    <header>
-        <h1>MOVANZA</h1>
-        <p>Panel de seguimiento y estadísticas</p>
+    <link rel="stylesheet" href="../estilos/alertas.css" data-estilo-alertas>
+    <script type="module" src="../scripts/alertas.js"></script><link rel="stylesheet" href="../estilos/index.css">
+    <link rel="stylesheet" href="../recursos/efecto_fondo/fondo.css"><link rel="stylesheet" href="../estilos/componentes-publicos.css">
+    <link rel="stylesheet" href="../estilos/home-empresa.css"><link rel="stylesheet" href="../estilos/home-empresa-2.css">
+    <link rel="stylesheet" href="../estilos/encabezado-empresarial.css"><link rel="stylesheet" href="../estilos/cuenta.css">
+    <link rel="stylesheet" href="../estilos/seleccionar-empresa.css"><link rel="stylesheet" href="../estilos/estadisticas.css">
+    <script id="biblioteca-graficos" src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js" async></script>
+    <script src="../scripts/componentes-publicos.js" defer></script><script src="../scripts/estadisticas-carga.js" defer></script>
+</head><body class="pagina-publica pagina-estadisticas" data-modulo="estadisticas">
+    <div class="container fondo-exterior" aria-hidden="true" inert><div id="stars"></div><div id="stars2"></div><div id="stars3"></div><div></div></div>
+    <section id="estado-acceso" class="estado-acceso"><p id="mensaje-acceso" role="status" aria-live="polite">Comprobando el acceso a tus estadísticas…</p><a href="../home_empresa_2.html">Volver a mi empresa</a></section>
+    <div id="sitio-estadisticas" class="sitio-publico" hidden>
+        <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+        <header class="cabecera-empresarial">
+        <div class="identidad-empresarial"><a class="marca" href="../home_empresa_2.html" aria-label="MOVANZA, inicio empresarial"><img src="../Carpeta_Imagenes/Logo/Logotipo%20MOVANZA.png" alt="MOVANZA" width="170" height="54"></a></div>
+        <button class="menu-empresarial" type="button" aria-expanded="false" aria-controls="navegacion-empresarial">Menú <span aria-hidden="true">☰</span></button>
+        <nav id="navegacion-empresarial" aria-label="Administración empresarial"><a href="../home_empresa_2.html">Inicio</a><a href="../paginas/equipo.html">Equipo</a><a href="../paginas/trabajos.html">Trabajos</a><a href="../paginas/estadisticas.html" aria-current="page" data-estadisticas-empresa>Estadísticas</a><a href="../paginas/seleccionar_empresa.html">Cambiar empresa</a></nav>
+        <details class="cuenta-empresarial menu-cuenta"><summary class="boton-relleno boton-cuenta">Cuenta <span aria-hidden="true">⌄</span></summary><div class="opciones-cuenta"><p id="usuario-empresarial"></p><button type="button" data-abrir-perfil aria-haspopup="dialog">Mi perfil</button><button type="button" id="cerrar-sesion">Cerrar sesión</button></div></details>
     </header>
-
-    <nav>
-        <a href="../index.html">← Volver a mi perfil</a>
-    </nav>
-
-    <section class="tarjeta bloque">
-        <h2>Panel de resultados</h2>
-        <p>
-            Los indicadores se calculan a partir de
-            las asignaciones almacenadas en Supabase.
-        </p>
-        <p>
-            <strong>Usuario:</strong>
-            <span id="usuario-actual">Cargando...</span>
-        </p>
-    </section>
-
-    <!-- FILTROS -->
-    <section class="tarjeta bloque">
-        <h2>Filtros</h2>
-
-        <div class="estadisticas-filtros">
-
-            <div id="contenedor-empresa" class="oculto">
-                <label for="filtro-empresa">Empresa</label>
-                <select id="filtro-empresa">
-                    <option value="todas">
-                        Todas mis empresas
-                    </option>
-                </select>
+        <main id="contenido" class="administracion-principal estadisticas-principal" hidden>
+            <section class="bienvenida-administracion banner-estadisticas" aria-labelledby="titulo-estadisticas"><div><p class="antetitulo">ESTADÍSTICAS DE TU OPERACIÓN</p><h1 id="titulo-estadisticas">Comprende el rendimiento de tu operación</h1><p>Consulta indicadores, analiza los tiempos de ejecución y descubre información útil sobre las actividades de tu empresa.</p></div><p class="empresa-identificada"><span>Informe de</span><strong id="empresa-informe">Verificando empresas…</strong></p></section>
+            <section class="panel-filtros" aria-labelledby="titulo-filtros"><div class="cabecera-filtros"><div><h2 id="titulo-filtros">Explora tus resultados</h2><p id="ultima-actualizacion">Las métricas se calculan sobre asignaciones reales.</p></div><button type="button" id="boton-actualizar-panel" class="boton-relleno">↻ Actualizar indicadores</button></div>
+                <fieldset id="filtros-controles" class="estadisticas-filtros" disabled><legend class="solo-lectores">Filtros del informe</legend>
+                    <div id="contenedor-empresa" class="oculto"><label for="filtro-empresa">Empresa</label><select id="filtro-empresa"><option value="todas">Todas mis empresas</option></select></div>
+                    <div id="contenedor-trabajador" class="oculto"><label for="filtro-trabajador">Trabajador</label><select id="filtro-trabajador"><option value="todos">Todos los trabajadores</option></select></div>
+                    <div><label for="filtro-periodo">Período</label><select id="filtro-periodo"><option value="todo">Todo el historial</option><option value="7">Últimos 7 días</option><option value="30" selected>Últimos 30 días</option><option value="90">Últimos 90 días</option><option value="personalizado">Personalizado</option></select></div>
+                    <div><label for="filtro-estado">Estado de la asignación</label><select id="filtro-estado"><option value="todos">Todos los estados</option><option value="pendiente">Pendientes</option><option value="aceptada">Aceptadas</option><option value="en_curso">En curso</option><option value="finalizada">Finalizadas</option><option value="rechazada">Rechazadas</option><option value="cancelada">Canceladas</option></select></div>
+                    <div><label for="filtro-punto">Punto de trabajo</label><select id="filtro-punto"><option value="todos">Todos los puntos con asignaciones</option></select></div>
+                    <div id="contenedor-fecha-inicio" class="oculto"><label for="fecha-inicio">Desde</label><input id="fecha-inicio" type="date"></div><div id="contenedor-fecha-fin" class="oculto"><label for="fecha-fin">Hasta</label><input id="fecha-fin" type="date"></div>
+                </fieldset>
+                <p class="criterio-fechas">Período según la fecha programada de las asignaciones · Hora de Colombia (UTC−5).</p><p id="descripcion-filtros" class="filtros-activos" role="status">Esperando los datos del informe.</p>
+            </section>
+            <div id="estado-informe"><p id="mensaje" role="status" aria-live="polite"></p></div>
+            <section id="resumen-indicadores" class="resumen-indicadores" aria-label="Indicadores principales">
+                <article class="indicador-principal efecto-card"><span class="efecto-card-borde" aria-hidden="true"></span><div class="interior-indicador"><span class="icono-indicador" aria-hidden="true">▤</span><h2>Asignaciones</h2><strong id="indicador-total">—</strong><p>Registros únicos que cumplen los filtros activos.</p></div></article>
+                <article class="indicador-principal efecto-card"><span class="efecto-card-borde" aria-hidden="true"></span><div class="interior-indicador"><span class="icono-indicador" aria-hidden="true">✓</span><h2>Finalizadas</h2><strong id="indicador-finalizadas">—</strong><p>Asignaciones con estado finalizada, según su fecha programada.</p></div></article>
+                <article class="indicador-principal efecto-card"><span class="efecto-card-borde" aria-hidden="true"></span><div class="interior-indicador"><span class="icono-indicador" aria-hidden="true">◷</span><h2>Tiempo real promedio</h2><strong id="indicador-tiempo-promedio">—</strong><p>Solo finalizadas con inicio y fin válidos.</p></div></article>
+                <article class="indicador-principal efecto-card"><span class="efecto-card-borde" aria-hidden="true"></span><div class="interior-indicador"><span class="icono-indicador" aria-hidden="true">◎</span><h2>Objetivos cumplidos</h2><strong id="indicador-cumplimiento">—</strong><p>Porcentaje sobre finalizadas con resultado registrado.</p></div></article>
+            </section>
+            <div class="estados-resumen" aria-label="Otros estados"><p data-estado="pendiente"><span>Pendientes</span><strong id="indicador-pendientes">—</strong></p><p data-estado="aceptada"><span>Aceptadas</span><strong id="indicador-aceptadas">—</strong></p><p data-estado="en_curso"><span>En curso</span><strong id="indicador-en-curso">—</strong></p><p data-estado="rechazada"><span>Rechazadas</span><strong id="indicador-rechazadas">—</strong></p><p data-estado="cancelada"><span>Canceladas</span><strong id="indicador-canceladas">—</strong></p></div>
+            <div class="cuadricula-graficos">
+                <section class="panel-grafico grafico-distribucion" aria-labelledby="titulo-grafico-estados"><div class="titulo-grafico"><h2 id="titulo-grafico-estados">Distribución por estado</h2><p>Todas las asignaciones incluidas en el informe.</p></div><div class="lienzo-grafico"><canvas id="grafico-estados" role="img" aria-label="Distribución por estado" aria-describedby="resumen-grafico-estados"></canvas><p id="vacio-grafico-estados" class="grafico-vacio">Aún no se han consultado los datos.</p></div><p id="resumen-grafico-estados" class="resumen-grafico"></p><details class="datos-grafico"><summary>Consultar valores del gráfico</summary><ul id="valores-grafico-estados"></ul></details></section>
+                <section class="panel-grafico grafico-evolucion" aria-labelledby="titulo-grafico-evolucion"><div class="titulo-grafico"><h2 id="titulo-grafico-evolucion">Evolución de las actividades</h2><p>Asignaciones por fecha programada; no por fecha de finalización.</p></div><div class="lienzo-grafico"><canvas id="grafico-evolucion" role="img" aria-label="Evolución de las actividades" aria-describedby="resumen-grafico-evolucion"></canvas><p id="vacio-grafico-evolucion" class="grafico-vacio">Aún no se han consultado los datos.</p></div><p id="resumen-grafico-evolucion" class="resumen-grafico"></p><details class="datos-grafico"><summary>Consultar valores del gráfico</summary><ul id="valores-grafico-evolucion"></ul></details></section>
+                <section class="panel-grafico " aria-labelledby="titulo-grafico-equipo"><div class="titulo-grafico"><h2 id="titulo-grafico-equipo">Actividad del equipo</h2><p>Asignaciones totales y finalizadas; hasta ocho grupos con mayor actividad.</p></div><div class="lienzo-grafico"><canvas id="grafico-equipo" role="img" aria-label="Actividad del equipo" aria-describedby="resumen-grafico-equipo"></canvas><p id="vacio-grafico-equipo" class="grafico-vacio">Aún no se han consultado los datos.</p></div><p id="resumen-grafico-equipo" class="resumen-grafico"></p><details class="datos-grafico"><summary>Consultar valores del gráfico</summary><ul id="valores-grafico-equipo"></ul></details></section>
+                <section class="panel-grafico " aria-labelledby="titulo-grafico-tiempos"><div class="titulo-grafico"><h2 id="titulo-grafico-tiempos">Tiempo real registrado</h2><p>Horas acumuladas en finalizadas con marcas de tiempo válidas.</p></div><div class="lienzo-grafico"><canvas id="grafico-tiempos" role="img" aria-label="Tiempo real registrado" aria-describedby="resumen-grafico-tiempos"></canvas><p id="vacio-grafico-tiempos" class="grafico-vacio">Aún no se han consultado los datos.</p></div><p id="resumen-grafico-tiempos" class="resumen-grafico"></p><details class="datos-grafico"><summary>Consultar valores del gráfico</summary><ul id="valores-grafico-tiempos"></ul></details></section>
             </div>
-
-            <div id="contenedor-trabajador" class="oculto">
-                <label for="filtro-trabajador">Trabajador</label>
-                <select id="filtro-trabajador">
-                    <option value="todos">
-                        Todos los trabajadores
-                    </option>
-                </select>
-            </div>
-
-            <div>
-                <label for="filtro-periodo">Período</label>
-                <select id="filtro-periodo">
-                    <option value="todo">Todo el historial</option>
-                    <option value="7">Últimos 7 días</option>
-                    <option value="30" selected>
-                        Últimos 30 días
-                    </option>
-                    <option value="90">Últimos 90 días</option>
-                    <option value="personalizado">
-                        Personalizado
-                    </option>
-                </select>
-            </div>
-
-            <div id="contenedor-fecha-inicio" class="oculto">
-                <label for="fecha-inicio">Desde</label>
-                <input id="fecha-inicio" type="date">
-            </div>
-
-            <div id="contenedor-fecha-fin" class="oculto">
-                <label for="fecha-fin">Hasta</label>
-                <input id="fecha-fin" type="date">
-            </div>
-
-        </div>
-
-        <button type="button" id="boton-actualizar-panel">
-            Actualizar indicadores
-        </button>
-
-        <p class="texto-ayuda">
-            Los filtros de fecha utilizan la fecha
-            programada de cada asignación.
-        </p>
-
-        <p id="descripcion-filtros"></p>
-    </section>
-
-    <!-- INDICADORES DE ESTADO -->
-    <section class="tarjeta bloque">
-        <h2>Estado de las asignaciones</h2>
-
-        <div class="estadisticas-tarjetas">
-
-            <div class="estadistica-tarjeta">
-                <span>Total</span>
-                <strong id="indicador-total">0</strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>Pendientes</span>
-                <strong id="indicador-pendientes">0</strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>Aceptadas</span>
-                <strong id="indicador-aceptadas">0</strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>En curso</span>
-                <strong id="indicador-en-curso">0</strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>Finalizadas</span>
-                <strong id="indicador-finalizadas">0</strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>Rechazadas</span>
-                <strong id="indicador-rechazadas">0</strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>Canceladas</span>
-                <strong id="indicador-canceladas">0</strong>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- GRÁFICO -->
-    <section class="tarjeta bloque">
-        <h2>Distribución por estado</h2>
-        <div id="grafico-estados"
-             class="grafico-estados"></div>
-    </section>
-
-    <!-- TIEMPOS Y CUMPLIMIENTO -->
-    <section class="tarjeta bloque">
-        <h2>Tiempos y cumplimiento</h2>
-
-        <div class="estadisticas-tarjetas">
-
-            <div class="estadistica-tarjeta">
-                <span>Tiempo real total</span>
-                <strong id="indicador-tiempo-total">—</strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>Tiempo real promedio</span>
-                <strong id="indicador-tiempo-promedio">—</strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>Objetivos cumplidos</span>
-                <strong id="indicador-objetivos-cumplidos">
-                    0
-                </strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>Objetivos no cumplidos</span>
-                <strong id="indicador-objetivos-no-cumplidos">
-                    0
-                </strong>
-            </div>
-
-            <div class="estadistica-tarjeta">
-                <span>Tasa de cumplimiento</span>
-                <strong id="indicador-cumplimiento">—</strong>
-            </div>
-
-        </div>
-
-        <p class="texto-ayuda">
-            Los tiempos se calculan con las fechas de
-            inicio y finalización del servidor.
-            El cumplimiento considera únicamente tareas
-            finalizadas con resultado registrado.
-        </p>
-    </section>
-
-    <!-- RESULTADOS AGRUPADOS -->
-    <section class="tarjeta bloque">
-        <h2 id="titulo-agrupacion">
-            Resultados por empresa
-        </h2>
-
-        <div class="estadisticas-tabla-contenedor">
-            <table class="estadisticas-tabla">
-                <thead>
-                    <tr>
-                        <th id="columna-grupo">Grupo</th>
-                        <th>Total</th>
-                        <th>Finalizadas</th>
-                        <th>Rechazadas</th>
-                        <th>Cumplimiento</th>
-                        <th>Tiempo real</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-agrupacion">
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- DETALLE -->
-    <section class="tarjeta bloque">
-        <h2>Detalle de asignaciones</h2>
-
-        <div class="estadisticas-tabla-contenedor">
-            <table class="estadisticas-tabla">
-                <thead>
-                    <tr>
-                        <th>Asignación</th>
-                        <th>Empresa</th>
-                        <th>Trabajador</th>
-                        <th>Fecha programada</th>
-                        <th>Estado</th>
-                        <th>Tiempo real</th>
-                        <th>Objetivo</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-detalle">
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <p id="mensaje" role="status" aria-live="polite"></p>
-
-</main>
-
-<script
-    type="module"
-    src="../scripts/modulo.js">
-</script>
-</body>
-</html>
+            <section class="panel-tiempos" aria-labelledby="titulo-tiempos"><div><p class="antetitulo">TIEMPOS Y RESULTADOS</p><h2 id="titulo-tiempos">Cada resultado, con su contexto</h2><p id="muestras-tiempo">Aún no se han consultado marcas de tiempo.</p><p>Los objetivos sin resultado registrado no cuentan como incumplidos.</p></div><dl><div><dt>Tiempo real total</dt><dd id="indicador-tiempo-total">—</dd></div><div><dt>Objetivos cumplidos</dt><dd id="indicador-objetivos-cumplidos">—</dd></div><div><dt>Objetivos no cumplidos</dt><dd id="indicador-objetivos-no-cumplidos">—</dd></div></dl></section>
+            <details class="detalle-informe"><summary><span id="titulo-agrupacion">Resultados por empresa</span><span class="ayuda-desplegar">Comparar resultados ↗</span></summary><p class="nota-agrupacion">Comparativa de <span id="columna-grupo">Empresa</span>: asignaciones, resultados y tiempos del mismo conjunto filtrado.</p><div id="tabla-agrupacion" class="tabla-empresas grupos-estadisticos"></div></details>
+            <details class="detalle-informe"><summary><span>Detalle de asignaciones</span><span class="ayuda-desplegar">Explorar registros ↗</span></summary><div class="estadisticas-tabla-contenedor"><table class="estadisticas-tabla"><caption class="solo-lectores">Asignaciones incluidas en el informe; las fechas se muestran en hora de Colombia.</caption><thead><tr><th scope="col">Asignación</th><th scope="col">Empresa</th><th scope="col">Trabajador</th><th scope="col">Fecha programada</th><th scope="col">Estado</th><th scope="col">Tiempo real</th><th scope="col">Objetivo</th></tr></thead><tbody id="tabla-detalle"></tbody></table></div></details>
+            <p class="usuario-informe">Informe consultado por <span id="usuario-actual"></span>.</p>
+        </main>
+        <footer class="pie-publico">
+                <div class="pie-columnas">
+                    <div>
+                        <a href="../index.html#inicio" class="marca-pie">MOVANZA<span aria-hidden="true">↗</span></a>
+                        <p>Gestión de trabajos presenciales.</p>
+                        <p>Manizales, Caldas, Colombia.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Manizales%2C%20Caldas%2C%20Colombia" target="_blank" rel="noopener noreferrer">Ver ubicación en el mapa ↗</a>
+                    </div>
+                    <div>
+                        <h2>Explora MOVANZA</h2>
+                        <nav aria-label="Mapa de navegación">
+                            <a href="../index.html#inicio">Inicio</a>
+                            <a href="../index.html#nosotros">Nosotros</a>
+                            <a href="../index.html#servicios">Servicios</a>
+                            <a href="../index.html#preguntas">Preguntas frecuentes</a>
+                            <a href="../index.html#experiencias">Experiencia</a>
+                            <a href="../index.html#contacto">Contacto</a>
+                            <a href="../index.html#politicas">Políticas</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <h2>Horarios de atención</h2>
+                        <dl class="horarios">
+                            <dt>Lunes a viernes</dt>
+                            <dd>8:00 a. m. – 6:00 p. m.</dd>
+                            <dt>Sábados</dt>
+                            <dd>9:00 a. m. – 1:00 p. m.</dd>
+                            <dt>Domingos y festivos</dt>
+                            <dd>No disponible.</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="pie-final">
+                    <p>© 2026 MOVANZA. Todos los derechos reservados.</p>
+                    <a href="../index.html#inicio">Volver al inicio ↑</a>
+                </div>
+            </footer>
+    </div>
+    <noscript><p class="aviso-noscript">Activa JavaScript para verificar tu sesión y consultar estadísticas.</p></noscript>
+</body></html>
